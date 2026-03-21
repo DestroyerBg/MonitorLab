@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="MonitorLab.Core/MonitorLab.Core.csproj" />
+  <Project Path="MonitorLab.Data/MonitorLab.Data.csproj" />
   <Project Path="MonitorLab.Web/MonitorLab.Web.csproj" />
 </Solution>
