@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MonitorEntity = MonitorLab.Data.Models.Monitor;
 
 namespace MonitorLab.Data
 {
@@ -7,18 +8,18 @@ namespace MonitorLab.Data
     {
         public ApplicationDbContext()
         {
-
         }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
-            
         }
 
-        override protected void OnModelCreating(ModelBuilder builder)
+        public DbSet<MonitorEntity> Monitors { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-        }   
-
+        }
     }
 }
