@@ -59,5 +59,7 @@ namespace MonitorLab.Data.Models
 
         [Range(ReleaseYearMin, ReleaseYearMax)]
         public int ReleaseYear { get; set; }
+
+        public ICollection<MonitorPort> MonitorPorts { get; set; } = new HashSet<MonitorPort>();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static MonitorLab.Data.Common.ErrorMessages.Monitor;
+
 namespace MonitorLab.Data.Attributes
 {
     public class ContrastRatioAttribute : ValidationAttribute

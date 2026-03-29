@@ -42,5 +42,22 @@
             public const int ReleaseYearMin = 1990;
             public const int ReleaseYearMax = 2100;
         }
+
+        public static class Port
+        {
+            // Name (HDMI, DisplayPort, USB-C и т.н.)
+            public const int NameMinLength = 2;
+            public const int NameMaxLength = 50;
+
+            // Version (пример: 1.4, 2.0, 2.1)
+            public const double VersionMin = 1.0;
+            public const double VersionMax = 10.0;
+        }
+
+        public static class MonitorPort
+        {
+            public const int CountMin = 1;
+            public const int CountMax = 10;
+        }
     }
 }
