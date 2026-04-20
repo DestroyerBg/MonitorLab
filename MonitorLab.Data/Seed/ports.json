@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "72b676b0-d234-4ccf-90d8-e68611acd824",
+    "Name": "HDMI",
+    "Version": 1.4
+  },
+  {
+    "Id": "064cbdc7-8482-4a06-a748-7c688022131b",
+    "Name": "HDMI",
+    "Version": 2.0
+  },
+  {
+    "Id": "987010f4-873d-4e58-87f2-54e3a429a6da",
+    "Name": "HDMI",
+    "Version": 2.1
+  },
+  {
+    "Id": "b321784a-3241-4800-a696-7be4bd760051",
+    "Name": "DisplayPort",
+    "Version": 1.2
+  },
+  {
+    "Id": "fa5c1378-905b-493f-844d-8aa7445126e2",
+    "Name": "DisplayPort",
+    "Version": 1.4
+  },
+  {
+    "Id": "65d68bb7-1ff4-4788-90b8-77072ca755df",
+    "Name": "USB-C",
+    "Version": 3.0
+  },
+  {
+    "Id": "4cf498c6-61e6-47e9-900b-4d0d2e9d9e61",
+    "Name": "USB-C",
+    "Version": 3.2
+  },
+  {
+    "Id": "a8953f45-e597-466f-b371-0c68d6e00bcf",
+    "Name": "D-Sub",
+    "Version": 1.0
+  }
+]

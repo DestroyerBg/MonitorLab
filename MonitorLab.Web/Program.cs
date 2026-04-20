@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MonitorLab.Data;
+using MonitorLab.Web.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,7 @@ else
     app.UseHsts();
 }
 
+app.CreateDatabase();
 app.UseHttpsRedirection();
 app.UseRouting();
 

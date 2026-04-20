@@ -51,6 +51,42 @@ namespace MonitorLab.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Monitors",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Brand = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Resolution = table.Column<int>(type: "int", nullable: false),
+                    PanelType = table.Column<int>(type: "int", nullable: false),
+                    ScreenSizeInches = table.Column<double>(type: "float", nullable: false),
+                    RefreshRateHz = table.Column<int>(type: "int", nullable: false),
+                    ResponseTimeMs = table.Column<double>(type: "float", nullable: false),
+                    BrightnessNits = table.Column<int>(type: "int", nullable: false),
+                    ContrastRatio = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
+                    ReleaseYear = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Monitors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ports",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Version = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ports", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -156,6 +192,30 @@ namespace MonitorLab.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "MonitorPorts",
+                columns: table => new
+                {
+                    MonitorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PortId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Count = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MonitorPorts", x => new { x.MonitorId, x.PortId });
+                    table.ForeignKey(
+                        name: "FK_MonitorPorts_Monitors_MonitorId",
+                        column: x => x.MonitorId,
+                        principalTable: "Monitors",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_MonitorPorts_Ports_PortId",
+                        column: x => x.PortId,
+                        principalTable: "Ports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -194,6 +254,11 @@ namespace MonitorLab.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MonitorPorts_PortId",
+                table: "MonitorPorts",
+                column: "PortId");
         }
 
         /// <inheritdoc />
@@ -215,10 +280,19 @@ namespace MonitorLab.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "MonitorPorts");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Monitors");
+
+            migrationBuilder.DropTable(
+                name: "Ports");
         }
     }
 }

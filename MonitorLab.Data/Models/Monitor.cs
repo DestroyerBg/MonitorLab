@@ -11,7 +11,7 @@ namespace MonitorLab.Data.Models
 
         [Required]
         [StringLength(
-            BrandMinLength,
+            BrandMaxLength,
             MinimumLength = BrandMinLength)]
         public string Brand { get; set; } = null!;
 

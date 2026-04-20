@@ -29,7 +29,7 @@
             public const int BrightnessMax = 2000;
 
             // Contrast Ratio
-            public const int ContrastRatioMaxLength = 3;
+            public const int ContrastRatioMaxLength = 15;
 
             // Description
             public const int DescriptionMinLength = 10;
