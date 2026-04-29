@@ -1,8 +1,18 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Начало";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="welcome-section">
+    <span class="welcome-badge">MonitorLab</span>
+
+    <h1>Добре дошли в MonitorLab</h1>
+
+    <p>
+        Уеб система за разглеждане, филтриране и сравнение на компютърни монитори
+        според техните основни технически характеристики.
+    </p>
+
+    <a asp-controller="Monitors" asp-action="Index" class="welcome-btn">
+        Към каталога
+    </a>
+</section>
