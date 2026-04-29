@@ -1,0 +1,148 @@
+﻿html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(180deg, #1e293b 0%, #273449 45%, #334155 100%);
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-header {
+    background: rgba(15, 23, 42, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-custom {
+    min-height: 72px;
+}
+
+.navbar-brand-custom {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #e5e7eb !important;
+    letter-spacing: 0.3px;
+}
+
+.navbar-brand-custom span {
+    color: #60a5fa;
+}
+
+.nav-link-custom {
+    color: #cbd5e1 !important;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 0.55rem 0.9rem !important;
+    transition: all 0.2s ease;
+}
+
+.nav-link-custom:hover {
+    background-color: rgba(96, 165, 250, 0.12);
+    color: #f8fafc !important;
+}
+
+.nav-link-custom.active-link {
+    background-color: #dbeafe;
+    color: #1d4ed8 !important;
+}
+
+.page-shell {
+    flex: 1;
+    width: 100%;
+    padding: 2rem 0 3rem 0;
+}
+
+.content-wrapper {
+    background-color: rgba(30, 41, 59, 0.86);
+    border: 1px solid rgba(148, 163, 184, 0.20);
+    border-radius: 24px;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.20);
+    padding: 2rem;
+    color: #e5e7eb;
+}
+
+.main-footer {
+    margin-top: auto;
+    border-top: 1px solid #dbe4ee;
+    background-color: rgba(15, 23, 42, 0.92);
+    color: #cbd5e1;
+}
+
+.footer-content {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.75rem 0;
+}
+
+.footer-title {
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.footer-text {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.footer-small {
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.page-title {
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.content-wrapper h1,
+.content-wrapper h2,
+.content-wrapper h3,
+.content-wrapper h4 {
+    color: #f8fafc;
+}
+
+.content-wrapper p {
+    color: #cbd5e1;
+}
+
+.content-wrapper a {
+    color: #93c5fd;
+}
+
+@media (max-width: 991.98px) {
+    .content-wrapper {
+        padding: 1.25rem;
+        border-radius: 18px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .page-shell {
+        padding-top: 1.2rem;
+        padding-bottom: 2rem;
+    }
+
+    .content-wrapper {
+        padding: 1rem;
+    }
+
+    .navbar-brand-custom {
+        font-size: 1.2rem;
+    }
+}
