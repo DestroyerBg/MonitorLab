@@ -11,7 +11,7 @@ namespace MonitorLab.Web.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }
