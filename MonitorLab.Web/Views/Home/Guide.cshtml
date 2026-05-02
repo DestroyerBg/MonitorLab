@@ -1,0 +1,411 @@
+﻿@{
+    ViewData["Title"] = "Техническа информация";
+}
+
+<section class="guide-page">
+    <div class="guide-header">
+        <span class="guide-badge">MonitorLab Guide</span>
+        <h1>Техническа информация за мониторите</h1>
+        <p>
+            Кратък справочник за основните характеристики, технологии и портове,
+            които имат значение при избора на монитор.
+        </p>
+    </div>
+
+    <div class="guide-grid">
+        <a class="guide-card" href="#specs">
+            <div class="guide-icon"><i class="bi bi-sliders"></i></div>
+            <h3>Основни характеристики</h3>
+            <p>Резолюция, честота на опресняване, време за реакция, яркост и контраст.</p>
+        </a>
+
+        <a class="guide-card" href="#panels">
+            <div class="guide-icon"><i class="bi bi-grid-3x3-gap"></i></div>
+            <h3>Типове панели</h3>
+            <p>IPS, VA, TN, OLED и други технологии за изграждане на изображение.</p>
+        </a>
+
+        <a class="guide-card" href="#technologies">
+            <div class="guide-icon"><i class="bi bi-lightbulb"></i></div>
+            <h3>Дисплей технологии</h3>
+            <p>LCD, LED, OLED, QLED, Mini LED и Micro LED.</p>
+        </a>
+
+        <a class="guide-card" href="#ports">
+            <div class="guide-icon"><i class="bi bi-usb-plug"></i></div>
+            <h3>Портове и входове</h3>
+            <p>VGA, DVI, HDMI, DisplayPort и USB-C.</p>
+        </a>
+
+        <a class="guide-card" href="#usage">
+            <div class="guide-icon"><i class="bi bi-person-check"></i></div>
+            <h3>Избор според употреба</h3>
+            <p>Какви параметри са важни за офис, гейминг, мултимедия и работа с цветове.</p>
+        </a>
+
+        <a class="guide-card" href="#comparison">
+            <div class="guide-icon"><i class="bi bi-bar-chart"></i></div>
+            <h3>Сравнителен анализ</h3>
+            <p>Предимства и недостатъци на различните мониторни технологии.</p>
+        </a>
+    </div>
+    <div class="accordion guide-main-accordion" id="mainGuideAccordion">
+
+        <section id="specs" class="guide-section collapsible-guide-section">
+            <div class="guide-section-header">
+                <div class="guide-section-title">
+                    <h2><i class="bi bi-sliders me-2"></i>Основни характеристики</h2>
+                    <p>В този раздел са представени основните параметри, които имат значение при избора на монитор.</p>
+                </div>
+
+                <button type="button" class="guide-toggle-btn"
+                        onclick="toggleGuideSection('specsContent', 'specsArrow')"
+                        aria-label="Разгъване на секцията">
+                    <i id="specsArrow" class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+
+            <div id="specsContent" class="guide-section-content" style="display: none;">
+                <div class="accordion guide-accordion mt-3" id="specsAccordion">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="resolutionHeading">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#resolutionCollapse" aria-expanded="true"
+                                    aria-controls="resolutionCollapse">
+                                <i class="bi bi-grid-3x3 me-2"></i> Резолюция
+                            </button>
+                        </h2>
+                        <div id="resolutionCollapse" class="accordion-collapse collapse show"
+                             aria-labelledby="resolutionHeading" data-bs-parent="#specsAccordion">
+                            <div class="accordion-body">
+                                Резолюцията показва броя пиксели по хоризонтала и вертикала.
+                                Например Full HD резолюцията 1920x1080 съдържа 2 073 600 пиксела.
+                                Колкото по-висока е резолюцията, толкова по-детайлно е изображението,
+                                но при игри и тежки графични задачи се изисква и по-мощна видеокарта.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="refreshRateHeading">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#refreshRateCollapse">
+                                <i class="bi bi-speedometer2 me-2"></i> Честота на опресняване
+                            </button>
+                        </h2>
+                        <div id="refreshRateCollapse" class="accordion-collapse collapse" data-bs-parent="#specsAccordion">
+                            <div class="accordion-body">
+                                Честотата на опресняване се измерва в Hz и показва колко пъти в секунда се обновява изображението.
+                                По-високата честота осигурява по-плавна картина, особено при игри.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="responseTimeHeading">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#responseTimeCollapse">
+                                <i class="bi bi-lightning-charge me-2"></i> Време за реакция
+                            </button>
+                        </h2>
+                        <div id="responseTimeCollapse" class="accordion-collapse collapse" data-bs-parent="#specsAccordion">
+                            <div class="accordion-body">
+                                Времето за реакция показва за колко време един пиксел преминава от една стойност в друга.
+                                По-ниската стойност намалява размазването и ghosting ефекта.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="brightnessHeading">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#brightnessCollapse">
+                                <i class="bi bi-brightness-high me-2"></i> Яркост
+                            </button>
+                        </h2>
+                        <div id="brightnessCollapse" class="accordion-collapse collapse" data-bs-parent="#specsAccordion">
+                            <div class="accordion-body">
+                                Яркостта показва колко силно може да свети екранът и обикновено се измерва
+                                в nits. По-високата яркост е полезна в добре осветени помещения и при HDR
+                                съдържание, но при продължителна работа прекалено силната яркост може да
+                                натоварва очите.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="contrastHeading">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#contrastCollapse">
+                                <i class="bi bi-circle-half me-2"></i> Контраст
+                            </button>
+                        </h2>
+                        <div id="contrastCollapse" class="accordion-collapse collapse" data-bs-parent="#specsAccordion">
+                            <div class="accordion-body">
+                                Контрастът описва разликата между най-светлите и най-тъмните части на
+                                изображението. По-високият контраст помага за по-дълбоко черно и по-ясни
+                                детайли в тъмни сцени, което е важно при филми, игри и работа с визуално
+                                съдържание.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="colorAccuracyHeading">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#colorAccuracyCollapse">
+                                <i class="bi bi-palette me-2"></i> Цветова точност
+                            </button>
+                        </h2>
+                        <div id="colorAccuracyCollapse" class="accordion-collapse collapse" data-bs-parent="#specsAccordion">
+                            <div class="accordion-body">
+                                Цветовата точност показва доколко мониторът възпроизвежда коректно цветовете.
+                                Този параметър е особено важен при графичен дизайн, обработка на снимки,
+                                видео монтаж и други професионални дейности.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="panels" class="guide-section collapsible-guide-section">
+            <div class="guide-section-header">
+                <div class="guide-section-title">
+                    <h2><i class="bi bi-grid-3x3-gap me-2"></i>Типове панели</h2>
+                    <p>Препратки към отделни страници с подробно описание на основните технологии.</p>
+                </div>
+
+                <button type="button" class="guide-toggle-btn"
+                        onclick="toggleGuideSection('panelsContent', 'panelsArrow')"
+                        aria-label="Разгъване на секцията">
+                    <i id="panelsArrow" class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+
+            <div id="panelsContent" class="guide-section-content" style="display: none;">
+                <div class="accordion guide-accordion mt-3" id="panelsAccordion">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="Crt" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-tv me-2"></i> CRT технология
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="Lcd" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-display me-2"></i> LCD технология
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="Led" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-lightbulb me-2"></i> LED монитори
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="Oled" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-circle-fill me-2"></i> OLED дисплеи
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="Qled" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-stars me-2"></i> QLED дисплеи
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="MiniLed" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-grid me-2"></i> Mini LED технология
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="MicroLed" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-cpu me-2"></i> Micro LED дисплеи
+                            </a>
+                        </h2>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="ports" class="guide-section collapsible-guide-section">
+            <div class="guide-section-header">
+                <div class="guide-section-title">
+                    <h2><i class="bi bi-usb-plug me-2"></i>Портове и входове</h2>
+                    <p>Основните видео интерфейси, използвани при мониторите.</p>
+                </div>
+
+                <button type="button" class="guide-toggle-btn"
+                        onclick="toggleGuideSection('portsContent', 'portsArrow')">
+                    <i id="portsArrow" class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+
+            <div id="portsContent" class="guide-section-content" style="display: none;">
+                <div class="accordion guide-accordion mt-3" id="portsAccordion">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="Vga" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-plug me-2"></i> VGA
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="Dvi" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-plug-fill me-2"></i> DVI
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="Hdmi" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-hdmi me-2"></i> HDMI
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="DisplayPort" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-displayport me-2"></i> DisplayPort
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="UsbC" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-usb-c me-2"></i> USB-C
+                            </a>
+                        </h2>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="usage" class="guide-section collapsible-guide-section">
+            <div class="guide-section-header">
+                <div class="guide-section-title">
+                    <h2><i class="bi bi-person-check me-2"></i>Избор според употреба</h2>
+                    <p>Насоки при избор на монитор според предназначението.</p>
+                </div>
+
+                <button type="button" class="guide-toggle-btn"
+                        onclick="toggleGuideSection('usageContent', 'usageArrow')">
+                    <i id="usageArrow" class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+
+            <div id="usageContent" class="guide-section-content" style="display: none;">
+                <div class="accordion guide-accordion mt-3" id="usageAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="Gaming" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-controller me-2"></i> Гейминг
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="Office" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-briefcase me-2"></i> Офис работа
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="CreativeWork" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-palette me-2"></i> Дизайн и обработка
+                            </a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparison" class="guide-section collapsible-guide-section">
+            <div class="guide-section-header">
+                <div class="guide-section-title">
+                    <h2><i class="bi bi-bar-chart me-2"></i>Сравнителен анализ</h2>
+                    <p>Обобщение на предимствата и недостатъците на различните технологии.</p>
+                </div>
+
+                <button type="button" class="guide-toggle-btn"
+                        onclick="toggleGuideSection('comparisonContent', 'comparisonArrow')">
+                    <i id="comparisonArrow" class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+
+            <div id="comparisonContent" class="guide-section-content" style="display: none;">
+                <div class="accordion guide-accordion mt-3" id="comparisonAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="TechnologyComparison" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-table me-2"></i> Сравнение на технологиите
+                            </a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</section>
+<script>
+    function toggleGuideSection(contentId, arrowId) {
+        const content = document.getElementById(contentId);
+        const arrow = document.getElementById(arrowId);
+
+        const isHidden = content.style.display === "none" || content.style.display === "";
+
+        if (isHidden) {
+            content.style.display = "block";
+
+            content.animate(
+                [{ opacity: 0 }, { opacity: 1 }],
+                { duration: 300, easing: "ease-in-out" }
+            );
+
+            arrow.classList.remove("bi-chevron-down");
+            arrow.classList.add("bi-chevron-up");
+        } else {
+            const animation = content.animate(
+                [{ opacity: 1 }, { opacity: 0 }],
+                { duration: 200, easing: "ease-in-out" }
+            );
+
+            animation.onfinish = () => {
+                content.style.display = "none";
+            };
+
+            arrow.classList.remove("bi-chevron-up");
+            arrow.classList.add("bi-chevron-down");
+        }
+    }
+</script>
