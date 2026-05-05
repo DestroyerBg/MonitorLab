@@ -418,6 +418,33 @@ body {
     margin-bottom: 0.75rem;
 }
 
+.guide-intro {
+    margin: 25px 0 35px 0;
+    padding: 20px 25px;
+    border-radius: 14px;
+    background: #192336;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: 0.25s ease;
+}
+
+.guide-intro:hover {
+    border-color: rgba(13,110,253,0.4);
+    box-shadow: 0 8px 25px rgba(13,110,253,0.15);
+}
+
+.guide-intro h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.guide-intro p {
+    margin-bottom: 10px;
+    color: #cbd5e1; 
+    line-height: 1.6;
+}
+
 .accordion-item {
     transition: all 0.2s ease;
     border: 1px solid rgba(255,255,255,0.05);
