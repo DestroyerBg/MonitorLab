@@ -419,17 +419,34 @@ body {
 }
 
 .guide-intro {
-    margin: 25px 0 35px 0;
-    padding: 20px 25px;
-    border-radius: 14px;
-    background: #192336;
+    margin: 25px 0 40px 0;
+    padding: 25px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.02);
     border: 1px solid rgba(255,255,255,0.05);
-    transition: 0.25s ease;
+    transition: 0.3s ease;
 }
 
 .guide-intro:hover {
     border-color: rgba(13,110,253,0.4);
-    box-shadow: 0 8px 25px rgba(13,110,253,0.15);
+    box-shadow: 0 10px 30px rgba(13,110,253,0.15);
+}
+
+.guide-intro-content {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.guide-intro-text {
+    flex: 1 1 400px;
+}
+
+.guide-intro:hover .monitor-line {
+    stroke-dashoffset: 220;
+    animation: drawMonitorLine 1.2s ease forwards;
 }
 
 .guide-intro h2 {
@@ -439,10 +456,49 @@ body {
     align-items: center;
 }
 
+.guide-intro-text h2 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
 .guide-intro p {
     margin-bottom: 10px;
     color: #cbd5e1; 
     line-height: 1.6;
+}
+
+.guide-intro-text p {
+    color: #cbd5e1;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.guide-intro-visual {
+    flex: 0 0 200px;
+    opacity: 0.9;
+    transition: 0.3s ease;
+}
+
+.guide-intro-visual svg {
+    width: 100%;
+}
+
+
+.guide-intro:hover .guide-intro-visual {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+.monitor-line {
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    animation: drawMonitorLine 1.6s ease forwards;
+}
+
+.guide-intro:hover .monitor-line {
+    animation: drawMonitorLine 1.2s ease forwards;
 }
 
 .accordion-item {
@@ -476,6 +532,19 @@ body {
     background: rgba(0, 123, 255, 0.1);
     color: #0d6efd;
     transform: translateX(3px);
+}
+
+.accordion-button.text-decoration-none::after {
+    display: none !important;
+}
+
+#panelsAccordion .accordion-button {
+    cursor: pointer;
+}
+
+#panelsAccordion .accordion-button:hover {
+    color: #0d6efd;
+    transform: translateX(4px);
 }
 
 .guide-accordion .accordion-button:not(.collapsed) {
@@ -781,6 +850,16 @@ body {
 
     .guide-header h1 {
         font-size: 1.8rem;
+    }
+}
+
+@keyframes drawMonitorLine {
+    from {
+        stroke-dashoffset: 220;
+    }
+
+    to {
+        stroke-dashoffset: 0;
     }
 }
 

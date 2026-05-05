@@ -13,19 +13,50 @@
     </div>
 
     <div class="guide-intro">
-        <h2><i class="bi bi-info-circle me-2"></i>Какво представлява мониторът?</h2>
-        <p>
-            Мониторът е изходно устройство, което визуализира информацията,
-            генерирана от компютърната система. Той преобразува електронните сигнали
-            в изображение, което потребителят може да възприеме визуално.
-        </p>
-        <p>
-            Съвременните монитори се използват в различни области – от ежедневна офис
-            работа и сърфиране в интернет, през гейминг и мултимедия, до професионални
-            дейности като графичен дизайн, обработка на изображения и видео.
-            Качеството на дисплея играе ключова роля за комфорта при работа и
-            точността на визуалното съдържание.
-        </p>
+        <div class="guide-intro-content">
+
+            <div class="guide-intro-text">
+                <h2>
+                    <i class="bi bi-info-circle me-2"></i>
+                    Какво представлява мониторът?
+                </h2>
+
+                <p>
+                    Мониторът е изходно устройство, което визуализира информацията,
+                    генерирана от компютъра. Той преобразува електронните сигнали
+                    в изображение, което потребителят възприема визуално.
+                </p>
+
+                <p>
+                    Съвременните монитори се използват в различни области – от офис
+                    работа и интернет, през гейминг и мултимедия, до професионални
+                    дейности като графичен дизайн и видео обработка. Качеството на
+                    дисплея е ключово за комфорта и точността на визуалното съдържание.
+                </p>
+            </div>
+
+            <div class="guide-intro-visual">
+                
+                <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="180" height="100" rx="10"
+                          fill="#0f172a" stroke="#0d6efd" stroke-width="2" />
+
+                    
+                    <polyline class="monitor-line"
+                              points="20,80 60,60 90,75 120,40 170,55"
+                              fill="none"
+                              stroke="#0d6efd"
+                              stroke-width="3"
+                              stroke-linecap="round"
+                              stroke-linejoin="round" />
+
+                   
+                    <rect x="85" y="110" width="30" height="6" fill="#94a3b8" />
+                    <rect x="70" y="116" width="60" height="6" rx="3" fill="#64748b" />
+                </svg>
+            </div>
+
+        </div>
     </div>
 
     <div class="guide-grid">
@@ -309,6 +340,14 @@
                         <h2 class="accordion-header">
                             <a asp-controller="Guide" asp-action="UsbC" class="accordion-button collapsed text-decoration-none">
                                 <i class="bi bi-usb-c me-2"></i> USB-C
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide" asp-action="ThunderBolt" class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-lightning-charge me-2"></i> ThunderBolt
                             </a>
                         </h2>
                     </div>

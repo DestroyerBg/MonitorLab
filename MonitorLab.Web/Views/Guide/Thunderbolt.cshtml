@@ -1,0 +1,119 @@
+﻿@{
+    ViewData["Title"] = "Thunderbolt интерфейс";
+}
+
+<section class="tech-details-page">
+    <a asp-controller="Home" asp-action="Guide" class="back-link">
+        <i class="bi bi-arrow-left"></i> Назад към техническата информация
+    </a>
+
+    <div class="tech-hero">
+        <span class="tech-badge">Thunderbolt</span>
+        <h1>Thunderbolt интерфейс</h1>
+        <p>
+            Thunderbolt е високоскоростен интерфейс, който комбинира пренос на данни,
+            видео сигнал и захранване в един кабел. Той използва USB-C конектор,
+            но предлага значително по-висока производителност.
+        </p>
+    </div>
+
+    <div class="tech-image-card">
+        <img src="~/images/guide/ports/thunderbolt.jpg" alt="Thunderbolt порт" />
+        <span>Фигура 1: Thunderbolt порт (USB-C форма)</span>
+    </div>
+
+    <div class="tech-content-grid">
+        <article class="tech-card">
+            <h2><i class="bi bi-info-circle"></i> Какво е Thunderbolt?</h2>
+            <p>
+                Thunderbolt е разработен съвместно от Intel и Apple и представлява
+                високоскоростен интерфейс за свързване на периферни устройства.
+            </p>
+            <p>
+                Той използва USB-C конектор, но поддържа значително по-висока скорост
+                на пренос и допълнителни функционалности като PCI Express и DisplayPort.
+            </p>
+        </article>
+
+        <article class="tech-card">
+            <h2><i class="bi bi-lightning"></i> Скорост и версии</h2>
+            <p>
+                Thunderbolt предлага много висока пропускателна способност.
+                Например Thunderbolt 3 и 4 достигат до 40 Gbps.
+            </p>
+            <p>
+                Това позволява работа с множество монитори, външни GPU устройства
+                и високоскоростни дискове едновременно.
+            </p>
+        </article>
+    </div>
+
+    <article class="tech-card full-width">
+        <h2><i class="bi bi-display"></i> Видео възможности</h2>
+        <p>
+            Thunderbolt използва DisplayPort протокол за предаване на видео сигнал,
+            което му позволява да поддържа множество монитори с висока резолюция.
+        </p>
+        <p>
+            Например чрез един Thunderbolt порт могат да се свържат два 4K монитора
+            или един 8K дисплей, в зависимост от версията и устройството.
+        </p>
+    </article>
+
+    <article class="tech-card full-width">
+        <h2><i class="bi bi-diagram-3"></i> Daisy chaining</h2>
+        <p>
+            Thunderbolt позволява свързване на няколко устройства последователно
+            (daisy chaining), като всички използват един порт.
+        </p>
+        <p>
+            Това означава, че монитор, външен диск и други устройства могат да бъдат
+            свързани в една верига, без нужда от допълнителни портове.
+        </p>
+    </article>
+
+    <article class="tech-card full-width">
+        <h2><i class="bi bi-laptop"></i> Практическа употреба</h2>
+        <p>
+            Thunderbolt се използва основно при висок клас лаптопи и работни станции.
+            Той позволява изграждане на мощни docking конфигурации с минимален брой кабели.
+        </p>
+        <p>
+            Често се използва в професионални среди – видео обработка, 3D работа,
+            както и при свързване на външни видеокарти (eGPU).
+        </p>
+    </article>
+
+    <div class="pros-cons-grid">
+        <article class="tech-card pros-card">
+            <h2><i class="bi bi-check-circle"></i> Предимства</h2>
+            <ul>
+                <li>Изключително висока скорост (до 40 Gbps).</li>
+                <li>Видео, данни и захранване в един кабел.</li>
+                <li>Поддръжка на multiple displays.</li>
+                <li>Daisy chaining на устройства.</li>
+                <li>Подходящ за професионална употреба.</li>
+            </ul>
+        </article>
+
+        <article class="tech-card cons-card">
+            <h2><i class="bi bi-exclamation-triangle"></i> Недостатъци</h2>
+            <ul>
+                <li>По-скъпи устройства и кабели.</li>
+                <li>Не всички USB-C портове са Thunderbolt.</li>
+                <li>По-рядко срещан при бюджетни устройства.</li>
+                <li>Изисква съвместим хардуер.</li>
+            </ul>
+        </article>
+    </div>
+
+    <article class="tech-summary">
+        <h2>Обобщение</h2>
+        <p>
+            Thunderbolt е един от най-мощните интерфейси за свързване на устройства.
+            Той комбинира висока скорост, гъвкавост и множество функции в един кабел.
+            Въпреки по-високата цена, той е предпочитан избор при професионални и
+            high-end системи.
+        </p>
+    </article>
+</section>
