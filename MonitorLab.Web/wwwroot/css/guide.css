@@ -1,0 +1,362 @@
+﻿.guide-page {
+    padding: 1.4rem 0.4rem;
+}
+
+.guide-header {
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto 2rem;
+}
+
+.guide-badge {
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    background: rgba(96, 165, 250, 0.14);
+    color: #93c5fd;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
+.guide-header h1 {
+    font-size: 2.3rem;
+    font-weight: 750;
+    color: #f8fafc;
+    margin-bottom: 1rem;
+}
+
+.guide-header p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.guide-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.4rem;
+}
+
+.guide-card {
+    text-decoration: none;
+    background: rgba(15, 23, 42, 0.36);
+    border: 1px solid rgba(148, 163, 184, 0.20);
+    border-radius: 18px;
+    padding: 1.3rem;
+    color: #cbd5e1;
+    transition: all 0.25s ease;
+    min-height: 175px;
+}
+
+    .guide-card:hover {
+        transform: translateY(-4px) scale(1.01);
+        border-color: rgba(96, 165, 250, 0.45);
+        background: rgba(30, 41, 59, 0.72);
+        color: #e5e7eb;
+        box-shadow: 0 10px 30px rgba(0, 123, 255, 0.2);
+    }
+
+        .guide-card:hover .guide-icon {
+            transform: scale(1.15);
+            color: #0d6efd;
+        }
+
+.guide-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(96, 165, 250, 0.14);
+    color: #60a5fa;
+    font-size: 1.35rem;
+    margin-bottom: 0.9rem;
+    transition: 0.25s ease;
+}
+
+.guide-card h3 {
+    color: #f8fafc;
+    margin-bottom: 0.6rem;
+    font-size: 1.15rem;
+}
+
+.guide-card p {
+    margin: 0;
+    line-height: 1.6;
+    color: #cbd5e1;
+}
+
+.guide-sections {
+    display: grid;
+    gap: 1rem;
+}
+
+.guide-section {
+    background: rgba(15, 23, 42, 0.28);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 18px;
+    padding: 1.3rem;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+    .guide-section:hover {
+        transform: translateY(-2px);
+        border-color: rgba(0, 123, 255, 0.4);
+        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+        background: linear-gradient(90deg, rgba(13,110,253,0.08) 0%, transparent 40%);
+    }
+
+    .guide-section::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 3px;
+        background: transparent;
+        transition: 0.3s;
+    }
+
+    .guide-section:hover::before {
+        background: linear-gradient(to bottom, #0d6efd, #00c6ff);
+    }
+
+    .guide-section h2 {
+        color: #f8fafc;
+        font-size: 1.35rem;
+        margin-bottom: 0.65rem;
+    }
+
+    .guide-section p {
+        color: #cbd5e1;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+.guide-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    transition: 0.25s ease;
+}
+
+.guide-section:hover .guide-section-header {
+    background: transparent;
+}
+
+.guide-section-title h2 {
+    margin-bottom: 0.7rem;
+}
+
+.guide-section-title p {
+    margin: 0;
+}
+
+.guide-toggle-btn {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 12px;
+    border: 1px solid rgba(96, 165, 250, 0.28);
+    background: rgba(96, 165, 250, 0.10);
+    color: #93c5fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+    .guide-toggle-btn:hover {
+        background: rgba(0, 123, 255, 0.15);
+        color: #dbeafe;
+        transform: scale(1.1);
+    }
+
+.guide-section-content {
+    margin-top: 1rem;
+}
+
+/* Intro */
+.guide-intro {
+    margin: 25px 0 40px 0;
+    padding: 25px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: 0.3s ease;
+}
+
+    .guide-intro:hover {
+        border-color: rgba(13,110,253,0.4);
+        box-shadow: 0 10px 30px rgba(13,110,253,0.15);
+    }
+
+.guide-intro-content {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.guide-intro-text {
+    flex: 1 1 400px;
+}
+
+    .guide-intro-text h2 {
+        font-size: 22px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+    }
+
+    .guide-intro-text p,
+    .guide-intro p {
+        color: #cbd5e1;
+        line-height: 1.6;
+        margin-bottom: 10px;
+    }
+
+.guide-intro-visual {
+    flex: 0 0 200px;
+    opacity: 0.9;
+    transition: 0.3s ease;
+}
+
+    .guide-intro-visual svg {
+        width: 100%;
+    }
+
+.guide-intro:hover .guide-intro-visual {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+.monitor-line {
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    animation: drawMonitorLine 1.6s ease forwards;
+}
+
+.guide-intro:hover .monitor-line {
+    stroke-dashoffset: 220;
+    animation: drawMonitorLine 1.2s ease forwards;
+}
+
+/* Accordion */
+.guide-accordion .accordion-item {
+    background: rgba(15, 23, 42, 0.34);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.accordion-item {
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+    .accordion-item:hover {
+        border-color: rgba(0, 123, 255, 0.3);
+    }
+
+.guide-accordion .accordion-button {
+    background: rgba(15, 23, 42, 0.46);
+    color: #f8fafc;
+    font-weight: 700;
+    box-shadow: none;
+}
+
+.accordion-button {
+    transition: all 0.2s ease;
+}
+
+    .accordion-button:hover {
+        background: rgba(0, 123, 255, 0.1);
+        color: #0d6efd;
+    }
+
+    .accordion-button.text-decoration-none:hover {
+        background: rgba(0, 123, 255, 0.1);
+        color: #0d6efd;
+        transform: translateX(3px);
+    }
+
+    .accordion-button.text-decoration-none::after {
+        display: none !important;
+    }
+
+.guide-accordion .accordion-button:not(.collapsed) {
+    background: rgba(37, 99, 235, 0.18);
+    color: #dbeafe;
+}
+
+.guide-accordion .accordion-button::after {
+    filter: invert(1);
+}
+
+.guide-accordion .accordion-body {
+    color: #cbd5e1;
+    line-height: 1.7;
+    background: rgba(15, 23, 42, 0.22);
+}
+
+/* Specific guide accordions */
+#panelsAccordion .accordion-button {
+    cursor: pointer;
+}
+
+    #panelsAccordion .accordion-button:hover {
+        color: #0d6efd;
+        transform: translateX(4px);
+    }
+
+/* Legacy / optional */
+.section-toggle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    transition: 0.2s ease;
+}
+
+    .section-toggle-header:hover {
+        background: rgba(30, 41, 59, 0.7);
+    }
+
+    .section-toggle-header h2 {
+        margin: 0;
+        font-size: 1.3rem;
+        color: #f8fafc;
+    }
+
+.toggle-arrow {
+    font-size: 1.2rem;
+    color: #93c5fd;
+}
+
+.specs-content {
+    margin-top: 0.8rem;
+}
+
+@keyframes drawMonitorLine {
+    from {
+        stroke-dashoffset: 220;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}

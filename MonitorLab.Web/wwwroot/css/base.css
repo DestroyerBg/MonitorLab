@@ -1,0 +1,51 @@
+﻿html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(180deg, #1e293b 0%, #273449 45%, #334155 100%);
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-shell {
+    flex: 1;
+    width: 100%;
+    padding: 2rem 0 3rem 0;
+}
+
+.content-wrapper {
+    background-color: rgba(30, 41, 59, 0.86);
+    border: 1px solid rgba(148, 163, 184, 0.20);
+    border-radius: 24px;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.20);
+    padding: 2rem;
+    color: #e5e7eb;
+}
+
+.page-title {
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.content-wrapper h1,
+.content-wrapper h2,
+.content-wrapper h3,
+.content-wrapper h4 {
+    color: #f8fafc;
+}
+
+.content-wrapper p {
+    color: #cbd5e1;
+}
+
+.content-wrapper a {
+    color: #93c5fd;
+}
