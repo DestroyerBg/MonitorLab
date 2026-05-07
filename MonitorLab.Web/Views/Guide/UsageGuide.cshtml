@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Избор според употреба";
+}
+
+<section class="comparison-page">
+    <a asp-controller="Home" asp-action="Guide" asp-fragment="usage" class="back-link">
+        <i class="bi bi-arrow-left"></i> Назад към техническата информация
+    </a>
+
+    <div class="comparison-hero">
+        <span class="comparison-badge">Практически избор</span>
+        <h1>Избор на монитор според употребата</h1>
+        <p>
+            Подходящият монитор зависи от начина на използване. Различните дейности изискват
+            различен баланс между резолюция, честота, цветове, контраст и тип панел.
+        </p>
+    </div>
+
+    <div class="analysis-grid usage-grid">
+        <article class="analysis-card">
+            <h3><i class="bi bi-briefcase"></i> Офис работа</h3>
+            <p>
+                За офис употреба най-важни са комфортът, добрата четимост и достатъчното
+                пространство на екрана. Подходящ избор е IPS монитор с Full HD или QHD резолюция.
+            </p>
+            <strong>Препоръка: IPS, 24–27", 60–100 Hz</strong>
+        </article>
+
+        <article class="analysis-card">
+            <h3><i class="bi bi-controller"></i> Гейминг</h3>
+            <p>
+                При гейминг водещи са честотата на опресняване и времето за реакция.
+                За състезателни игри са подходящи високи Hz, а за визуално качество — OLED или Mini LED.
+            </p>
+            <strong>Препоръка: 144+ Hz, ниско време за реакция</strong>
+        </article>
+
+        <article class="analysis-card">
+            <h3><i class="bi bi-palette"></i> Дизайн и обработка</h3>
+            <p>
+                При работа с изображения и видео най-важни са цветовата точност,
+                широкият цветови обхват и стабилните ъгли на видимост.
+            </p>
+            <strong>Препоръка: IPS или OLED, QHD/4K</strong>
+        </article>
+
+        <article class="analysis-card">
+            <h3><i class="bi bi-film"></i> Филми и мултимедия</h3>
+            <p>
+                За филми и мултимедия са важни контрастът, дълбокото черно и добрата яркост.
+                OLED е отличен избор, а Mini LED и VA също са добри варианти.
+            </p>
+            <strong>Препоръка: OLED, Mini LED или VA</strong>
+        </article>
+    </div>
+
+    <div class="comparison-table-wrapper usage-table-wrapper">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Употреба</th>
+                    <th>Важни параметри</th>
+                    <th>Подходяща технология</th>
+                    <th>Препоръчителна резолюция</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Офис</th>
+                    <td>Четимост, размер, комфорт за очите</td>
+                    <td>IPS</td>
+                    <td>Full HD / QHD</td>
+                </tr>
+                <tr>
+                    <th>Гейминг</th>
+                    <td>Hz, време за реакция, adaptive sync</td>
+                    <td>OLED, IPS, TN, Mini LED</td>
+                    <td>Full HD / QHD</td>
+                </tr>
+                <tr>
+                    <th>Дизайн</th>
+                    <td>Цветова точност, ъгли, калибрация</td>
+                    <td>IPS / OLED</td>
+                    <td>QHD / 4K</td>
+                </tr>
+                <tr>
+                    <th>Филми</th>
+                    <td>Контраст, черно, HDR</td>
+                    <td>OLED / Mini LED / VA</td>
+                    <td>QHD / 4K</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <article class="comparison-summary">
+        <h2>Обобщение</h2>
+        <p>
+            За повечето потребители най-балансираният избор е IPS монитор с добра резолюция.
+            За гейминг е важна високата честота на опресняване, а за филми и визуално качество
+            най-силни са OLED и Mini LED. При професионална обработка на изображения водеща е
+            цветовата точност.
+        </p>
+    </article>
+</section>

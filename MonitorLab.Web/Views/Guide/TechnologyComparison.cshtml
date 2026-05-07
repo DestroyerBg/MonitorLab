@@ -1,0 +1,171 @@
+﻿@{
+    ViewData["Title"] = "Сравнителен анализ";
+}
+
+<section class="comparison-page">
+    <a asp-controller="Home" asp-action="Guide" asp-fragment="comparison" class="back-link">
+        <i class="bi bi-arrow-left"></i> Назад към техническата информация
+    </a>
+
+    <div class="comparison-hero">
+        <span class="comparison-badge">Сравнителен анализ</span>
+        <h1>Сравнение на мониторните технологии</h1>
+        <p>
+            В тази страница са сравнени основните технологии според контраст, цветова точност,
+            честота на опресняване, време за реакция, енергийна ефективност и подходяща употреба.
+        </p>
+    </div>
+
+    <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Критерий</th>
+                    <th>CRT</th>
+                    <th>TN</th>
+                    <th>IPS</th>
+                    <th>VA</th>
+                    <th>OLED</th>
+                    <th>Mini LED</th>
+                    <th>QLED</th>
+                    <th>Micro LED</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Контраст</th>
+                    <td>Висок</td>
+                    <td>Нисък</td>
+                    <td>Среден</td>
+                    <td>Много висок</td>
+                    <td>Безкраен</td>
+                    <td>Много висок</td>
+                    <td>Много висок</td>
+                    <td>Безкраен</td>
+                </tr>
+                <tr>
+                    <th>Цветова точност</th>
+                    <td>Средна</td>
+                    <td>Слаба</td>
+                    <td>Отлична</td>
+                    <td>Добра</td>
+                    <td>Изключителна</td>
+                    <td>Отлична</td>
+                    <td>Много добра</td>
+                    <td>Изключителна</td>
+                </tr>
+                <tr>
+                    <th>Честота</th>
+                    <td>Много висока</td>
+                    <td>Висока</td>
+                    <td>Средна</td>
+                    <td>Средна</td>
+                    <td>Висока</td>
+                    <td>Висока</td>
+                    <td>Средна</td>
+                    <td>Висока</td>
+                </tr>
+                <tr>
+                    <th>Ъгъл на видимост</th>
+                    <td>Добър</td>
+                    <td>Тесен</td>
+                    <td>Широк</td>
+                    <td>Широк</td>
+                    <td>Почти перфектен</td>
+                    <td>Широк</td>
+                    <td>Широк</td>
+                    <td>Широк</td>
+                </tr>
+                <tr>
+                    <th>Време за реакция</th>
+                    <td>Много бързо</td>
+                    <td>Много бързо</td>
+                    <td>Средно</td>
+                    <td>Средно</td>
+                    <td>Много бързо</td>
+                    <td>Средно</td>
+                    <td>Средно</td>
+                    <td>Много бързо</td>
+                </tr>
+                <tr>
+                    <th>Енергийна ефективност</th>
+                    <td>Ниска</td>
+                    <td>Висока</td>
+                    <td>Средна</td>
+                    <td>Средна</td>
+                    <td>Добра при тъмни сцени</td>
+                    <td>Добра</td>
+                    <td>Висока</td>
+                    <td>Много добра</td>
+                </tr>
+                <tr>
+                    <th>Подходяща употреба</th>
+                    <td>Ретро системи</td>
+                    <td>Бюджетен гейминг</td>
+                    <td>Офис и дизайн</td>
+                    <td>Филми и игри</td>
+                    <td>Кино, гейминг, дизайн</td>
+                    <td>HDR и гейминг</td>
+                    <td>Мултимедия</td>
+                    <td>High-end дисплеи</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="analysis-grid">
+        <article class="analysis-card">
+            <h3><i class="bi bi-image"></i> Най-добро качество на картината</h3>
+            <p>OLED и Micro LED предлагат най-добър контраст и най-дълбоко черно.</p>
+        </article>
+
+        <article class="analysis-card">
+            <h3><i class="bi bi-briefcase"></i> Най-балансиран избор</h3>
+            <p>IPS е много добър избор за офис работа, учене, дизайн и ежедневна употреба.</p>
+        </article>
+
+        <article class="analysis-card">
+            <h3><i class="bi bi-controller"></i> Гейминг</h3>
+            <p>OLED, TN и Mini LED са силни варианти според бюджета и търсената честота.</p>
+        </article>
+
+        <article class="analysis-card">
+            <h3><i class="bi bi-currency-dollar"></i> Цена</h3>
+            <p>TN, VA и стандартните LED/IPS модели обикновено са по-достъпни.</p>
+        </article>
+    </div>
+
+    <div class="pros-cons-grid comparison-pros-cons">
+        <article class="tech-card pros-card">
+            <h2><i class="bi bi-check-circle"></i> Основни изводи</h2>
+            <ul>
+                <li>OLED е отличен за контраст, филми и премиум гейминг.</li>
+                <li>IPS е най-балансиран за ежедневна и професионална употреба.</li>
+                <li>VA предлага добър контраст на по-достъпна цена.</li>
+                <li>Mini LED подобрява HDR представянето при LCD панелите.</li>
+                <li>Micro LED е много перспективна, но все още скъпа технология.</li>
+            </ul>
+        </article>
+
+        <article class="tech-card cons-card">
+            <h2><i class="bi bi-exclamation-triangle"></i> Компромиси</h2>
+            <ul>
+                <li>OLED има риск от burn-in при статично изображение.</li>
+                <li>TN има слаби цветове и тесни ъгли на видимост.</li>
+                <li>VA може да има по-бавно време за реакция.</li>
+                <li>Mini LED може да има halo ефект около ярки обекти.</li>
+                <li>QLED не е самоизлъчваща технология и не достига OLED черното.</li>
+            </ul>
+        </article>
+    </div>
+
+    <article class="comparison-summary">
+        <h2>Обобщение</h2>
+        <p>
+            Няма универсално най-добра технология за всеки потребител. Изборът зависи от
+            предназначението на монитора, бюджета и нуждите на потребителя. За офис и обучение
+            IPS е практичен избор, за филми и максимален контраст OLED е много силен вариант,
+            а за HDR и висока яркост Mini LED и QLED имат сериозни предимства.
+        </p>
+    </article>
+</section>

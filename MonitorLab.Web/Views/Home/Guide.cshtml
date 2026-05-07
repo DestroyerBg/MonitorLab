@@ -356,48 +356,6 @@
             </div>
         </section>
 
-        <section id="usage" class="guide-section collapsible-guide-section">
-            <div class="guide-section-header">
-                <div class="guide-section-title">
-                    <h2><i class="bi bi-person-check me-2"></i>Избор според употреба</h2>
-                    <p>Насоки при избор на монитор според предназначението.</p>
-                </div>
-
-                <button type="button" class="guide-toggle-btn"
-                        onclick="toggleGuideSection('usageContent', 'usageArrow')">
-                    <i id="usageArrow" class="bi bi-chevron-down"></i>
-                </button>
-            </div>
-
-            <div id="usageContent" class="guide-section-content" style="display: none;">
-                <div class="accordion guide-accordion mt-3" id="usageAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <a asp-controller="Guide" asp-action="Gaming" class="accordion-button collapsed text-decoration-none">
-                                <i class="bi bi-controller me-2"></i> Гейминг
-                            </a>
-                        </h2>
-                    </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <a asp-controller="Guide" asp-action="Office" class="accordion-button collapsed text-decoration-none">
-                                <i class="bi bi-briefcase me-2"></i> Офис работа
-                            </a>
-                        </h2>
-                    </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <a asp-controller="Guide" asp-action="CreativeWork" class="accordion-button collapsed text-decoration-none">
-                                <i class="bi bi-palette me-2"></i> Дизайн и обработка
-                            </a>
-                        </h2>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="comparison" class="guide-section collapsible-guide-section">
             <div class="guide-section-header">
                 <div class="guide-section-title">
@@ -420,6 +378,37 @@
                             </a>
                         </h2>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="usage" class="guide-section collapsible-guide-section">
+            <div class="guide-section-header">
+                <div class="guide-section-title">
+                    <h2><i class="bi bi-person-check me-2"></i>Избор според употреба</h2>
+                    <p>Насоки при избор на монитор според предназначението.</p>
+                </div>
+
+                <button type="button" class="guide-toggle-btn"
+                        onclick="toggleGuideSection('usageContent', 'usageArrow', 'usage')">
+                    <i id="usageArrow" class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+
+            <div id="usageContent" class="guide-section-content" style="display: none;">
+                <div class="accordion guide-accordion mt-3" id="usageAccordion">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <a asp-controller="Guide"
+                                   asp-action="UsageGuide"
+                                   class="accordion-button collapsed text-decoration-none">
+                                <i class="bi bi-person-workspace me-2"></i>
+                                Препоръки според начина на използване
+                            </a>
+                        </h2>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -459,7 +448,7 @@
     }
 </script>
 
-            <script>
+<script>
     document.addEventListener("DOMContentLoaded", () => {
         const hash = window.location.hash;
 

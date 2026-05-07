@@ -17,5 +17,7 @@ namespace MonitorLab.Web.Controllers
         public IActionResult DisplayPort() => View();
         public IActionResult UsbC() => View();
         public IActionResult Thunderbolt() => View();
+        public IActionResult TechnologyComparison() => View();
+        public IActionResult UsageGuide() => View();
     }
 }
