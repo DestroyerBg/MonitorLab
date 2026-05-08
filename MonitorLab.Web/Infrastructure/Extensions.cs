@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MonitorLab.Data;
 using MonitorLab.Data.Seed;
+using MonitorLab.Web.MapperProfiles;
 
 namespace MonitorLab.Web.Infrastructure
 {
@@ -16,6 +17,12 @@ namespace MonitorLab.Web.Infrastructure
             {
                 await DatabaseSeeder.SeedAsync(dbContext);
             }
+        }
+
+        public static IServiceCollection RegisterAutomapper(this IServiceCollection services)
+        {
+             services.AddAutoMapper(cfg => cfg.AddMaps(typeof(MonitorProfiles).Assembly));
+             return services;
         }
     }
 }
