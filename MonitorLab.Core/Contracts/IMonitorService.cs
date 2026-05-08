@@ -1,9 +1,9 @@
-﻿using Monitor = MonitorLab.Data.Models.Monitor;
+﻿using MonitorLab.Data.EntityDTOs;
+using Monitor = MonitorLab.Data.Models.Monitor;
 namespace MonitorLab.Core.Contracts
 {
     public interface IMonitorService
     {
-        IEnumerable<Monitor> GetAllMonitors();
-        
+        Task<MonitorCatalogDTO> GetMonitorCatalogAsync();
     }
 }

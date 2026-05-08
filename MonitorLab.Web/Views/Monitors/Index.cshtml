@@ -1,0 +1,105 @@
+﻿@model MonitorCatalogViewModel
+
+@{
+    ViewData["Title"] = "Монитори";
+}
+
+<section class="monitors-page">
+    <div class="catalog-header">
+        <span class="catalog-badge">MonitorLab Catalog</span>
+        <h1>Каталог с монитори</h1>
+        <p>
+            Разгледайте наличните модели и използвайте филтрите, за да намерите монитор
+            според нужните технически характеристики.
+        </p>
+    </div>
+
+    <form asp-controller="Monitors" asp-action="Index" method="get" class="catalog-filters">
+        <div class="filter-group">
+            <label>Търсене</label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="Марка или модел..." />
+        </div>
+
+        <div class="filter-group">
+            <label>Марка</label>
+            <select asp-for="Brand" class="form-select">
+                <option value="">Всички</option>
+                @foreach (var brand in Model.Brands)
+                {
+                    <option value="@brand">@brand</option>
+                }
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Резолюция</label>
+            <select asp-for="Resolution" class="form-select">
+                <option value="">Всички</option>
+                @foreach (var resolution in Model.Resolutions)
+                {
+                    <option value="@resolution">@resolution</option>
+                }
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Панел</label>
+            <select asp-for="PanelType" class="form-select">
+                <option value="">Всички</option>
+                @foreach (var panel in Model.PanelTypes)
+                {
+                    <option value="@panel">@panel</option>
+                }
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Минимум Hz</label>
+            <input asp-for="MinRefreshRate" class="form-control" type="number" placeholder="примерно 144" />
+        </div>
+
+        <div class="filter-actions">
+            <button type="submit" class="filter-btn primary">
+                <i class="bi bi-search"></i> Филтрирай
+            </button>
+
+            <a asp-controller="Monitors" asp-action="Index" class="filter-btn secondary">
+                Изчисти
+            </a>
+        </div>
+    </form>
+
+    <div class="monitor-grid">
+        @foreach (var monitor in Model.Monitors)
+        {
+            <article class="monitor-card">
+                <div class="monitor-image">
+                    <img src="@monitor.ImageUrl" alt="@monitor.Brand @monitor.Model" />
+                </div>
+
+                <div class="monitor-body">
+                    <h3>@monitor.Brand @monitor.Model</h3>
+
+                    <div class="monitor-specs">
+                        <span><i class="bi bi-aspect-ratio"></i> @monitor.ScreenSizeInches"</span>
+                        <span><i class="bi bi-grid-3x3"></i> @monitor.Resolution</span>
+                        <span><i class="bi bi-display"></i> @monitor.PanelType</span>
+                        <span><i class="bi bi-speedometer2"></i> @monitor.RefreshRateHz Hz</span>
+                        <span><i class="bi bi-lightning-charge"></i> @monitor.ResponseTimeMs ms</span>
+                        <span><i class="bi bi-brightness-high"></i> @monitor.BrightnessNits nits</span>
+                    </div>
+
+                    <div class="monitor-actions">
+                        <a asp-controller="Monitors" asp-action="Details" asp-route-id="@monitor.Id" class="monitor-btn secondary">
+                            Детайли
+                        </a>
+
+                        <a asp-controller="Compare" asp-action="Add" asp-route-id="@monitor.Id" class="monitor-btn primary">
+                            Сравни
+                        </a>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</section>

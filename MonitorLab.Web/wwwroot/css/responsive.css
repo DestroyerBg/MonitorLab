@@ -66,3 +66,25 @@
         font-size: 1.8rem;
     }
 }
+
+@media (max-width: 1100px) {
+    .catalog-filters {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .monitor-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    .catalog-filters,
+    .monitor-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}

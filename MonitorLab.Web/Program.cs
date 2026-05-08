@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MonitorLab.Core.Contracts;
+using MonitorLab.Core.Services;
 using MonitorLab.Data;
 using MonitorLab.Web.Infrastructure;
 
@@ -16,6 +18,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IMonitorService, MonitorService>();
 builder.Services.RegisterAutomapper();
 WebApplication app = builder.Build();
 
@@ -40,6 +43,7 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
+app.UseStaticFiles();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
