@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="MonitorLab.Core/MonitorLab.Core.csproj" />
   <Project Path="MonitorLab.Data/MonitorLab.Data.csproj" />
+  <Project Path="MonitorLab.Tests/MonitorLab.Tests.csproj" Id="d61038a0-f252-43ca-afdf-a2a202359dce" />
   <Project Path="MonitorLab.Web/MonitorLab.Web.csproj" />
 </Solution>
