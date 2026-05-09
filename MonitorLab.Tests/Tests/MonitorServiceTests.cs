@@ -134,4 +134,14 @@ public class MonitorServiceTests
         Assert.That(monitor.BrightnessNits, Is.EqualTo(300));
         Assert.That(monitor.ImageUrl, Is.EqualTo("/images/monitors/aoc.jpg"));
     }
+
+    [Test]
+    public void AutoMapperConfiguration_ShouldBeValid()
+    {
+        MapperConfiguration config = new MapperConfiguration(
+            cfg => cfg.AddMaps(typeof(MonitorProfiles).Assembly),
+            NullLoggerFactory.Instance);
+
+        config.AssertConfigurationIsValid();
+    }
 }
