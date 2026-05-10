@@ -183,7 +183,7 @@
     margin-top: 1rem;
 }
 
-/* Intro */
+
 .guide-intro {
     margin: 25px 0 40px 0;
     padding: 25px;
@@ -250,7 +250,7 @@
     animation: drawMonitorLine 1.2s ease forwards;
 }
 
-/* Accordion */
+
 .guide-accordion .accordion-item {
     background: rgba(15, 23, 42, 0.34);
     border: 1px solid rgba(148, 163, 184, 0.18);
@@ -309,7 +309,7 @@
     background: rgba(15, 23, 42, 0.22);
 }
 
-/* Specific guide accordions */
+
 #panelsAccordion .accordion-button {
     cursor: pointer;
 }
@@ -319,7 +319,7 @@
         transform: translateX(4px);
     }
 
-/* Legacy / optional */
+
 .section-toggle-header {
     display: flex;
     justify-content: space-between;
@@ -351,12 +351,27 @@
     margin-top: 0.8rem;
 }
 
-@keyframes drawMonitorLine {
-    from {
-        stroke-dashoffset: 220;
-    }
+.resolution-list {
+    display: grid;
+    gap: 0.6rem;
+    margin: 1rem 0;
+}
 
-    to {
-        stroke-dashoffset: 0;
-    }
+.resolution-list div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.38);
+    border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.resolution-list strong {
+    color: #f8fafc;
+}
+
+.resolution-list span {
+    color: #93c5fd;
+    font-weight: 700;
 }

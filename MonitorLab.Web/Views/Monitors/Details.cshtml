@@ -1,0 +1,167 @@
+﻿@model MonitorDetailsViewModel
+
+@{
+    ViewData["Title"] = $"{Model.Brand} {Model.Model}";
+}
+
+<section class="monitor-details-page">
+    <a asp-controller="Monitors" asp-action="Index" class="back-link">
+        <i class="bi bi-arrow-left"></i> Назад към каталога
+    </a>
+
+    <div class="monitor-details-hero">
+        <div class="monitor-details-image">
+            <img src="@Url.Content(Model.ImageUrl)" alt="@Model.Brand @Model.Model" />
+        </div>
+
+        <div class="monitor-details-info">
+            <span class="monitor-details-badge">MonitorLab</span>
+            <h1>@Model.Brand @Model.Model</h1>
+            <p>@Model.Description</p>
+
+            <div class="monitor-details-actions">
+                <a asp-controller="Compare" asp-action="Add" asp-route-id="@Model.Id" class="monitor-btn primary">
+                    <i class="bi bi-bar-chart"></i> Добави за сравнение
+                </a>
+
+                <a asp-controller="Guide" asp-action="UsageGuide" class="monitor-btn secondary">
+                    <i class="bi bi-info-circle"></i> Как да избера монитор?
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="details-grid">
+        <article class="details-card">
+            <h2><i class="bi bi-list-check"></i> Основни характеристики</h2>
+
+            <div class="details-spec-list">
+                <div>
+                    <span>Размер в инчове</span>
+                    <strong>@Model.ScreenSizeInches"</strong>
+                </div>
+
+                <div>
+                    <span>Резолюция</span>
+                    <strong>
+                        <a asp-controller="Home" asp-action="Guide" asp-fragment="specs">
+                            @Model.Resolution
+                        </a>
+                    </strong>
+                </div>
+
+                <div>
+                    <span>Тип панел</span>
+                    <strong>
+                        <a asp-controller="Guide" asp-action="@GetPanelGuideAction(Model.PanelType)">
+                            @Model.PanelType
+                        </a>
+                    </strong>
+                </div>
+
+                <div>
+                    <span>Честота</span>
+
+                    <strong>
+                        <a asp-controller="Home" asp-action="Guide" asp-fragment="specs">
+                            @Model.RefreshRateHz Hz
+                        </a>
+                    </strong>
+                </div>
+
+                <div>
+                    <span>Време за реакция</span>
+                    <strong>
+                        <a asp-controller="Home" asp-action="Guide" asp-fragment="specs">
+                            @Model.ResponseTimeMs ms
+                        </a>
+                    </strong>
+                </div>
+
+                <div>
+                    <span>Яркост</span>
+                    <strong>
+                        <a asp-controller="Home" asp-action="Guide" asp-fragment="specs">
+                            @Model.BrightnessNits nits
+                        </a>
+                    </strong>
+                </div>
+
+                <div>
+                    <span>Контраст</span>
+                    <strong>
+                        <a asp-controller="Home" asp-action="Guide" asp-fragment="specs">
+                        @Model.ContrastRatio
+                        </a>
+                        </strong>
+                </div>
+
+                <div>
+                    <span>Година</span>
+                    <strong>@Model.ReleaseYear</strong>
+                </div>
+            </div>
+        </article>
+
+        <article class="details-card">
+            <h2><i class="bi bi-plug"></i> Портове и входове</h2>
+
+            <div class="ports-list">
+                @foreach (var port in Model.Ports)
+                {
+                    <a class="port-link"
+                           asp-controller="Guide"
+                           asp-action="@GetPortGuideAction(port.Name)">
+                        <i class="bi bi-usb-plug"></i>
+                        <span>@port.Name @port.Version</span>
+                        <strong>@port.Count</strong>
+                    </a>
+                }
+            </div>
+        </article>
+    </div>
+
+    <article class="details-card mt-3">
+        <h2><i class="bi bi-lightbulb"></i> Полезна техническа информация</h2>
+        <p>
+            Ако дадена характеристика не е ясна, можеш да отвориш съответната техническа страница.
+            Например типът на панела, резолюцията и портовете водят към обяснителни раздели,
+            където са описани принципът на работа, предимствата и недостатъците, а параметри като резолюция, честота, време за реакция, яркост и контраст водят към главната страница с техническа информация, където може да прочетете по-подробно.
+        </p>
+    </article>
+</section>
+
+@functions {
+    private string GetPanelGuideAction(string panelType)
+    {
+        return panelType.ToLower() switch
+        {
+            "oled" => "Oled",
+            "qled" => "Qled",
+            "mini led" => "MiniLed",
+            "miniled" => "MiniLed",
+            "micro led" => "MicroLed",
+            "microled" => "MicroLed",
+            "tn" => "Lcd",
+            "ips" => "Lcd",
+            "va" => "Lcd",
+            _ => "Lcd"
+        };
+    }
+
+    private string GetPortGuideAction(string portName)
+    {
+        return portName.ToLower() switch
+        {
+            "vga" => "Vga",
+            "dvi" => "Dvi",
+            "hdmi" => "Hdmi",
+            "displayport" => "DisplayPort",
+            "display port" => "DisplayPort",
+            "usb-c" => "UsbC",
+            "usbc" => "UsbC",
+            "thunderbolt" => "Thunderbolt",
+            _ => "UsbC"
+        };
+    }
+}

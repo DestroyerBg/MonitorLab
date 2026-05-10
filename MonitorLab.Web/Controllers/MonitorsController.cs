@@ -17,5 +17,19 @@ namespace MonitorLab.Web.Controllers
             MonitorCatalogViewModel model = mapper.Map<MonitorCatalogViewModel>(dto);
             return View(model);
         }
+
+        public async Task<IActionResult> Details(Guid id)
+        {
+            MonitorDetailsDTO dto = await monitorService.GetMonitorDetailsAsync(id);
+
+            if (dto == null)
+            {
+                return NotFound();
+            }
+
+            MonitorDetailsViewModel model = mapper.Map<MonitorDetailsViewModel>(dto);
+
+            return View(model);
+        }
     }
 }
