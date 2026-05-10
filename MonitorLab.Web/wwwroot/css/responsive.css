@@ -88,3 +88,20 @@
         flex-direction: column;
     }
 }
+
+@media (max-width: 900px) {
+    .monitor-details-hero,
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@keyframes drawMonitorLine {
+    from {
+        stroke-dashoffset: 220;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}

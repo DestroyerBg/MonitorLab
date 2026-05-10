@@ -5,5 +5,6 @@ namespace MonitorLab.Core.Contracts
     public interface IMonitorService
     {
         Task<MonitorCatalogDTO> GetMonitorCatalogAsync();
+        Task<MonitorDetailsDTO> GetMonitorDetailsAsync(Guid id);
     }
 }

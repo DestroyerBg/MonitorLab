@@ -13,6 +13,11 @@ namespace MonitorLab.Web.MapperProfiles
             CreateMap<Monitor, MonitorCardDto>();
             CreateMap<MonitorCardDto, MonitorCardViewModel>();
             CreateMap<MonitorCatalogDTO, MonitorCatalogViewModel>();
+            CreateMap<Monitor, MonitorDetailsDTO>();
+            CreateMap<MonitorDetailsDTO, MonitorDetailsViewModel>();
+            CreateMap<MonitorPortDetailsDTO, MonitorPortDetailsViewModel>();
+            CreateMap<Port, MonitorPortDetailsDTO>()
+                .ForMember(dest => dest.Count, opt => opt.Ignore());
         }
     }
 }
