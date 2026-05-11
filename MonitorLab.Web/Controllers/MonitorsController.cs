@@ -12,7 +12,7 @@ namespace MonitorLab.Web.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            MonitorCatalogDTO dto = await monitorService.GetMonitorCatalogAsync();
+            MonitorCatalogDTO? dto = await monitorService.GetMonitorCatalogAsync();
 
             MonitorCatalogViewModel model = mapper.Map<MonitorCatalogViewModel>(dto);
             return View(model);
@@ -20,7 +20,7 @@ namespace MonitorLab.Web.Controllers
 
         public async Task<IActionResult> Details(Guid id)
         {
-            MonitorDetailsDTO dto = await monitorService.GetMonitorDetailsAsync(id);
+            MonitorDetailsDTO? dto = await monitorService.GetMonitorDetailsAsync(id);
 
             if (dto == null)
             {
@@ -30,6 +30,21 @@ namespace MonitorLab.Web.Controllers
             MonitorDetailsViewModel model = mapper.Map<MonitorDetailsViewModel>(dto);
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Filter(
+         string? searchTerm,
+         string? brand,
+         string? resolution,
+         string? panelType,
+         int? minRefreshRate)
+        {
+            IEnumerable<MonitorCardDto> dtos = await monitorService.GetMonitorCatalogAsync(searchTerm, brand, resolution, panelType, minRefreshRate);
+
+            IEnumerable<MonitorCardViewModel> model = mapper.Map<IEnumerable<MonitorCardViewModel>>(dtos);
+
+            return PartialView("_MonitorCardsPartial", model);
         }
     }
 }

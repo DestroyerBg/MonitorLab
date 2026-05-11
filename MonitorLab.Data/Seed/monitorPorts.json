@@ -238,5 +238,48 @@
     "MonitorId": "b75f3c9b-adbb-40bc-b7d3-71c6157f4717",
     "PortId": "fa5c1378-905b-493f-844d-8aa7445126e2",
     "Count": 1
+  },
+  {
+    "MonitorId": "1f8b7b8e-3f39-4b4b-8c9f-71e0e9c7b101",
+    "PortId": "987010f4-873d-4e58-87f2-54e3a429a6da",
+    "Count": 2
+  },
+  {
+    "MonitorId": "1f8b7b8e-3f39-4b4b-8c9f-71e0e9c7b101",
+    "PortId": "fa5c1378-905b-493f-844d-8aa7445126e2",
+    "Count": 1
+  },
+
+  {
+    "MonitorId": "89c3e027-2e5f-4e4e-9de3-9eb7c0fa4b22",
+    "PortId": "987010f4-873d-4e58-87f2-54e3a429a6da",
+    "Count": 2
+  },
+  {
+    "MonitorId": "89c3e027-2e5f-4e4e-9de3-9eb7c0fa4b22",
+    "PortId": "fa5c1378-905b-493f-844d-8aa7445126e2",
+    "Count": 1
+  },
+
+  {
+    "MonitorId": "dc4e77fd-8d7a-4e12-8a62-6c1848d9475a",
+    "PortId": "064cbdc7-8482-4a06-a748-7c688022131b",
+    "Count": 1
+  },
+  {
+    "MonitorId": "dc4e77fd-8d7a-4e12-8a62-6c1848d9475a",
+    "PortId": "fa5c1378-905b-493f-844d-8aa7445126e2",
+    "Count": 2
+  },
+
+  {
+    "MonitorId": "3a2be810-2435-4e30-a6fd-208a2369954c",
+    "PortId": "064cbdc7-8482-4a06-a748-7c688022131b",
+    "Count": 2
+  },
+  {
+    "MonitorId": "3a2be810-2435-4e30-a6fd-208a2369954c",
+    "PortId": "fa5c1378-905b-493f-844d-8aa7445126e2",
+    "Count": 1
   }
 ]
