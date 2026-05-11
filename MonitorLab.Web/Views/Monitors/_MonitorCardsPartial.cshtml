@@ -1,0 +1,33 @@
+﻿@model IEnumerable<MonitorCardViewModel>
+
+@foreach (var monitor in Model)
+{
+    <article class="monitor-card">
+        <div class="monitor-image">
+            <img src="@Url.Content(monitor.ImageUrl)" alt="@monitor.Brand @monitor.Model" />
+        </div>
+
+        <div class="monitor-body">
+            <h3>@monitor.Brand @monitor.Model</h3>
+
+            <div class="monitor-specs">
+                <span><i class="bi bi-aspect-ratio"></i> @monitor.ScreenSizeInches"</span>
+                <span><i class="bi bi-grid-3x3"></i> @monitor.Resolution</span>
+                <span><i class="bi bi-display"></i> @monitor.PanelType</span>
+                <span><i class="bi bi-speedometer2"></i> @monitor.RefreshRateHz Hz</span>
+                <span><i class="bi bi-lightning-charge"></i> @monitor.ResponseTimeMs ms</span>
+                <span><i class="bi bi-brightness-high"></i> @monitor.BrightnessNits nits</span>
+            </div>
+
+            <div class="monitor-actions">
+                <a asp-controller="Monitors" asp-action="Details" asp-route-id="@monitor.Id" class="monitor-btn secondary">
+                    Детайли
+                </a>
+
+                <a asp-controller="Compare" asp-action="Add" asp-route-id="@monitor.Id" class="monitor-btn primary">
+                    Сравни
+                </a>
+            </div>
+        </div>
+    </article>
+}
