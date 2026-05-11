@@ -12,7 +12,7 @@ namespace MonitorLab.Web.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            MonitorCatalogDTO dto = await monitorService.GetMonitorCatalogAsync();
+            MonitorCatalogDTO? dto = await monitorService.GetMonitorCatalogAsync();
 
             MonitorCatalogViewModel model = mapper.Map<MonitorCatalogViewModel>(dto);
             return View(model);
@@ -20,7 +20,7 @@ namespace MonitorLab.Web.Controllers
 
         public async Task<IActionResult> Details(Guid id)
         {
-            MonitorDetailsDTO dto = await monitorService.GetMonitorDetailsAsync(id);
+            MonitorDetailsDTO? dto = await monitorService.GetMonitorDetailsAsync(id);
 
             if (dto == null)
             {

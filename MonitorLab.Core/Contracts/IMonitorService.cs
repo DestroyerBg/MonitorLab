@@ -4,7 +4,7 @@ namespace MonitorLab.Core.Contracts
 {
     public interface IMonitorService
     {
-        Task<MonitorCatalogDTO> GetMonitorCatalogAsync();
+        Task<MonitorCatalogDTO?> GetMonitorCatalogAsync();
 
         Task<IEnumerable<MonitorCardDto>> GetMonitorCatalogAsync(
             string? searchTerm,
@@ -12,6 +12,6 @@ namespace MonitorLab.Core.Contracts
             string? resolution,
             string? panelType,
             int? minRefreshRate);
-        Task<MonitorDetailsDTO> GetMonitorDetailsAsync(Guid id);
+        Task<MonitorDetailsDTO?> GetMonitorDetailsAsync(Guid id);
     }
 }

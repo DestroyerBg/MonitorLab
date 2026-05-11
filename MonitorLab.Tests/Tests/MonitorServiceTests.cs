@@ -81,7 +81,7 @@ public class MonitorServiceTests
 
         await dbContext.SaveChangesAsync();
 
-        MonitorCatalogDTO result = await monitorService.GetMonitorCatalogAsync();
+        MonitorCatalogDTO? result = await monitorService.GetMonitorCatalogAsync();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Monitors.Count(), Is.EqualTo(2));
@@ -90,7 +90,7 @@ public class MonitorServiceTests
     [Test]
     public async Task GetMonitorCatalogAsync_ShouldReturnEmptyCollection_WhenNoMonitorsExist()
     {
-        MonitorCatalogDTO result = await monitorService.GetMonitorCatalogAsync();
+        MonitorCatalogDTO? result = await monitorService.GetMonitorCatalogAsync();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Monitors, Is.Not.Null);
@@ -121,11 +121,12 @@ public class MonitorServiceTests
 
         await dbContext.SaveChangesAsync();
 
-        MonitorCatalogDTO result = await monitorService.GetMonitorCatalogAsync();
+        MonitorCatalogDTO? result = await monitorService.GetMonitorCatalogAsync();
 
-        MonitorCardDto monitor = result.Monitors.First();
+        MonitorCardDto? monitor = result?.Monitors.FirstOrDefault();
 
-        Assert.That(monitor.Id, Is.EqualTo(monitorId));
+        Assert.That(monitor, Is.Not.Null);
+        Assert.That(monitor!.Id, Is.EqualTo(monitorId));
         Assert.That(monitor.Brand, Is.EqualTo("AOC"));
         Assert.That(monitor.Model, Is.EqualTo("24G4"));
         Assert.That(monitor.ScreenSizeInches, Is.EqualTo(23.8));

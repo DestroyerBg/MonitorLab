@@ -11,7 +11,7 @@ namespace MonitorLab.Core.Services
         IMapper mapper,
         ApplicationDbContext dbContext) : IMonitorService
     {
-        public async Task<MonitorCatalogDTO> GetMonitorCatalogAsync()
+        public async Task<MonitorCatalogDTO?> GetMonitorCatalogAsync()
         {
             IList<MonitorCardDto> monitors = await dbContext.Monitors
                 .Select(m => mapper.Map<MonitorCardDto>(m)).ToListAsync();
@@ -65,17 +65,14 @@ namespace MonitorLab.Core.Services
             return monitors;
         }
 
-        public async Task<MonitorDetailsDTO> GetMonitorDetailsAsync(Guid id)
+        public async Task<MonitorDetailsDTO?> GetMonitorDetailsAsync(Guid id)
         {
-            if (!await CheckId(id))
+            Monitor? monitor = await GetMonitorByIdWithPortsAsync(id);
+
+            if (monitor == null)
             {
                 return null;
             }
-
-            Monitor? monitor = await dbContext.Monitors
-                .Include(m => m.MonitorPorts)
-                .ThenInclude(mp => mp.Port)
-                .FirstOrDefaultAsync(m => m.Id == id);
 
             MonitorDetailsDTO details = mapper.Map<MonitorDetailsDTO>(monitor);
 
@@ -83,15 +80,19 @@ namespace MonitorLab.Core.Services
             {
                 MonitorPortDetailsDTO portDetails = mapper.Map<MonitorPortDetailsDTO>(monitorPort.Port);
                 portDetails.Count = monitorPort.Count;
+
                 details.Ports = details.Ports.Append(portDetails);
-            } 
+            }
 
             return details;
         }
 
-        private async Task<bool> CheckId(Guid id)
+        private async Task<Monitor?> GetMonitorByIdWithPortsAsync(Guid id)
         {
-            return await dbContext.Monitors.AnyAsync(m => m.Id == id);
+            return await dbContext.Monitors
+                .Include(m => m.MonitorPorts)
+                .ThenInclude(mp => mp.Port)
+                .FirstOrDefaultAsync(m => m.Id == id);
         }
     }
 }
