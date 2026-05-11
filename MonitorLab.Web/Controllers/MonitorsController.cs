@@ -31,5 +31,20 @@ namespace MonitorLab.Web.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Filter(
+         string? searchTerm,
+         string? brand,
+         string? resolution,
+         string? panelType,
+         int? minRefreshRate)
+        {
+            IEnumerable<MonitorCardDto> dtos = await monitorService.GetMonitorCatalogAsync(searchTerm, brand, resolution, panelType, minRefreshRate);
+
+            IEnumerable<MonitorCardViewModel> model = mapper.Map<IEnumerable<MonitorCardViewModel>>(dtos);
+
+            return PartialView("_MonitorCardsPartial", model);
+        }
     }
 }

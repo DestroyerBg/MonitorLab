@@ -175,3 +175,9 @@
     gap: 0.65rem;
 }
 
+.catalog-filters input::placeholder {
+    color: #cbd5e1;
+    opacity: 1;
+}
+
+

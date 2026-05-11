@@ -14,7 +14,8 @@
         </p>
     </div>
 
-    <form asp-controller="Monitors" asp-action="Index" method="get" class="catalog-filters">
+    <form class="catalog-filters"
+          onsubmit="event.preventDefault(); filterMonitors();">
         <div class="filter-group">
             <label>Търсене</label>
             <input asp-for="SearchTerm" class="form-control" placeholder="Марка или модел..." />
@@ -63,9 +64,9 @@
                 <i class="bi bi-search"></i> Филтрирай
             </button>
 
-            <a asp-controller="Monitors" asp-action="Index" class="filter-btn secondary">
+            <button type="button" class="filter-btn secondary" onclick="clearMonitorFilters()">
                 Изчисти
-            </a>
+            </button>
         </div>
     </form>
 
@@ -73,3 +74,5 @@
         <partial name="_MonitorCardsPartial" model="Model.Monitors" />
     </div>
 </section>
+<script src="~/js/monitors.js"></script>
+<script src="~/js/clear-monitors.js"></script>

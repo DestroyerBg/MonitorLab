@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using MonitorLab.Core.Contracts;
 using MonitorLab.Data;
@@ -19,7 +20,49 @@ namespace MonitorLab.Core.Services
 
             catalog.Monitors = monitors;
 
+            catalog.Brands = monitors.Select(b => b.Brand).Distinct().ToList();
+            catalog.Resolutions = monitors.Select(r => r.Resolution).Distinct().ToList();
+            catalog.PanelTypes = monitors.Select(p => p.PanelType).Distinct().ToList();
+
             return catalog;
+        }
+
+        public async Task<IEnumerable<MonitorCardDto>> GetMonitorCatalogAsync(string? searchTerm, string? brand, string? resolution, string? panelType, int? minRefreshRate)
+        {
+            IQueryable<Monitor>? query = dbContext.Monitors.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                query = query.Where(m =>
+                    m.Brand.Contains(searchTerm) ||
+                    m.Model.Contains(searchTerm));
+            }
+
+            if (!string.IsNullOrWhiteSpace(brand))
+            {
+                query = query.Where(m => m.Brand == brand);
+            }
+
+            if (!string.IsNullOrWhiteSpace(resolution))
+            {
+                query = query.Where(m => m.Resolution.ToString() == resolution);
+            }
+
+            if (!string.IsNullOrWhiteSpace(panelType))
+            {
+                query = query.Where(m => m.PanelType.ToString() == panelType);
+            }
+
+            if (minRefreshRate.HasValue)
+            {
+                query = query.Where(m => m.RefreshRateHz >= minRefreshRate.Value);
+            }
+
+            IList<MonitorCardDto> monitors = await query
+                .ProjectTo<MonitorCardDto>(mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return monitors;
         }
 
         public async Task<MonitorDetailsDTO> GetMonitorDetailsAsync(Guid id)
