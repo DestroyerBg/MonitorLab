@@ -4,6 +4,7 @@
     {
         FullHD = 0,
         QHD = 1, 
-        UHD4K = 2
+        UHD = 2,
+        UWQHD = 3
     }
 }
