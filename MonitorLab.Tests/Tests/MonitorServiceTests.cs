@@ -98,6 +98,167 @@ public class MonitorServiceTests
     }
 
     [Test]
+    public async Task GetMonitorCatalogAsync_ShouldPopulateFilterCollections()
+    {
+        await dbContext.Monitors.AddRangeAsync(
+            new Monitor
+            {
+                Id = Guid.NewGuid(),
+                Brand = "LG",
+                Model = "UltraGear",
+                Resolution = ResolutionType.QHD,
+                PanelType = PanelType.OLED,
+                ScreenSizeInches = 27,
+                RefreshRateHz = 240,
+                ResponseTimeMs = 0.03,
+                BrightnessNits = 250,
+                ContrastRatio = "1000000:1",
+                Description = "Test",
+                ImageUrl = "/images/lg.jpg",
+                ReleaseYear = 2024
+            },
+            new Monitor
+            {
+                Id = Guid.NewGuid(),
+                Brand = "Samsung",
+                Model = "Odyssey",
+                Resolution = ResolutionType.UHD,
+                PanelType = PanelType.VA,
+                ScreenSizeInches = 32,
+                RefreshRateHz = 144,
+                ResponseTimeMs = 1,
+                BrightnessNits = 350,
+                ContrastRatio = "2500:1",
+                Description = "Test",
+                ImageUrl = "/images/samsung.jpg",
+                ReleaseYear = 2023
+            });
+
+        await dbContext.SaveChangesAsync();
+
+        MonitorCatalogDTO? result = await monitorService.GetMonitorCatalogAsync();
+
+        Assert.That(result, Is.Not.Null);
+
+        Assert.That(result!.Brands.Count(), Is.EqualTo(2));
+        Assert.That(result.Resolutions.Count(), Is.EqualTo(2));
+        Assert.That(result.PanelTypes.Count(), Is.EqualTo(2));
+
+        Assert.That(result.Brands, Does.Contain("LG"));
+        Assert.That(result.Brands, Does.Contain("Samsung"));
+
+        Assert.That(result.Resolutions, Does.Contain("QHD"));
+        Assert.That(result.Resolutions, Does.Contain("UHD"));
+
+        Assert.That(result.PanelTypes, Does.Contain("OLED"));
+        Assert.That(result.PanelTypes, Does.Contain("VA"));
+    }
+
+    [Test]
+    public async Task FilterMonitorsAsync_ShouldFilterBySearchTerm()
+    {
+        await SeedMonitors();
+
+        IEnumerable<MonitorCardDto> result =
+            await monitorService.GetMonitorCatalogAsync(
+                "Samsung",
+                null,
+                null,
+                null,
+                null);
+
+        Assert.That(result.Count(), Is.EqualTo(1));
+        Assert.That(result.First().Brand, Is.EqualTo("Samsung"));
+    }
+
+    [Test]
+    public async Task FilterMonitorsAsync_ShouldFilterByBrand()
+    {
+        await SeedMonitors();
+
+        IEnumerable<MonitorCardDto> result =
+            await monitorService.GetMonitorCatalogAsync(
+                null,
+                "LG",
+                null,
+                null,
+                null);
+
+        Assert.That(result.All(m => m.Brand == "LG"), Is.True);
+    }
+
+    [Test]
+    public async Task FilterMonitorsAsync_ShouldFilterByResolution()
+    {
+        await SeedMonitors();
+
+        IEnumerable<MonitorCardDto> result =
+            await monitorService.GetMonitorCatalogAsync(
+                null,
+                null,
+                "QHD",
+                null,
+                null);
+
+        Assert.That(result.All(m => m.Resolution == "QHD"), Is.True);
+    }
+
+    [Test]
+    public async Task FilterMonitorsAsync_ShouldFilterByPanelType()
+    {
+        await SeedMonitors();
+
+        IEnumerable<MonitorCardDto> result =
+            await monitorService.GetMonitorCatalogAsync(
+                null,
+                null,
+                null,
+                "OLED",
+                null);
+
+        Assert.That(result.All(m => m.PanelType == "OLED"), Is.True);
+    }
+
+    [Test]
+    public async Task FilterMonitorsAsync_ShouldFilterByMinimumRefreshRate()
+    {
+        await SeedMonitors();
+
+        IEnumerable<MonitorCardDto> result =
+            await monitorService.GetMonitorCatalogAsync(
+                null,
+                null,
+                null,
+                null,
+                200);
+
+        Assert.That(result.All(m => m.RefreshRateHz >= 200), Is.True);
+    }
+
+    [Test]
+    public async Task FilterMonitorsAsync_ShouldApplyAllFilters()
+    {
+        await SeedMonitors();
+
+        IEnumerable<MonitorCardDto> result =
+            await monitorService.GetMonitorCatalogAsync(
+                "LG",
+                "LG",
+                "QHD",
+                "OLED",
+                240);
+
+        Assert.That(result.Count(), Is.EqualTo(1));
+
+        MonitorCardDto monitor = result.First();
+
+        Assert.That(monitor.Brand, Is.EqualTo("LG"));
+        Assert.That(monitor.Resolution, Is.EqualTo("QHD"));
+        Assert.That(monitor.PanelType, Is.EqualTo("OLED"));
+        Assert.That(monitor.RefreshRateHz, Is.GreaterThanOrEqualTo(240));
+    }
+
+    [Test]
     public async Task GetMonitorCatalogAsync_ShouldMapMonitorPropertiesCorrectly()
     {
         var monitorId = Guid.NewGuid();
@@ -272,5 +433,44 @@ public class MonitorServiceTests
         MonitorPortDetailsDTO displayPortResult = result.Ports.First(p => p.Name == "DisplayPort");
         Assert.That(displayPortResult.Version, Is.EqualTo(1.4));
         Assert.That(displayPortResult.Count, Is.EqualTo(1));
+    }
+
+    private async Task SeedMonitors()
+    {
+        await dbContext.Monitors.AddRangeAsync(
+            new Monitor
+            {
+                Id = Guid.NewGuid(),
+                Brand = "LG",
+                Model = "UltraGear",
+                Resolution = ResolutionType.QHD,
+                PanelType = PanelType.OLED,
+                ScreenSizeInches = 27,
+                RefreshRateHz = 240,
+                ResponseTimeMs = 0.03,
+                BrightnessNits = 250,
+                ContrastRatio = "1000000:1",
+                Description = "Test",
+                ImageUrl = "/images/lg.jpg",
+                ReleaseYear = 2024
+            },
+            new Monitor
+            {
+                Id = Guid.NewGuid(),
+                Brand = "Samsung",
+                Model = "Odyssey",
+                Resolution = ResolutionType.UHD,
+                PanelType = PanelType.VA,
+                ScreenSizeInches = 32,
+                RefreshRateHz = 144,
+                ResponseTimeMs = 1,
+                BrightnessNits = 350,
+                ContrastRatio = "2500:1",
+                Description = "Test",
+                ImageUrl = "/images/samsung.jpg",
+                ReleaseYear = 2023
+            });
+
+        await dbContext.SaveChangesAsync();
     }
 }
