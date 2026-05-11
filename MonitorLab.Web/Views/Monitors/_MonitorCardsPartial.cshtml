@@ -1,7 +1,23 @@
 ﻿@model IEnumerable<MonitorCardViewModel>
-
-@foreach (var monitor in Model)
+@if (!Model.Any())
 {
+    <div class="empty-monitors-state">
+        <div class="empty-monitors-icon">
+            <i class="bi bi-emoji-frown"></i>
+        </div>
+
+        <h3>Няма намерени монитори</h3>
+
+        <p>
+            Не открихме модел, който да отговаря на избраните критерии.
+            Опитайте да промените или изчистите филтрите.
+        </p>
+    </div>
+}
+else
+{
+    @foreach (var monitor in Model)
+    {
     <article class="monitor-card">
         <div class="monitor-image">
             <img src="@Url.Content(monitor.ImageUrl)" alt="@monitor.Brand @monitor.Model" />
@@ -30,4 +46,5 @@
             </div>
         </div>
     </article>
+    }
 }
