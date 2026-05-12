@@ -35,8 +35,11 @@ else
 }
 
 app.CreateDatabase();
+
 app.UseHttpsRedirection();
+
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();
