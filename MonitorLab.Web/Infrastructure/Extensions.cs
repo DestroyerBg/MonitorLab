@@ -2,7 +2,7 @@
 using MonitorLab.Data;
 using MonitorLab.Data.Seed;
 using MonitorLab.Web.MapperProfiles;
-
+using System.Text.Json;
 namespace MonitorLab.Web.Infrastructure
 {
     public static class Extensions
@@ -23,6 +23,35 @@ namespace MonitorLab.Web.Infrastructure
         {
              services.AddAutoMapper(cfg => cfg.AddMaps(typeof(MonitorProfiles).Assembly));
              return services;
+        }
+
+        public static HttpContext GetObject(this HttpContext context)
+        {
+            return context;
+        }
+
+        public static void SetObject<T>(
+         this ISession session,
+         string key,
+         T value)
+        {
+            string json = JsonSerializer.Serialize(value);
+
+            session.SetString(key, json);
+        }
+
+        public static T? GetObject<T>(
+            this ISession session,
+            string key)
+        {
+            string? json = session.GetString(key);
+
+            if (json == null)
+            {
+                return default;
+            }
+
+            return JsonSerializer.Deserialize<T>(json);
         }
     }
 }
