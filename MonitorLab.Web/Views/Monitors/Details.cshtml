@@ -20,7 +20,7 @@
             <p>@Model.Description</p>
 
             <div class="monitor-details-actions">
-                <a asp-controller="Compare" asp-action="Add" asp-route-id="@Model.Id" class="monitor-btn primary">
+                <a asp-controller="Compare" asp-action="Add" asp-route-id="@Model.Id" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString" class="monitor-btn primary">
                     <i class="bi bi-bar-chart"></i> Добави за сравнение
                 </a>
 

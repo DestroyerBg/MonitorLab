@@ -4,25 +4,48 @@ using MonitorLab.Core.Contracts;
 using MonitorLab.Data.EntityDTOs;
 using MonitorLab.Web.Infrastructure;
 using MonitorLab.Web.Models.CompareViewModels;
+using static MonitorLab.Data.Common.TempDataMessages;
 namespace MonitorLab.Web.Controllers
 {
     public class CompareController(
         IMonitorService monitorService,
         IMapper mapper) : Controller
     {
-        public IActionResult Add(Guid id)
+        public async Task<IActionResult> Add(Guid id, string? returnUrl = null)
         {
             IList<Guid> ids = HttpContext.Session.GetObject<List<Guid>>("CompareMonitors") ?? new();
+            MonitorDetailsDTO? monitor = await monitorService.GetMonitorDetailsAsync(id);
 
-            if (!ids.Contains(id) && ids.Count < 3)
+            if (monitor == null)
             {
-                ids.Add(id);
+                TempData["ToastType"] = Error;
+                TempData["ToastMessage"] = MonitorNotFound;
+                return Redirect(returnUrl ?? Url.Action("Index", "Monitors")!);
             }
 
+            if (ids.Contains(id))
+            {
+                TempData["ToastType"] = Error;
+                TempData["ToastMessage"] = MonitorAlreadyAdded(monitor.Brand, monitor.Model);
+                return Redirect(returnUrl ?? Url.Action("Index", "Monitors")!);
+            }
+
+            if (ids.Count >= 3)
+            {
+                TempData["ToastType"] = Error;
+                TempData["ToastMessage"] = CompareLimitReached;
+                return Redirect(returnUrl ?? Url.Action("Index", "Monitors")!);
+            }
+
+            ids.Add(id);
             HttpContext.Session.SetObject("CompareMonitors", ids);
 
+            TempData["ToastType"] = Success;
+            TempData["ToastMessage"] = MonitorAddedSuccessfully(monitor.Brand, monitor.Model);
+            
+
             return ids.Count == 3 ? RedirectToAction(nameof(Index))
-                : RedirectToAction("Index", "Monitors"); ;
+                : Redirect(returnUrl ?? Url.Action("Index", "Monitors")!); 
         }
 
         public IActionResult Remove(Guid id)
