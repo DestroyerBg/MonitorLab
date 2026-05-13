@@ -21,7 +21,8 @@ namespace MonitorLab.Web.Controllers
 
             HttpContext.Session.SetObject("CompareMonitors", ids);
 
-            return RedirectToAction("Index", "Monitors");
+            return ids.Count == 3 ? RedirectToAction(nameof(Index))
+                : RedirectToAction("Index", "Monitors"); ;
         }
 
         public IActionResult Remove(Guid id)
