@@ -16,6 +16,17 @@
         </p>
     </div>
 
+    <div class="compare-top-actions">
+
+        <a asp-controller="Monitors"
+               asp-action="Index"
+               class="compare-catalog-btn">
+            <i class="bi bi-arrow-left"></i>
+            Обратно към каталога
+        </a>
+
+    </div>
+
     @if (!Model.Monitors.Any())
     {
         <div class="empty-compare-state">
