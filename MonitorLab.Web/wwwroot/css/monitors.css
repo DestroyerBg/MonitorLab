@@ -225,3 +225,14 @@
     margin: 0;
 }
 
+.compare-btn {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    color: #86efac;
+}
+
+.compare-btn:hover {
+    background: rgba(34, 197, 94, 0.25);
+    color: #dcfce7;
+}
+

@@ -1,0 +1,173 @@
+﻿@model CompareViewModel
+
+@{
+    ViewData["Title"] = "Сравнение на монитори";
+}
+
+<section class="compare-page">
+
+    <div class="compare-header">
+        <span class="compare-badge">MonitorLab Compare</span>
+
+        <h1>Сравнение на монитори</h1>
+
+        <p>
+            Сравнение на избраните модели по основни характеристики.
+        </p>
+    </div>
+
+    @if (!Model.Monitors.Any())
+    {
+        <div class="empty-compare-state">
+            <div class="empty-compare-icon">
+                <i class="bi bi-display"></i>
+            </div>
+
+            <h3>Няма избрани монитори</h3>
+
+            <p>
+                Добавете монитори от каталога, за да започнете сравнение.
+            </p>
+
+            <a asp-controller="Monitors"
+                   asp-action="Index"
+                   class="compare-back-btn">
+                Към каталога
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="compare-top-actions">
+
+            <a asp-controller="Monitors"
+                   asp-action="Index"
+                   class="compare-catalog-btn">
+                <i class="bi bi-arrow-left"></i>
+                Обратно към каталога
+            </a>
+
+        </div>
+        <div class="compare-table-wrapper">
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Характеристика</th>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <th>
+                                <div class="compare-monitor-heading">
+                                    <span>@monitor.Brand @monitor.Model</span>
+
+                                    <a asp-controller="Compare"
+                                           asp-action="Remove"
+                                           asp-route-id="@monitor.Id"
+                                           class="compare-remove-btn"
+                                           title="Премахни от сравнението">
+                                        <i class="bi bi-x-lg"></i>
+                                    </a>
+                                </div>
+                            </th>
+                        }
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Снимка</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>
+                                <img src="@Url.Content(monitor.ImageUrl)"
+                                     alt="@monitor.Brand @monitor.Model"
+                                     class="compare-monitor-image" />
+                            </td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Размер</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>@monitor.ScreenSizeInches"</td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Резолюция</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>@monitor.Resolution</td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Тип панел</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>@monitor.PanelType</td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Честота</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>@monitor.RefreshRateHz Hz</td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Време за реакция</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>@monitor.ResponseTimeMs ms</td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Яркост</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>@monitor.BrightnessNits nits</td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Контраст</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>@monitor.ContrastRatio</td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Портове</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>
+                                <div class="compare-ports">
+                                    @foreach (var port in monitor.Ports)
+                                    {
+                                        <span>@port.Name x@(port.Count)</span>
+                                    }
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+
+</section>

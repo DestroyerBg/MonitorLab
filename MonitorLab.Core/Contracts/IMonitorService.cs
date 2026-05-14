@@ -13,5 +13,6 @@ namespace MonitorLab.Core.Contracts
             string? panelType,
             int? minRefreshRate);
         Task<MonitorDetailsDTO?> GetMonitorDetailsAsync(Guid id);
+        Task<CompareDTO> GetMonitorComparisonAsync(IList<Guid> ids);
     }
 }

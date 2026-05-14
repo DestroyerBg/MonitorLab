@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using MonitorLab.Core.Contracts;
 using MonitorLab.Data;
 using MonitorLab.Data.EntityDTOs;
+using MonitorLab.Data.Models;
+using NuGet.Packaging;
 using Monitor = MonitorLab.Data.Models.Monitor;
 namespace MonitorLab.Core.Services
 {
@@ -65,6 +67,28 @@ namespace MonitorLab.Core.Services
             return monitors;
         }
 
+        public async Task<CompareDTO> GetMonitorComparisonAsync(IList<Guid> ids)
+        {
+            CompareDTO dto = new CompareDTO();
+
+            foreach (var id in ids)
+            {
+                Monitor? monitor = await GetMonitorByIdWithPortsAsync(id);
+                if (monitor == null)
+                {
+                   continue;
+                }
+
+                MonitorComparisonCardDTO monitorDto = mapper.Map<MonitorComparisonCardDTO>(monitor);
+
+                monitorDto.Ports = MapMonitorPorts(monitor.MonitorPorts);
+
+                dto.Monitors.Add(monitorDto);
+
+            }
+            return dto;
+        }
+
         public async Task<MonitorDetailsDTO?> GetMonitorDetailsAsync(Guid id)
         {
             Monitor? monitor = await GetMonitorByIdWithPortsAsync(id);
@@ -76,15 +100,10 @@ namespace MonitorLab.Core.Services
 
             MonitorDetailsDTO details = mapper.Map<MonitorDetailsDTO>(monitor);
 
-            foreach (var monitorPort in monitor.MonitorPorts)
-            {
-                MonitorPortDetailsDTO portDetails = mapper.Map<MonitorPortDetailsDTO>(monitorPort.Port);
-                portDetails.Count = monitorPort.Count;
-
-                details.Ports = details.Ports.Append(portDetails);
-            }
+            details.Ports = MapMonitorPorts(monitor.MonitorPorts);
 
             return details;
+
         }
 
         private async Task<Monitor?> GetMonitorByIdWithPortsAsync(Guid id)
@@ -94,5 +113,18 @@ namespace MonitorLab.Core.Services
                 .ThenInclude(mp => mp.Port)
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
+
+        private IEnumerable<MonitorPortDetailsDTO> MapMonitorPorts(IEnumerable<MonitorPort> monitorPorts)
+        {
+            return monitorPorts.Select(mp =>
+            {
+                MonitorPortDetailsDTO portDto = mapper.Map<MonitorPortDetailsDTO>(mp.Port);
+                portDto.Count = mp.Count;
+
+                return portDto;
+            })
+              .ToList();
+        }
+
     }
 }

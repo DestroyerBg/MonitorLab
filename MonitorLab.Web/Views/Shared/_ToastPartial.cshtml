@@ -1,0 +1,31 @@
+﻿@if (TempData["ToastMessage"] != null)
+{
+    string toastType = TempData["ToastType"]?.ToString() ?? "success";
+    bool isSuccess = toastType == "success";
+
+    <div class="toast-container position-fixed top-0 end-0 p-3 monitorlab-toast-container">
+        <div id="monitorlabToast"
+             class="toast monitorlab-toast @(isSuccess ? "monitorlab-toast-success" : "monitorlab-toast-error")"
+             role="alert"
+             aria-live="assertive"
+             aria-atomic="true">
+
+            <div class="toast-header monitorlab-toast-header">
+                <i class="bi @(isSuccess ? "bi-check-circle-fill" : "bi-exclamation-triangle-fill") me-2"></i>
+
+                <strong class="me-auto">
+                    @(isSuccess ? "Успешно" : "Грешка")
+                </strong>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+            </div>
+
+            <div class="toast-body">
+                @TempData["ToastMessage"]
+            </div>
+        </div>
+    </div>
+}

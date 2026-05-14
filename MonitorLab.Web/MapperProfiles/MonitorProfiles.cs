@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MonitorLab.Data.EntityDTOs;
 using MonitorLab.Data.Models;
+using MonitorLab.Web.Models.CompareViewModels;
 using MonitorLab.Web.Models.MonitorViewModels;
 using Monitor = MonitorLab.Data.Models.Monitor;
 
@@ -19,7 +20,17 @@ namespace MonitorLab.Web.MapperProfiles
             CreateMap<MonitorPortDetailsDTO, MonitorPortDetailsViewModel>();
             CreateMap<Port, MonitorPortDetailsDTO>()
                 .ForMember(dest => dest.Count, opt => opt.Ignore());
-            
+            CreateMap<Monitor, MonitorComparisonCardDTO>()
+                .ForMember(dest => dest.Ports, opt => opt.Ignore())
+                .ForMember(dest => dest.GamingScore, opt => opt.Ignore())
+                .ForMember(dest => dest.OfficeScore, opt => opt.Ignore())
+                .ForMember(dest => dest.MultimediaScore, opt => opt.Ignore())
+                .ForMember(dest => dest.DesignScore, opt => opt.Ignore());
+            CreateMap<MonitorComparisonCardDTO, MonitorComparisonCardViewModel>();
+            CreateMap<ComparisonRecommendationDTO, ComparisonRecommendationViewModel>();
+            CreateMap<CompareDTO, CompareViewModel>();
+
+
         }
     }
 }

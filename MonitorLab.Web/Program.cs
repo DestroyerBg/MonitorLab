@@ -20,6 +20,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IMonitorService, MonitorService>();
 builder.Services.RegisterAutomapper();
+
+builder.Services.AddSession();
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,8 +37,11 @@ else
 }
 
 app.CreateDatabase();
+
 app.UseHttpsRedirection();
+
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -32,7 +32,7 @@
                             <a class="nav-link nav-link-custom" asp-area="" asp-controller="Monitors" asp-action="Index">Монитори</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Monitors" asp-action="Compare">Сравнение</a>
+                            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Compare" asp-action="Index">Сравнение</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link nav-link-custom" asp-area="" asp-controller="Home" asp-action="About">За проекта</a>
@@ -68,9 +68,11 @@
             </div>
         </div>
     </footer>
+    <partial name="_ToastPartial" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/toast-partial.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
