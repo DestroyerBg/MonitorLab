@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MonitorLab.Core.Contracts;
+using MonitorLab.Data.Common;
 using MonitorLab.Data.EntityDTOs;
 using MonitorLab.Web.Infrastructure;
 using MonitorLab.Web.Models.CompareViewModels;
@@ -48,13 +49,36 @@ namespace MonitorLab.Web.Controllers
                 : Redirect(returnUrl ?? Url.Action("Index", "Monitors")!); 
         }
 
-        public IActionResult Remove(Guid id)
+        public async Task<IActionResult> Remove(Guid id)
         {
-            List<Guid> ids = HttpContext.Session.GetObject<List<Guid>>("CompareMonitors") ?? new();
+            List<Guid> ids = HttpContext.Session
+                .GetObject<List<Guid>>("CompareMonitors") ?? new();
+
+            MonitorDetailsDTO? monitor =
+                await monitorService.GetMonitorDetailsAsync(id);
+
+            if (monitor == null)
+            {
+                TempData[TempDataMessages.ToastType] =
+                    TempDataMessages.Error;
+
+                TempData[TempDataMessages.ToastMessage] =
+                    TempDataMessages.MonitorNotFound;
+
+                return RedirectToAction(nameof(Index));
+            }
 
             ids.Remove(id);
 
             HttpContext.Session.SetObject("CompareMonitors", ids);
+
+            TempData[TempDataMessages.ToastType] =
+                TempDataMessages.Success;
+
+            TempData[TempDataMessages.ToastMessage] =
+                TempDataMessages.MonitorRemovedSuccessfully(
+                    monitor.Brand,
+                    monitor.Model);
 
             return RedirectToAction(nameof(Index));
         }

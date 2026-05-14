@@ -16,5 +16,9 @@
 
         public static string MonitorAddedSuccessfully(string brand, string model)
             => $"{brand} {model} е добавен успешно за сравнение.";
+
+        public static string MonitorRemovedSuccessfully(string brand, string model)
+            => $"{brand} {model} беше премахнат от сравнението.";
     }
 }
+    
