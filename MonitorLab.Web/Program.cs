@@ -19,6 +19,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IMonitorService, MonitorService>();
+builder.Services.AddScoped<IComparisonScoreService, ComparisonScoreService>();
 builder.Services.RegisterAutomapper();
 
 builder.Services.AddSession();

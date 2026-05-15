@@ -234,3 +234,45 @@
     color: #ffffff;
     transform: translateY(-1px);
 }
+.recommendation-grid {
+    max-width: 1120px;
+    margin: 1.4rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.recommendation-card {
+    background: rgba(15, 23, 42, 0.36);
+    border: 1px solid rgba(148, 163, 184, 0.20);
+    border-radius: 18px;
+    padding: 1.2rem;
+    transition: 0.25s ease;
+}
+
+.recommendation-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(96, 165, 250, 0.38);
+    box-shadow: 0 10px 28px rgba(37, 99, 235, 0.14);
+}
+
+.recommendation-card h3 {
+    color: #f8fafc;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.recommendation-card h3 i {
+    color: #60a5fa;
+}
+
+.recommendation-card p {
+    color: #cbd5e1;
+    line-height: 1.6;
+    margin: 0;
+}
+
+

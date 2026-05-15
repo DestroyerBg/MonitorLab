@@ -10,6 +10,7 @@ namespace MonitorLab.Web.Controllers
 {
     public class CompareController(
         IMonitorService monitorService,
+        IComparisonScoreService comparisonScoreService,
         IMapper mapper) : Controller
     {
         public async Task<IActionResult> Index()
@@ -17,6 +18,8 @@ namespace MonitorLab.Web.Controllers
             IList<Guid> ids = HttpContext.Session.GetObject<List<Guid>>("CompareMonitors") ?? new();
 
             CompareDTO compareDTO = await monitorService.GetMonitorComparisonAsync(ids);
+            compareDTO = comparisonScoreService.ApplyScores(compareDTO);
+            compareDTO = comparisonScoreService.ApplyRecommendations(compareDTO);
 
             CompareViewModel viewModel = mapper.Map<CompareViewModel>(compareDTO);
 

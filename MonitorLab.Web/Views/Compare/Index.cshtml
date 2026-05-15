@@ -12,8 +12,17 @@
         <h1>Сравнение на монитори</h1>
 
         <p>
-            Сравнение на избраните модели по основни характеристики.
+            Сравнение на избраните модели по основни характеристики и препоръка според начина на използване.
         </p>
+    </div>
+
+    <div class="compare-top-actions">
+        <a asp-controller="Monitors"
+               asp-action="Index"
+               class="compare-catalog-btn">
+            <i class="bi bi-arrow-left"></i>
+            Обратно към каталога
+        </a>
     </div>
 
     @if (!Model.Monitors.Any())
@@ -38,16 +47,6 @@
     }
     else
     {
-        <div class="compare-top-actions">
-
-            <a asp-controller="Monitors"
-                   asp-action="Index"
-                   class="compare-catalog-btn">
-                <i class="bi bi-arrow-left"></i>
-                Обратно към каталога
-            </a>
-
-        </div>
         <div class="compare-table-wrapper">
             <table class="compare-table">
                 <thead>
@@ -165,8 +164,78 @@
                             </td>
                         }
                     </tr>
+
+                    <tr>
+                        <td>Гейминг оценка</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>@monitor.GamingScore / 15</td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Офис оценка</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>@monitor.OfficeScore / 15</td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Мултимедия оценка</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>@monitor.MultimediaScore / 15</td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Дизайн оценка</td>
+
+                        @foreach (var monitor in Model.Monitors)
+                        {
+                            <td>@monitor.DesignScore / 15</td>
+                        }
+                    </tr>
                 </tbody>
             </table>
+        </div>
+
+        <div class="recommendation-grid">
+            <article class="recommendation-card">
+                <h3>
+                    <i class="bi bi-controller"></i>
+                    Най-подходящ за гейминг
+                </h3>
+                <p>@Model.Recommendations.GamingRecommendation</p>
+            </article>
+
+            <article class="recommendation-card">
+                <h3>
+                    <i class="bi bi-briefcase"></i>
+                    Най-подходящ за офис
+                </h3>
+                <p>@Model.Recommendations.OfficeRecommendation</p>
+            </article>
+
+            <article class="recommendation-card">
+                <h3>
+                    <i class="bi bi-film"></i>
+                    Най-подходящ за мултимедия
+                </h3>
+                <p>@Model.Recommendations.MultimediaRecommendation</p>
+            </article>
+
+            <article class="recommendation-card">
+                <h3>
+                    <i class="bi bi-palette"></i>
+                    Най-подходящ за дизайн
+                </h3>
+                <p>@Model.Recommendations.DesignRecommendation</p>
+            </article>
         </div>
     }
 

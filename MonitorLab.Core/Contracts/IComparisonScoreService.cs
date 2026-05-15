@@ -4,7 +4,7 @@ namespace MonitorLab.Core.Contracts
 {
     public interface IComparisonScoreService
     {
-        void ApplyScores(CompareDTO model);
-        void ApplyRecommendations(CompareDTO model);
+        CompareDTO ApplyScores(CompareDTO model);
+        CompareDTO ApplyRecommendations(CompareDTO model);
     }
 }
