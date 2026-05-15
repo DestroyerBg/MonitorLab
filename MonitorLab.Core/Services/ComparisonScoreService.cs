@@ -1,6 +1,6 @@
 ﻿using MonitorLab.Core.Contracts;
 using MonitorLab.Data.EntityDTOs;
-
+using static MonitorLab.Data.Common.StaticMessages;
 namespace MonitorLab.Core.Services
 {
     public class ComparisonScoreService : IComparisonScoreService
@@ -13,16 +13,16 @@ namespace MonitorLab.Core.Services
             }
 
             dto.Recommendations.GamingRecommendation =
-                GetRecommendationText(dto.Monitors.MaxBy(m => m.GamingScore), "гейминг");
+                GetRecommendationText(dto.Monitors.MaxBy(m => m.GamingScore), Gaming);
 
             dto.Recommendations.OfficeRecommendation =
-                GetRecommendationText(dto.Monitors.MaxBy(m => m.OfficeScore), "офис работа");
+                GetRecommendationText(dto.Monitors.MaxBy(m => m.OfficeScore), Office);
 
             dto.Recommendations.MultimediaRecommendation =
-                GetRecommendationText(dto.Monitors.MaxBy(m => m.MultimediaScore), "мултимедия");
+                GetRecommendationText(dto.Monitors.MaxBy(m => m.MultimediaScore), Multimedia);
 
             dto.Recommendations.DesignRecommendation =
-                GetRecommendationText(dto.Monitors.MaxBy(m => m.DesignScore), "дизайн и обработка");
+                GetRecommendationText(dto.Monitors.MaxBy(m => m.DesignScore), Design);
 
             return dto;
         }
@@ -163,7 +163,7 @@ namespace MonitorLab.Core.Services
                 return string.Empty;
             }
 
-            return $"{monitor.Brand} {monitor.Model} е най-подходящ за {usage} според сравнените параметри.";
+            return GetRecommendationTextFromStaticMessages(monitor, usage);
         }
     }
 }
