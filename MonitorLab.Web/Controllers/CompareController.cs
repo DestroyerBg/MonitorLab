@@ -10,8 +10,21 @@ namespace MonitorLab.Web.Controllers
 {
     public class CompareController(
         IMonitorService monitorService,
+        IComparisonScoreService comparisonScoreService,
         IMapper mapper) : Controller
     {
+        public async Task<IActionResult> Index()
+        {
+            IList<Guid> ids = HttpContext.Session.GetObject<List<Guid>>("CompareMonitors") ?? new();
+
+            CompareDTO compareDTO = await monitorService.GetMonitorComparisonAsync(ids);
+            compareDTO = comparisonScoreService.ApplyScores(compareDTO);
+            compareDTO = comparisonScoreService.ApplyRecommendations(compareDTO);
+
+            CompareViewModel viewModel = mapper.Map<CompareViewModel>(compareDTO);
+
+            return View(viewModel);
+        }
         public async Task<IActionResult> Add(Guid id, string? returnUrl = null)
         {
             IList<Guid> ids = HttpContext.Session.GetObject<List<Guid>>("CompareMonitors") ?? new();
@@ -43,10 +56,10 @@ namespace MonitorLab.Web.Controllers
 
             TempData["ToastType"] = Success;
             TempData["ToastMessage"] = MonitorAddedSuccessfully(monitor.Brand, monitor.Model);
-            
+
 
             return ids.Count == 3 ? RedirectToAction(nameof(Index))
-                : Redirect(returnUrl ?? Url.Action("Index", "Monitors")!); 
+                : Redirect(returnUrl ?? Url.Action("Index", "Monitors")!);
         }
 
         public async Task<IActionResult> Remove(Guid id)
@@ -83,15 +96,6 @@ namespace MonitorLab.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Index()
-        {
-            IList<Guid> ids = HttpContext.Session.GetObject<List<Guid>>("CompareMonitors") ?? new();
-            
-            CompareDTO compareDTO = await monitorService.GetMonitorComparisonAsync(ids);
 
-            CompareViewModel viewModel = mapper.Map<CompareViewModel>(compareDTO);
-
-            return View(viewModel);
-        }
     }
 }
