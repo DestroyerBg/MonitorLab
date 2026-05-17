@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MonitorLab.Data;
 using MonitorLab.Data.Seed;
 using MonitorLab.Web.MapperProfiles;
@@ -21,13 +22,8 @@ namespace MonitorLab.Web.Infrastructure
 
         public static IServiceCollection RegisterAutomapper(this IServiceCollection services)
         {
-             services.AddAutoMapper(cfg => cfg.AddMaps(typeof(MonitorProfiles).Assembly));
-             return services;
-        }
-
-        public static HttpContext GetObject(this HttpContext context)
-        {
-            return context;
+            services.AddAutoMapper(cfg => cfg.AddMaps(typeof(MonitorProfiles).Assembly));
+            return services;
         }
 
         public static void SetObject<T>(
@@ -53,5 +49,18 @@ namespace MonitorLab.Web.Infrastructure
 
             return JsonSerializer.Deserialize<T>(json);
         }
+
+        public static async Task<WebApplication> SeedAdminAsync(this WebApplication app)
+        {
+            using IServiceScope scope = app.Services.CreateScope();
+            UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            IConfiguration configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+
+            await AdminSeeder.SeedAsync(userManager, roleManager, configuration);
+
+            return app;
+        }
+
     }
 }
