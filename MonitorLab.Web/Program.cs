@@ -13,13 +13,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddSignInManager<SignInManager<IdentityUser>>()
+    .AddRoles<IdentityRole>()
+    .AddRoleManager<RoleManager<IdentityRole>>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IMonitorService, MonitorService>();
 builder.Services.AddScoped<IComparisonScoreService, ComparisonScoreService>();
+builder.Services.AddScoped<IUserService, ApplicationUserService>();
 builder.Services.RegisterAutomapper();
 
 builder.Services.AddSession();
@@ -37,7 +41,9 @@ else
     app.UseHsts();
 }
 
-app.CreateDatabase();
+await app.CreateDatabase();
+
+await app.SeedAdminAsync();
 
 app.UseHttpsRedirection();
 

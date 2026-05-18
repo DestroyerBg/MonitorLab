@@ -100,7 +100,7 @@
 
                         @foreach (var monitor in Model.Monitors)
                         {
-                            <td>@monitor.Resolution</td>
+                            <td>@monitor.Resolution/<strong>@monitor.GetResolutionPixelsRatio(monitor.Resolution)</strong></td>
                         }
                     </tr>
 

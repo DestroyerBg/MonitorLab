@@ -35,11 +35,45 @@
                             <a class="nav-link nav-link-custom" asp-area="" asp-controller="Compare" asp-action="Index">Сравнение</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Home" asp-action="About">За проекта</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link nav-link-custom" asp-area="" asp-controller="Home" asp-action="Guide">Техническа информация</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Home" asp-action="About">За проекта</a>
+                        </li>
+                        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-custom"
+                                       asp-area="Admin"
+                                       asp-controller="Monitors"
+                                       asp-action="Index">
+                                    <i class="bi bi-shield-check me-1"></i>
+                                    Админ панел
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-controller="Account"
+                                      asp-action="Logout"
+                                      method="post"
+                                      class="d-inline">
+                                    <button type="submit" class="nav-link nav-link-custom btn btn-link">
+                                        <i class="bi bi-box-arrow-right me-1"></i>
+                                        Изход
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-custom"
+                                       asp-controller="Account"
+                                       asp-action="Login">
+                                    <i class="bi bi-shield-check me-1"></i>
+                                   Вход админ
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

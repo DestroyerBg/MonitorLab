@@ -33,5 +33,22 @@ namespace MonitorLab.Web.Models.CompareViewModels
         public int MultimediaScore { get; set; }
 
         public int DesignScore { get; set; }
+
+        public string GetResolutionPixelsRatio(string resolution)
+        {
+            switch (resolution)
+            {
+                case "FullHD":
+                    return "1920x1080";
+                case "QHD":
+                    return "2560x1440";
+                case "UHD":
+                    return "3840x2160";
+                case "UWQHD":
+                    return "3440x1440";
+                default:
+                    return string.Empty;
+            }
+        }
     }
 }
