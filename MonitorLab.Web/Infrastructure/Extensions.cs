@@ -8,7 +8,7 @@ namespace MonitorLab.Web.Infrastructure
 {
     public static class Extensions
     {
-        public static async void CreateDatabase(this WebApplication app)
+        public static async Task CreateDatabase(this WebApplication app)
         {
             using IServiceScope scope = app.Services.CreateScope();
             ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

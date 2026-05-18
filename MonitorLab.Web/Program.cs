@@ -23,6 +23,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IMonitorService, MonitorService>();
 builder.Services.AddScoped<IComparisonScoreService, ComparisonScoreService>();
+builder.Services.AddScoped<IUserService, ApplicationUserService>();
 builder.Services.RegisterAutomapper();
 
 builder.Services.AddSession();
@@ -40,7 +41,7 @@ else
     app.UseHsts();
 }
 
-app.CreateDatabase();
+await app.CreateDatabase();
 
 await app.SeedAdminAsync();
 
