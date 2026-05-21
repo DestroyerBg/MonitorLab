@@ -29,8 +29,8 @@ namespace MonitorLab.Web.MapperProfiles
             CreateMap<MonitorComparisonCardDTO, MonitorComparisonCardViewModel>();
             CreateMap<ComparisonRecommendationDTO, ComparisonRecommendationViewModel>();
             CreateMap<CompareDTO, CompareViewModel>();
-
-
+            CreateMap<MonitorCreateDTO, MonitorCreateViewModel>();
+             
         }
     }
 }

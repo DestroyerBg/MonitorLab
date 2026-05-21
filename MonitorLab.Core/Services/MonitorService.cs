@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonitorLab.Core.Contracts;
 using MonitorLab.Data;
 using MonitorLab.Data.EntityDTOs;
 using MonitorLab.Data.Models;
-using NuGet.Packaging;
 using Monitor = MonitorLab.Data.Models.Monitor;
 namespace MonitorLab.Core.Services
 {
@@ -104,6 +104,35 @@ namespace MonitorLab.Core.Services
 
             return details;
 
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetDistinctResolutions()
+        {
+            IEnumerable<SelectListItem> resolutions = await dbContext.Monitors
+                .Select(m => m.Resolution)
+                .Distinct()
+                .Select(r => new SelectListItem
+                {
+                    Text = r.ToString(),
+                    Value = r.ToString()
+                })
+                .ToListAsync();
+
+            return resolutions;
+        }
+        public async Task<IEnumerable<SelectListItem>> GetDistinctPanelTypes()
+        {
+            IEnumerable<SelectListItem> panelTypes = await dbContext.Monitors
+                .Select(m => m.PanelType)
+                .Distinct()
+                .Select(r => new SelectListItem
+                {
+                    Text = r.ToString(),
+                    Value = r.ToString()
+                })
+                .ToListAsync();
+
+            return panelTypes;
         }
 
         private async Task<Monitor?> GetMonitorByIdWithPortsAsync(Guid id)

@@ -255,3 +255,49 @@
     background: rgba(239, 68, 68, 0.22);
     color: #fee2e2;
 }
+
+.admin-form-card {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 1.4rem;
+    border-radius: 18px;
+    background: rgba(15, 23, 42, 0.36);
+    border: 1px solid rgba(148, 163, 184, 0.20);
+}
+
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.admin-textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.admin-form-actions {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.admin-cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.8rem 1.1rem;
+    border-radius: 12px;
+    background: rgba(148, 163, 184, 0.12);
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 750;
+}
+
+.admin-cancel-btn:hover {
+    background: rgba(148, 163, 184, 0.20);
+    color: #f8fafc;
+}
+
+
