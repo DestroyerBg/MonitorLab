@@ -27,4 +27,8 @@
     <ProjectReference Include="..\MonitorLab.Data\MonitorLab.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
 </Project>

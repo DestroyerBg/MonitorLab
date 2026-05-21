@@ -34,7 +34,7 @@ namespace MonitorLab.Core.Services
             IdentityUser? user = await userManager.FindByEmailAsync(dto.Email);
             if (user == null)
             {
-                return new SignInResult();
+                return SignInResult.Failed;
             }
 
             SignInResult result =

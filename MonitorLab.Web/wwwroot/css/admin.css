@@ -127,6 +127,131 @@
     font-weight: 700;
 }
 
-    .admin-back-link:hover {
-        color: #dbeafe;
+.admin-back-link:hover {
+    color: #dbeafe;
+}
+
+.admin-panel-page {
+    padding: 1.4rem 0.4rem;
+}
+
+.admin-panel-header {
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto 2rem;
+}
+
+    .admin-panel-header h1 {
+        color: #f8fafc;
+        font-size: 2.25rem;
+        font-weight: 750;
+        margin-bottom: 0.8rem;
     }
+
+    .admin-panel-header p {
+        color: #cbd5e1;
+        line-height: 1.7;
+    }
+
+.admin-actions-bar {
+    max-width: 1120px;
+    margin: 0 auto 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.admin-add-btn,
+.admin-edit-btn,
+.admin-delete-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    text-decoration: none;
+    font-weight: 750;
+    border-radius: 12px;
+    transition: 0.2s ease;
+}
+
+.admin-add-btn {
+    padding: 0.8rem 1.1rem;
+    background: #2563eb;
+    color: white;
+}
+
+    .admin-add-btn:hover {
+        background: #1d4ed8;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+.admin-table-wrapper {
+    max-width: 1120px;
+    margin: 0 auto;
+    overflow-x: auto;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.20);
+    background: rgba(15, 23, 42, 0.36);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+.admin-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+    color: #cbd5e1;
+}
+
+    .admin-table th,
+    .admin-table td {
+        padding: 1rem;
+        border: 1px solid rgba(148, 163, 184, 0.14);
+        vertical-align: middle;
+    }
+
+    .admin-table thead th {
+        background: rgba(15, 23, 42, 0.94);
+        color: #f8fafc;
+        font-weight: 800;
+    }
+
+    .admin-table tbody tr {
+        transition: 0.2s ease;
+    }
+
+        .admin-table tbody tr:hover {
+            background: rgba(37, 99, 235, 0.08);
+        }
+
+    .admin-table strong {
+        color: #f8fafc;
+    }
+
+.admin-row-actions {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.admin-edit-btn {
+    padding: 0.55rem 0.8rem;
+    background: rgba(96, 165, 250, 0.12);
+    border: 1px solid rgba(96, 165, 250, 0.25);
+    color: #93c5fd;
+}
+
+.admin-edit-btn:hover {
+    background: rgba(96, 165, 250, 0.22);
+    color: #dbeafe;
+}
+
+.admin-delete-btn {
+    padding: 0.55rem 0.8rem;
+    background: rgba(248, 113, 113, 0.12);
+    border: 1px solid rgba(248, 113, 113, 0.25);
+    color: #fca5a5;
+}
+
+.admin-delete-btn:hover {
+    background: rgba(239, 68, 68, 0.22);
+    color: #fee2e2;
+}
