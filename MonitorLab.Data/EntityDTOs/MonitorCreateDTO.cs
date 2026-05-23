@@ -10,6 +10,7 @@ namespace MonitorLab.Data.EntityDTOs
         public double ScreenSizeInches { get; set; }
         public int RefreshRateHz { get; set; }
 
+        public double ResponseTimeMs { get; set; }
         public int BrightnessNits { get; set; }
 
         public string ContrastRatio { get; set; } = null!;
