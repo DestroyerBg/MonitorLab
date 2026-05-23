@@ -18,5 +18,8 @@ namespace MonitorLab.Core.Contracts
         Task<IEnumerable<SelectListItem>> GetDistinctPanelTypes();
 
         Task<IEnumerable<SelectListItem>> GetDistinctResolutions();
+        
+        Task<Guid> CreateMonitorAsync(MonitorCreateDTO monitorCreateDTO);
+        Task UpdateMonitorImageAsync(Guid monitorId, string imageUrl);
     }
 }

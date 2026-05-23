@@ -11,6 +11,8 @@
         public const string MonitorNotFound = "Мониторът не беше намерен.";
         public const string CompareLimitReached = "Могат да се сравняват максимум 3 монитора.";
 
+        public const string MonitorAddedSuccessfullyIntoDatabase = "Мониторът беше добавен успешно.";
+
         public static string MonitorAlreadyAdded(string brand, string model)
             => $"{brand} {model} вече е добавен в списъка за сравнение.";
 

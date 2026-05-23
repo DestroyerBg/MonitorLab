@@ -135,6 +135,32 @@ namespace MonitorLab.Core.Services
             return panelTypes;
         }
 
+        public async Task<Guid> CreateMonitorAsync(MonitorCreateDTO monitorCreateDTO)
+        {
+            Monitor monitor = mapper.Map<Monitor>(monitorCreateDTO);
+
+            monitor.Id = Guid.NewGuid();
+
+            await dbContext.Monitors.AddAsync(monitor);
+            await dbContext.SaveChangesAsync();
+
+            return monitor.Id;
+        }
+
+        public async Task UpdateMonitorImageAsync(Guid monitorId, string imageUrl)
+        {
+            Monitor? monitor = await dbContext.Monitors.FindAsync(monitorId);
+
+            if (monitor == null)
+            {
+                return;
+            }
+
+            monitor.ImageUrl = imageUrl;
+
+            await dbContext.SaveChangesAsync();
+        }
+
         private async Task<Monitor?> GetMonitorByIdWithPortsAsync(Guid id)
         {
             return await dbContext.Monitors
