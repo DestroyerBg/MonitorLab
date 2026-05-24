@@ -255,3 +255,110 @@
     background: rgba(239, 68, 68, 0.22);
     color: #fee2e2;
 }
+
+.admin-form-card {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 1.4rem;
+    border-radius: 18px;
+    background: rgba(15, 23, 42, 0.36);
+    border: 1px solid rgba(148, 163, 184, 0.20);
+}
+
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.admin-textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.admin-form-actions {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.admin-cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.8rem 1.1rem;
+    border-radius: 12px;
+    background: rgba(148, 163, 184, 0.12);
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 750;
+}
+
+.admin-cancel-btn:hover {
+    background: rgba(148, 163, 184, 0.20);
+    color: #f8fafc;
+}
+
+.admin-ports-section {
+    margin-top: 1.4rem;
+    padding: 1.2rem;
+    border-radius: 18px;
+    background: rgba(15, 23, 42, 0.32);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+    .admin-ports-section h2 {
+        color: #f8fafc;
+        font-size: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .admin-ports-section p {
+        color: #94a3b8;
+        margin-bottom: 1rem;
+    }
+
+.admin-ports-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem;
+}
+
+.admin-port-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem;
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.46);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.admin-port-check {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: #e5e7eb;
+    font-weight: 700;
+}
+
+    .admin-port-check input {
+        width: 18px;
+        height: 18px;
+    }
+
+.admin-port-count {
+    width: 90px;
+}
+
+    .admin-port-count label {
+        color: #94a3b8;
+        font-size: 0.85rem;
+    }
+
+
+

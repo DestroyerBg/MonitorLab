@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using MonitorLab.Core.Contracts;
 using MonitorLab.Core.Services;
 using MonitorLab.Data;
+using MonitorLab.Web.Contracts;
 using MonitorLab.Web.Infrastructure;
+using MonitorLab.Web.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IMonitorService, MonitorService>();
 builder.Services.AddScoped<IComparisonScoreService, ComparisonScoreService>();
 builder.Services.AddScoped<IUserService, ApplicationUserService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.RegisterAutomapper();
 
 builder.Services.AddSession();

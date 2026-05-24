@@ -29,8 +29,18 @@ namespace MonitorLab.Web.MapperProfiles
             CreateMap<MonitorComparisonCardDTO, MonitorComparisonCardViewModel>();
             CreateMap<ComparisonRecommendationDTO, ComparisonRecommendationViewModel>();
             CreateMap<CompareDTO, CompareViewModel>();
-
-
+            CreateMap<MonitorCreateDTO, MonitorCreateViewModel>()
+                .ForMember(src => src.Resolutions, opt => opt.Ignore())
+                .ForMember(src => src.PanelTypes, opt => opt.Ignore())
+                .ForMember(src => src.ImageFile, opt => opt.Ignore());
+            CreateMap<MonitorCreateViewModel, MonitorCreateDTO>();
+            CreateMap<MonitorCreateDTO, Monitor>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.MonitorPorts, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
+            CreateMap<MonitorPortCreateViewModel, MonitorPortCreateDTO>();
+            CreateMap<MonitorPortCreateDTO, MonitorPortCreateViewModel>();
+             
         }
     }
 }

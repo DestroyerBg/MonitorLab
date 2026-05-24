@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonitorLab.Core.Contracts;
 using MonitorLab.Data;
 using MonitorLab.Data.EntityDTOs;
 using MonitorLab.Data.Models;
-using NuGet.Packaging;
 using Monitor = MonitorLab.Data.Models.Monitor;
 namespace MonitorLab.Core.Services
 {
@@ -104,6 +104,83 @@ namespace MonitorLab.Core.Services
 
             return details;
 
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetDistinctResolutions()
+        {
+            IEnumerable<SelectListItem> resolutions = await dbContext.Monitors
+                .Select(m => m.Resolution)
+                .Distinct()
+                .Select(r => new SelectListItem
+                {
+                    Text = r.ToString(),
+                    Value = r.ToString()
+                })
+                .ToListAsync();
+
+            return resolutions;
+        }
+        public async Task<IEnumerable<SelectListItem>> GetDistinctPanelTypes()
+        {
+            IEnumerable<SelectListItem> panelTypes = await dbContext.Monitors
+                .Select(m => m.PanelType)
+                .Distinct()
+                .Select(r => new SelectListItem
+                {
+                    Text = r.ToString(),
+                    Value = r.ToString()
+                })
+                .ToListAsync();
+
+            return panelTypes;
+        }
+
+        public async Task<Guid> CreateMonitorAsync(MonitorCreateDTO monitorCreateDTO)
+        {
+            Monitor monitor = mapper.Map<Monitor>(monitorCreateDTO);
+
+            monitor.Id = Guid.NewGuid();
+
+            monitor.MonitorPorts = monitorCreateDTO.Ports.Select(p => new MonitorPort
+            {
+                PortId = p.PortId,
+                MonitorId = monitor.Id,
+                Count = p.Count
+            }).ToList();
+
+            await dbContext.Monitors.AddAsync(monitor);
+            await dbContext.SaveChangesAsync();
+
+            return monitor.Id;
+        }
+
+        public async Task<IList<MonitorPortCreateDTO>> GetPortsForCreateAsync()
+        {
+            return await dbContext.Ports
+                .OrderBy(p => p.Name)
+                .ThenBy(p => p.Version)
+                .Select(p => new MonitorPortCreateDTO
+                {
+                    PortId = p.Id,
+                    Name = p.Name,
+                    Version = p.Version,
+                    Count = 1
+                })
+                .ToListAsync();
+        }
+
+        public async Task UpdateMonitorImageAsync(Guid monitorId, string imageUrl)
+        {
+            Monitor? monitor = await dbContext.Monitors.FindAsync(monitorId);
+
+            if (monitor == null)
+            {
+                return;
+            }
+
+            monitor.ImageUrl = imageUrl;
+
+            await dbContext.SaveChangesAsync();
         }
 
         private async Task<Monitor?> GetMonitorByIdWithPortsAsync(Guid id)

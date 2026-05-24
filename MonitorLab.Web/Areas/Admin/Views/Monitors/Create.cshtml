@@ -1,0 +1,150 @@
+﻿@model MonitorCreateViewModel
+
+@{
+    ViewData["Title"] = "Добавяне на монитор";
+}
+
+<section class="admin-panel-page">
+    <div class="admin-panel-header">
+        <span class="admin-login-badge">MonitorLab Admin</span>
+        <h1>Добавяне на монитор</h1>
+        <p>Попълнете техническите характеристики на новия модел.</p>
+    </div>
+
+    <form asp-area="Admin"
+          asp-controller="Monitors"
+          asp-action="Create"
+          method="post"
+          enctype="multipart/form-data"
+          class="admin-form-card">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="admin-form-grid">
+            <div class="admin-form-group">
+                <label asp-for="Brand">Марка</label>
+                <input asp-for="Brand" class="form-control" />
+                <span asp-validation-for="Brand" class="text-danger"></span>
+            </div>
+
+            <div class="admin-form-group">
+                <label asp-for="Model">Модел</label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+
+            <div class="admin-form-group">
+                <label asp-for="Resolution">Резолюция</label>
+                <select asp-for="Resolution" asp-items="Model.Resolutions" class="form-select">
+                    <option value="">Избери резолюция</option>
+                </select>
+                <span asp-validation-for="Resolution" class="text-danger"></span>
+            </div>
+
+            <div class="admin-form-group">
+                <label asp-for="PanelType">Тип панел</label>
+                <select asp-for="PanelType" asp-items="Model.PanelTypes" class="form-select">
+                    <option value="">Избери панел</option>
+                </select>
+                <span asp-validation-for="PanelType" class="text-danger"></span>
+            </div>
+
+            <div class="admin-form-group">
+                <label asp-for="ScreenSizeInches">Размер в инчове</label>
+                <input asp-for="ScreenSizeInches" class="form-control" type="number" step="0.1" />
+                <span asp-validation-for="ScreenSizeInches" class="text-danger"></span>
+            </div>
+
+            <div class="admin-form-group">
+                <label asp-for="RefreshRateHz">Честота на опресняване</label>
+                <input asp-for="RefreshRateHz" class="form-control" type="number" />
+                <span asp-validation-for="RefreshRateHz" class="text-danger"></span>
+            </div>
+
+            <div class="admin-form-group">
+                <label asp-for="ResponseTimeMs">Време за реакция</label>
+                <input asp-for="ResponseTimeMs" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="ResponseTimeMs" class="text-danger"></span>
+            </div>
+
+            <div class="admin-form-group">
+                <label asp-for="BrightnessNits">Яркост</label>
+                <input asp-for="BrightnessNits" class="form-control" type="number" />
+                <span asp-validation-for="BrightnessNits" class="text-danger"></span>
+            </div>
+
+            <div class="admin-form-group">
+                <label asp-for="ContrastRatio">Контраст</label>
+                <input asp-for="ContrastRatio" class="form-control" placeholder="примерно 1000:1" />
+                <span asp-validation-for="ContrastRatio" class="text-danger"></span>
+            </div>
+
+            <div class="admin-form-group">
+                <label asp-for="ReleaseYear">Година</label>
+                <input asp-for="ReleaseYear" class="form-control" type="number" />
+                <span asp-validation-for="ReleaseYear" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="admin-form-group">
+            <label asp-for="Description">Описание</label>
+            <textarea asp-for="Description" class="form-control admin-textarea"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="admin-form-group">
+            <label asp-for="ImageFile">Снимка</label>
+            <input asp-for="ImageFile" class="form-control" type="file" accept="image/*" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+
+        <div class="admin-ports-section">
+            <h2><i class="bi bi-usb-plug"></i> Портове</h2>
+            <p>Изберете наличните портове и задайте броя им.</p>
+
+            <div class="admin-ports-grid">
+                @for (int i = 0; i < Model.Ports.Count; i++)
+                {
+                    <div class="admin-port-option">
+                        <input type="hidden" asp-for="Ports[i].PortId" />
+                        <input type="hidden" asp-for="Ports[i].Name" />
+                        <input type="hidden" asp-for="Ports[i].Version" />
+
+                        <label class="admin-port-check">
+                            <input asp-for="Ports[i].IsSelected" />
+                            <span>@Model.Ports[i].Name @Model.Ports[i].Version</span>
+                        </label>
+
+                        <div class="admin-port-count">
+                            <label asp-for="Ports[i].Count">Брой</label>
+                            <input asp-for="Ports[i].Count"
+                                   class="form-control"
+                                   type="number"
+                                   min="1"
+                                   max="10" />
+                            <span asp-validation-for="Ports[i].Count" class="text-danger"></span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="admin-form-actions">
+            <button type="submit" class="admin-add-btn">
+                <i class="bi bi-check-circle"></i>
+                Запази
+            </button>
+
+            <a asp-area="Admin"
+                   asp-controller="Monitors"
+                   asp-action="Dashboard"
+                   class="admin-cancel-btn">
+                Отказ
+            </a>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
