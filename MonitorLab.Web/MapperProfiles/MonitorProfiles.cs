@@ -38,6 +38,8 @@ namespace MonitorLab.Web.MapperProfiles
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.MonitorPorts, opt => opt.Ignore())
                 .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
+            CreateMap<MonitorPortCreateViewModel, MonitorPortCreateDTO>();
+            CreateMap<MonitorPortCreateDTO, MonitorPortCreateViewModel>();
              
         }
     }

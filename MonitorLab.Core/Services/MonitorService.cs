@@ -141,10 +141,32 @@ namespace MonitorLab.Core.Services
 
             monitor.Id = Guid.NewGuid();
 
+            monitor.MonitorPorts = monitorCreateDTO.Ports.Select(p => new MonitorPort
+            {
+                PortId = p.PortId,
+                MonitorId = monitor.Id,
+                Count = p.Count
+            }).ToList();
+
             await dbContext.Monitors.AddAsync(monitor);
             await dbContext.SaveChangesAsync();
 
             return monitor.Id;
+        }
+
+        public async Task<IList<MonitorPortCreateDTO>> GetPortsForCreateAsync()
+        {
+            return await dbContext.Ports
+                .OrderBy(p => p.Name)
+                .ThenBy(p => p.Version)
+                .Select(p => new MonitorPortCreateDTO
+                {
+                    PortId = p.Id,
+                    Name = p.Name,
+                    Version = p.Version,
+                    Count = 1
+                })
+                .ToListAsync();
         }
 
         public async Task UpdateMonitorImageAsync(Guid monitorId, string imageUrl)

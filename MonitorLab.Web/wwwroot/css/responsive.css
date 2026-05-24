@@ -138,3 +138,18 @@
         grid-template-columns: 1fr;
     }
 }
+
+@media (max-width: 768px) {
+    .admin-ports-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-port-option {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-port-count {
+        width: 100%;
+    }
+}

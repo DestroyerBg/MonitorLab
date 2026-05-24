@@ -714,6 +714,105 @@ public class MonitorServiceTests
         Assert.That(updated, Is.Not.Null);
         Assert.That(updated!.ImageUrl, Is.EqualTo("/images/monitors/test.jpg"));
     }
+    [Test]
+    public async Task CreateMonitorAsync_ShouldCreateMonitorPorts_WhenPortsAreProvided()
+    {
+        Guid hdmiId = Guid.NewGuid();
+        Guid displayPortId = Guid.NewGuid();
+
+        await dbContext.Ports.AddRangeAsync(
+            new Port
+            {
+                Id = hdmiId,
+                Name = "HDMI",
+                Version = 2.1
+            },
+            new Port
+            {
+                Id = displayPortId,
+                Name = "DisplayPort",
+                Version = 1.4
+            });
+
+        await dbContext.SaveChangesAsync();
+
+        MonitorCreateDTO dto = new()
+        {
+            Brand = "LG",
+            Model = "UltraGear",
+            Resolution = "QHD",
+            PanelType = "IPS",
+            ScreenSizeInches = 27,
+            RefreshRateHz = 165,
+            ResponseTimeMs = 1,
+            BrightnessNits = 400,
+            ContrastRatio = "1000:1",
+            Description = "Gaming monitor",
+            ReleaseYear = 2024,
+
+            Ports = new List<MonitorPortCreateDTO>
+        {
+            new()
+            {
+                PortId = hdmiId,
+                Count = 2
+            },
+            new()
+            {
+                PortId = displayPortId,
+                Count = 1
+            }
+        }
+        };
+
+        Guid monitorId =
+            await monitorService.CreateMonitorAsync(dto);
+
+        List<MonitorPort> monitorPorts = await dbContext.MonitorPorts
+            .Where(mp => mp.MonitorId == monitorId)
+            .ToListAsync();
+
+        Assert.That(monitorPorts.Count, Is.EqualTo(2));
+
+        MonitorPort hdmiPort =
+            monitorPorts.First(mp => mp.PortId == hdmiId);
+
+        Assert.That(hdmiPort.Count, Is.EqualTo(2));
+
+        MonitorPort displayPort =
+            monitorPorts.First(mp => mp.PortId == displayPortId);
+
+        Assert.That(displayPort.Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public async Task CreateMonitorAsync_ShouldNotCreateMonitorPorts_WhenNoPortsAreProvided()
+    {
+        MonitorCreateDTO dto = new()
+        {
+            Brand = "Samsung",
+            Model = "Odyssey G5",
+            Resolution = "QHD",
+            PanelType = "VA",
+            ScreenSizeInches = 27,
+            RefreshRateHz = 144,
+            ResponseTimeMs = 1,
+            BrightnessNits = 350,
+            ContrastRatio = "2500:1",
+            Description = "Curved gaming monitor",
+            ReleaseYear = 2024,
+
+            Ports = new List<MonitorPortCreateDTO>()
+        };
+
+        Guid monitorId =
+            await monitorService.CreateMonitorAsync(dto);
+
+        bool hasPorts = await dbContext.MonitorPorts
+            .AnyAsync(mp => mp.MonitorId == monitorId);
+
+        Assert.That(hasPorts, Is.False);
+    }
 
     [Test]
     public async Task UpdateMonitorImageAsync_ShouldNotThrow_WhenMonitorDoesNotExist()

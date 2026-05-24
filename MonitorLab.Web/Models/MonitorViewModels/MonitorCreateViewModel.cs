@@ -77,4 +77,7 @@ public class MonitorCreateViewModel
 
     public IEnumerable<SelectListItem> PanelTypes { get; set; }
         = new List<SelectListItem>();
+
+    public IList<MonitorPortCreateViewModel> Ports { get; set; }
+    = new List<MonitorPortCreateViewModel>();
 }

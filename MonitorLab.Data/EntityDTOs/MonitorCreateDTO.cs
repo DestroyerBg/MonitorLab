@@ -19,5 +19,7 @@ namespace MonitorLab.Data.EntityDTOs
 
         public int ReleaseYear { get; set; }
 
+        public IList<MonitorPortCreateDTO> Ports { get; set; } = new List<MonitorPortCreateDTO>();
+
     }
 }

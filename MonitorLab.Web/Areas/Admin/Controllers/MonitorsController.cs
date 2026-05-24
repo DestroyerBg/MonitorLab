@@ -33,6 +33,8 @@ namespace MonitorLab.Web.Areas.Admin.Controllers
         {
             MonitorCreateViewModel model = new MonitorCreateViewModel();
             await PopulateDropdowns(model);
+
+            model = await FillPorts(model);
             return View(model);
         }
 
@@ -43,6 +45,7 @@ namespace MonitorLab.Web.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 await PopulateDropdowns(httpModel!);
+                await FillPorts(httpModel!);
                 return View(httpModel);
             }
 
@@ -69,6 +72,12 @@ namespace MonitorLab.Web.Areas.Admin.Controllers
         {
             model.Resolutions = await monitorService.GetDistinctResolutions();
             model.PanelTypes = await monitorService.GetDistinctPanelTypes();
+        }
+
+        private async Task<MonitorCreateViewModel> FillPorts(MonitorCreateViewModel model)
+        {
+            model.Ports = mapper.Map<IList<MonitorPortCreateViewModel>>(await monitorService.GetPortsForCreateAsync());
+            return model;
         }
     }
 }

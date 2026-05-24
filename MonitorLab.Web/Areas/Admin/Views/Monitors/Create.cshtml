@@ -98,6 +98,37 @@
             <span asp-validation-for="ImageFile" class="text-danger"></span>
         </div>
 
+        <div class="admin-ports-section">
+            <h2><i class="bi bi-usb-plug"></i> Портове</h2>
+            <p>Изберете наличните портове и задайте броя им.</p>
+
+            <div class="admin-ports-grid">
+                @for (int i = 0; i < Model.Ports.Count; i++)
+                {
+                    <div class="admin-port-option">
+                        <input type="hidden" asp-for="Ports[i].PortId" />
+                        <input type="hidden" asp-for="Ports[i].Name" />
+                        <input type="hidden" asp-for="Ports[i].Version" />
+
+                        <label class="admin-port-check">
+                            <input asp-for="Ports[i].IsSelected" />
+                            <span>@Model.Ports[i].Name @Model.Ports[i].Version</span>
+                        </label>
+
+                        <div class="admin-port-count">
+                            <label asp-for="Ports[i].Count">Брой</label>
+                            <input asp-for="Ports[i].Count"
+                                   class="form-control"
+                                   type="number"
+                                   min="1"
+                                   max="10" />
+                            <span asp-validation-for="Ports[i].Count" class="text-danger"></span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
         <div class="admin-form-actions">
             <button type="submit" class="admin-add-btn">
                 <i class="bi bi-check-circle"></i>
