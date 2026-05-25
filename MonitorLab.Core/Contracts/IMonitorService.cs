@@ -19,5 +19,6 @@ namespace MonitorLab.Core.Contracts
         Task<IList<MonitorPortCreateDTO>> GetPortsForCreateAsync();
         Task<Guid> CreateMonitorAsync(MonitorCreateDTO monitorCreateDTO);
         Task UpdateMonitorImageAsync(Guid monitorId, string imageUrl);
+        Task<string?> DeleteMonitorAsync(Guid id);
     }
 }

@@ -68,6 +68,29 @@ namespace MonitorLab.Web.Areas.Admin.Controllers
             return RedirectToAction(nameof(Dashboard));
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            string? imageUrl = await monitorService.DeleteMonitorAsync(id);
+
+            if (imageUrl == null)
+            {
+                TempData["ToastType"] = Error;
+                TempData["ToastMessage"] = MonitorNotFound;
+                return RedirectToAction(nameof(Dashboard));
+            }
+
+            if (!string.IsNullOrWhiteSpace(imageUrl))
+            {
+                imageService.DeleteImage(imageUrl);
+            }
+
+            TempData["ToastType"] = Success;
+            TempData["ToastMessage"] = MonitorDeletedSuccessfully;
+            return RedirectToAction(nameof(Dashboard));
+        }
+
         private async Task PopulateDropdowns(MonitorCreateViewModel model)
         {
             model.Resolutions = await monitorService.GetDistinctResolutions();

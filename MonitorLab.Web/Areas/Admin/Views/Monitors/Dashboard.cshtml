@@ -57,14 +57,20 @@
                                     Промяна
                                 </a>
 
-                                <a asp-area="Admin"
-                                       asp-controller="Monitors"
-                                       asp-action="Delete"
-                                       asp-route-id="@monitor.Id"
-                                       class="admin-delete-btn">
-                                    <i class="bi bi-trash"></i>
-                                    Изтрий
-                                </a>
+                                <form asp-action="Delete"
+                                      asp-route-id="@monitor.Id"
+                                      asp-area="Admin"
+                                      method="post"
+                                      class="d-inline">
+
+                                    <button type="submit"
+                                            class="admin-delete-btn"
+                                            onclick="return confirm('Сигурни ли сте, че искате да изтриете този монитор?');">
+                                        <i class="bi bi-trash"></i>
+                                        Изтрий
+                                    </button>
+
+                                </form>
                             </div>
                         </td>
                     </tr>

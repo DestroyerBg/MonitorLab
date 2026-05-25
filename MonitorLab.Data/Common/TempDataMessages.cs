@@ -13,6 +13,8 @@
 
         public const string MonitorAddedSuccessfullyIntoDatabase = "Мониторът беше добавен успешно.";
 
+        public const string MonitorDeletedSuccessfully = "Мониторът беше изтрит успешно.";
+
         public static string MonitorAlreadyAdded(string brand, string model)
             => $"{brand} {model} вече е добавен в списъка за сравнение.";
 
