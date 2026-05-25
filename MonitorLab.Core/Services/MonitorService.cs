@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonitorLab.Core.Contracts;
@@ -181,6 +182,27 @@ namespace MonitorLab.Core.Services
             monitor.ImageUrl = imageUrl;
 
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<string?> DeleteMonitorAsync(Guid id)
+        {
+            Monitor? monitor = await dbContext.Monitors
+                .Include(m => m.MonitorPorts)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (monitor == null)
+            {
+                return null;
+            }
+
+            string? imageUrl = monitor.ImageUrl;
+
+            dbContext.MonitorPorts.RemoveRange(monitor.MonitorPorts);
+            dbContext.Monitors.Remove(monitor);
+
+            await dbContext.SaveChangesAsync();
+
+            return imageUrl;
         }
 
         private async Task<Monitor?> GetMonitorByIdWithPortsAsync(Guid id)

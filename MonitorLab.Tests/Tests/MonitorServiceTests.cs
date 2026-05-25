@@ -525,6 +525,7 @@ public class MonitorServiceTests
         Assert.That(displayPort.Count, Is.EqualTo(1));
     }
 
+
     private async Task SeedMonitors()
     {
         await dbContext.Monitors.AddRangeAsync(
@@ -821,5 +822,129 @@ public class MonitorServiceTests
             await monitorService.UpdateMonitorImageAsync(
                 Guid.NewGuid(),
                 "/images/monitors/test.jpg"));
+    }
+
+    [Test]
+    public async Task DeleteMonitorAsync_ShouldReturnNull_WhenMonitorDoesNotExist()
+    {
+        string? result = await monitorService.DeleteMonitorAsync(Guid.NewGuid());
+
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public async Task DeleteMonitorAsync_ShouldDeleteMonitor_WhenMonitorExists()
+    {
+        Monitor monitor = new()
+        {
+            Id = Guid.NewGuid(),
+            Brand = "LG",
+            Model = "UltraGear",
+            Resolution = ResolutionType.QHD,
+            PanelType = PanelType.IPS,
+            ScreenSizeInches = 27,
+            RefreshRateHz = 165,
+            ResponseTimeMs = 1,
+            BrightnessNits = 350,
+            ContrastRatio = "1000:1",
+            Description = "Test monitor",
+            ImageUrl = "/images/monitors/lg.jpg",
+            ReleaseYear = 2024
+        };
+
+        await dbContext.Monitors.AddAsync(monitor);
+        await dbContext.SaveChangesAsync();
+
+        string? result = await monitorService.DeleteMonitorAsync(monitor.Id);
+
+        Monitor? deletedMonitor = await dbContext.Monitors.FindAsync(monitor.Id);
+
+        Assert.That(result, Is.EqualTo("/images/monitors/lg.jpg"));
+        Assert.That(deletedMonitor, Is.Null);
+    }
+
+    [Test]
+    public async Task DeleteMonitorAsync_ShouldDeleteMonitorPorts_WhenMonitorHasPorts()
+    {
+        Guid monitorId = Guid.NewGuid();
+        Guid hdmiId = Guid.NewGuid();
+
+        Monitor monitor = new()
+        {
+            Id = monitorId,
+            Brand = "Samsung",
+            Model = "Odyssey",
+            Resolution = ResolutionType.QHD,
+            PanelType = PanelType.VA,
+            ScreenSizeInches = 27,
+            RefreshRateHz = 165,
+            ResponseTimeMs = 1,
+            BrightnessNits = 350,
+            ContrastRatio = "2500:1",
+            Description = "Test monitor",
+            ImageUrl = "/images/monitors/samsung.jpg",
+            ReleaseYear = 2024
+        };
+
+        Port hdmi = new()
+        {
+            Id = hdmiId,
+            Name = "HDMI",
+            Version = 2.1
+        };
+
+        MonitorPort monitorPort = new()
+        {
+            MonitorId = monitorId,
+            Monitor = monitor,
+            PortId = hdmiId,
+            Port = hdmi,
+            Count = 2
+        };
+
+        await dbContext.Monitors.AddAsync(monitor);
+        await dbContext.Ports.AddAsync(hdmi);
+        await dbContext.MonitorPorts.AddAsync(monitorPort);
+        await dbContext.SaveChangesAsync();
+
+        string? result = await monitorService.DeleteMonitorAsync(monitorId);
+
+        bool monitorExists = await dbContext.Monitors.AnyAsync(m => m.Id == monitorId);
+        bool monitorPortExists = await dbContext.MonitorPorts.AnyAsync(mp => mp.MonitorId == monitorId);
+
+        Assert.That(result, Is.EqualTo("/images/monitors/samsung.jpg"));
+        Assert.That(monitorExists, Is.False);
+        Assert.That(monitorPortExists, Is.False);
+    }
+
+    [Test]
+    public async Task DeleteMonitorAsync_ShouldReturnNullImageUrl_WhenMonitorHasNoImage()
+    {
+        Monitor monitor = new()
+        {
+            Id = Guid.NewGuid(),
+            Brand = "AOC",
+            Model = "24G4",
+            Resolution = ResolutionType.FullHD,
+            PanelType = PanelType.IPS,
+            ScreenSizeInches = 23.8,
+            RefreshRateHz = 180,
+            ResponseTimeMs = 1,
+            BrightnessNits = 300,
+            ContrastRatio = "1000:1",
+            Description = "Test monitor",
+            ImageUrl = null,
+            ReleaseYear = 2024
+        };
+
+        await dbContext.Monitors.AddAsync(monitor);
+        await dbContext.SaveChangesAsync();
+
+        string? result = await monitorService.DeleteMonitorAsync(monitor.Id);
+
+        Monitor? deletedMonitor = await dbContext.Monitors.FindAsync(monitor.Id);
+
+        Assert.That(result, Is.Null);
+        Assert.That(deletedMonitor, Is.Null);
     }
 }
