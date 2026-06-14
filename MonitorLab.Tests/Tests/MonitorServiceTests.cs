@@ -9,7 +9,10 @@ using MonitorLab.Data.Enums;
 using MonitorLab.Data.Models;
 using MonitorLab.Web.MapperProfiles;
 using NUnit.Framework;
+using static MonitorLab.Data.Common.DatabaseConstants;
 using Monitor = MonitorLab.Data.Models.Monitor;
+using MonitorPort = MonitorLab.Data.Models.MonitorPort;
+using Port = MonitorLab.Data.Models.Port;
 namespace MonitorLab.Tests;
 
 
@@ -879,8 +882,6 @@ public class MonitorServiceTests
         MonitorEditDTO? result =
             await monitorService.GetMonitorForEditAsync(monitorId);
 
-        result!.Ports = await monitorService.GetPortsForEditAsync(monitorId);
-
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.Ports.Count, Is.EqualTo(2));
 
@@ -898,20 +899,20 @@ public class MonitorServiceTests
     }
 
     [Test]
-    public async Task GetPortsForEditAsync_ShouldReturnAllPorts()
+    public async Task GetMonitorForEditAsync_ShouldReturnAllPorts()
     {
         Guid monitorId = await SeedMonitorWithPorts();
 
-        IList<MonitorPortCreateDTO> result =
-            await monitorService.GetPortsForEditAsync(monitorId);
+        MonitorEditDTO? result =
+            await monitorService.GetMonitorForEditAsync(monitorId);
 
-        Assert.That(result.Count, Is.EqualTo(2));
-        Assert.That(result.Any(p => p.Name == "HDMI"), Is.True);
-        Assert.That(result.Any(p => p.Name == "DisplayPort"), Is.True);
+        Assert.That(result!.Ports.Count, Is.EqualTo(2));
+        Assert.That(result!.Ports.Any(p => p.Name == "HDMI"), Is.True);
+        Assert.That(result!.Ports.Any(p => p.Name == "DisplayPort"), Is.True);
     }
 
     [Test]
-    public async Task GetPortsForEditAsync_ShouldMarkOnlySelectedPorts()
+    public async Task GetMonitorForEditAsync_ShouldMarkOnlySelectedPorts()
     {
         Guid monitorId = Guid.NewGuid();
 
@@ -969,21 +970,33 @@ public class MonitorServiceTests
         await dbContext.Monitors.AddAsync(monitor);
         await dbContext.Ports.AddRangeAsync(hdmi, displayPort, usbC);
         await dbContext.MonitorPorts.AddAsync(monitorHdmi);
+
         await dbContext.SaveChangesAsync();
 
-        IList<MonitorPortCreateDTO> result =
-            await monitorService.GetPortsForEditAsync(monitorId);
+        MonitorEditDTO? result =
+            await monitorService.GetMonitorForEditAsync(monitorId);
 
-        Assert.That(result.Count, Is.EqualTo(3));
+        Assert.That(result, Is.Not.Null);
 
-        Assert.That(result.First(p => p.PortId == hdmiId).IsSelected, Is.True);
-        Assert.That(result.First(p => p.PortId == hdmiId).Count, Is.EqualTo(2));
+        Assert.That(result!.Ports.Count, Is.EqualTo(3));
 
-        Assert.That(result.First(p => p.PortId == displayPortId).IsSelected, Is.False);
-        Assert.That(result.First(p => p.PortId == displayPortId).Count, Is.EqualTo(1));
+        MonitorPortCreateDTO hdmiPort =
+            result.Ports.First(p => p.PortId == hdmiId);
 
-        Assert.That(result.First(p => p.PortId == usbCId).IsSelected, Is.False);
-        Assert.That(result.First(p => p.PortId == usbCId).Count, Is.EqualTo(1));
+        Assert.That(hdmiPort.IsSelected, Is.True);
+        Assert.That(hdmiPort.Count, Is.EqualTo(2));
+
+        MonitorPortCreateDTO displayPortPort =
+            result.Ports.First(p => p.PortId == displayPortId);
+
+        Assert.That(displayPortPort.IsSelected, Is.False);
+        Assert.That(displayPortPort.Count, Is.EqualTo(1));
+
+        MonitorPortCreateDTO usbCPort =
+            result.Ports.First(p => p.PortId == usbCId);
+
+        Assert.That(usbCPort.IsSelected, Is.False);
+        Assert.That(usbCPort.Count, Is.EqualTo(1));
     }
 
     [Test]

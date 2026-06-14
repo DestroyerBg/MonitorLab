@@ -209,30 +209,20 @@ namespace MonitorLab.Core.Services
         public async Task<MonitorEditDTO?> GetMonitorForEditAsync(Guid id)
         {
             Monitor? monitor = await dbContext.Monitors
-                                .Include(m => m.MonitorPorts)
-                                .ThenInclude(m => m.Port)
-                                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(m => m.MonitorPorts)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (monitor == null)
             {
                 return null;
             }
 
             MonitorEditDTO dto = mapper.Map<MonitorEditDTO>(monitor);
-            return dto;
-        }
 
-        public async Task<IList<MonitorPortCreateDTO>> GetPortsForEditAsync(Guid monitorId)
-        {
-            List<Guid> selectedPortIds = await dbContext.MonitorPorts
-                                        .Where(mp => mp.MonitorId == monitorId)
-                                        .Select(mp => mp.PortId)
-                                        .ToListAsync();
+            Dictionary<Guid, int> selectedPorts = monitor.MonitorPorts
+                .ToDictionary(mp => mp.PortId, mp => mp.Count);
 
-            Dictionary<Guid, int> selectedPortCounts = await dbContext.MonitorPorts
-                .Where(mp => mp.MonitorId == monitorId)
-                .ToDictionaryAsync(mp => mp.PortId, mp => mp.Count);
-
-            return await dbContext.Ports
+            dto.Ports = await dbContext.Ports
                 .OrderBy(p => p.Name)
                 .ThenBy(p => p.Version)
                 .Select(p => new MonitorPortCreateDTO
@@ -240,12 +230,14 @@ namespace MonitorLab.Core.Services
                     PortId = p.Id,
                     Name = p.Name,
                     Version = p.Version,
-                    IsSelected = selectedPortIds.Contains(p.Id),
-                    Count = selectedPortCounts.ContainsKey(p.Id)
-                        ? selectedPortCounts[p.Id]
+                    IsSelected = selectedPorts.ContainsKey(p.Id),
+                    Count = selectedPorts.ContainsKey(p.Id)
+                        ? selectedPorts[p.Id]
                         : 1
                 })
                 .ToListAsync();
+
+            return dto;
         }
 
         public async Task<bool> EditMonitorAsync(MonitorEditDTO dto)

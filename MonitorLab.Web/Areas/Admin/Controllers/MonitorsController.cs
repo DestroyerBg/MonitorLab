@@ -108,10 +108,7 @@ namespace MonitorLab.Web.Areas.Admin.Controllers
 
             model.Resolutions = await monitorService.GetDistinctResolutions();
             model.PanelTypes = await monitorService.GetDistinctPanelTypes();
-
-            model.Ports = mapper.Map<IList<MonitorPortCreateViewModel>>(
-                await monitorService.GetPortsForEditAsync(id));
-
+           
             return View(model);
         }
 
@@ -121,7 +118,7 @@ namespace MonitorLab.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                await PopulateEditDropdownsAndPorts(inputModel);
+                await PopulateEditViewModelAsync(inputModel);
                 return View(inputModel);
             }
 
@@ -182,9 +179,22 @@ namespace MonitorLab.Web.Areas.Admin.Controllers
         {
             model.Resolutions = await monitorService.GetDistinctResolutions();
             model.PanelTypes = await monitorService.GetDistinctPanelTypes();
+        }
 
-            model.Ports = mapper.Map<IList<MonitorPortCreateViewModel>>(
-                await monitorService.GetPortsForEditAsync(model.Id));
+        private async Task PopulateEditViewModelAsync(MonitorEditViewModel model)
+        {
+            model.Resolutions = await monitorService.GetDistinctResolutions();
+            model.PanelTypes = await monitorService.GetDistinctPanelTypes();
+
+            if (model.Ports == null || !model.Ports.Any())
+            {
+                MonitorEditDTO? dto = await monitorService.GetMonitorForEditAsync(model.Id);
+
+                if (dto != null)
+                {
+                    model.Ports = mapper.Map<IList<MonitorPortCreateViewModel>>(dto.Ports);
+                }
+            }
         }
     }
 }

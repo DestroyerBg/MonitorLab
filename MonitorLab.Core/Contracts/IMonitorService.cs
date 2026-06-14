@@ -20,7 +20,6 @@ namespace MonitorLab.Core.Contracts
         Task<Guid> CreateMonitorAsync(MonitorCreateDTO monitorCreateDTO);
         Task UpdateMonitorImageAsync(Guid monitorId, string imageUrl);
         Task<MonitorEditDTO?> GetMonitorForEditAsync(Guid id);
-        Task<IList<MonitorPortCreateDTO>> GetPortsForEditAsync(Guid monitorId);
         Task<string?> DeleteMonitorAsync(Guid id);
 
         Task<bool> EditMonitorAsync(MonitorEditDTO dto);
