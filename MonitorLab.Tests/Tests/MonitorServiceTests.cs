@@ -525,109 +525,6 @@ public class MonitorServiceTests
         Assert.That(displayPort.Count, Is.EqualTo(1));
     }
 
-
-    private async Task SeedMonitors()
-    {
-        await dbContext.Monitors.AddRangeAsync(
-            new Monitor
-            {
-                Id = Guid.NewGuid(),
-                Brand = "LG",
-                Model = "UltraGear",
-                Resolution = ResolutionType.QHD,
-                PanelType = PanelType.OLED,
-                ScreenSizeInches = 27,
-                RefreshRateHz = 240,
-                ResponseTimeMs = 0.03,
-                BrightnessNits = 250,
-                ContrastRatio = "1000000:1",
-                Description = "Test",
-                ImageUrl = "/images/lg.jpg",
-                ReleaseYear = 2024
-            },
-            new Monitor
-            {
-                Id = Guid.NewGuid(),
-                Brand = "Samsung",
-                Model = "Odyssey",
-                Resolution = ResolutionType.UHD,
-                PanelType = PanelType.VA,
-                ScreenSizeInches = 32,
-                RefreshRateHz = 144,
-                ResponseTimeMs = 1,
-                BrightnessNits = 350,
-                ContrastRatio = "2500:1",
-                Description = "Test",
-                ImageUrl = "/images/samsung.jpg",
-                ReleaseYear = 2023
-            });
-
-        await dbContext.SaveChangesAsync();
-    }
-
-    private async Task<Guid> SeedMonitorWithPorts()
-    {
-        Guid monitorId = Guid.NewGuid();
-        Guid hdmiId = Guid.NewGuid();
-        Guid displayPortId = Guid.NewGuid();
-
-        Monitor monitor = new Monitor
-        {
-            Id = monitorId,
-            Brand = "Asus",
-            Model = "ROG Swift OLED PG27AQDM",
-            Resolution = ResolutionType.QHD,
-            PanelType = PanelType.OLED,
-            ScreenSizeInches = 26.5,
-            RefreshRateHz = 240,
-            ResponseTimeMs = 0.03,
-            BrightnessNits = 240,
-            ContrastRatio = "1500000:1",
-            Description = "OLED gaming monitor",
-            ImageUrl = "/images/monitors/asus.jpg",
-            ReleaseYear = 2023
-        };
-
-        Port hdmi = new Port
-        {
-            Id = hdmiId,
-            Name = "HDMI",
-            Version = 2.0
-        };
-
-        Port displayPort = new Port
-        {
-            Id = displayPortId,
-            Name = "DisplayPort",
-            Version = 1.4
-        };
-
-        MonitorPort monitorHdmi = new MonitorPort
-        {
-            MonitorId = monitorId,
-            Monitor = monitor,
-            PortId = hdmiId,
-            Port = hdmi,
-            Count = 2
-        };
-
-        MonitorPort monitorDisplayPort = new MonitorPort
-        {
-            MonitorId = monitorId,
-            Monitor = monitor,
-            PortId = displayPortId,
-            Port = displayPort,
-            Count = 1
-        };
-
-        await dbContext.Monitors.AddAsync(monitor);
-        await dbContext.Ports.AddRangeAsync(hdmi, displayPort);
-        await dbContext.MonitorPorts.AddRangeAsync(monitorHdmi, monitorDisplayPort);
-        await dbContext.SaveChangesAsync();
-
-        return monitorId;
-    }
-
     [Test]
     public async Task GetDistinctResolutions_ShouldReturnOnlyExistingDistinctResolutions()
     {
@@ -946,5 +843,372 @@ public class MonitorServiceTests
 
         Assert.That(result, Is.Null);
         Assert.That(deletedMonitor, Is.Null);
+    }
+
+    [Test]
+    public async Task GetMonitorForEditAsync_ShouldReturnNull_WhenMonitorDoesNotExist()
+    {
+        MonitorEditDTO? result =
+            await monitorService.GetMonitorForEditAsync(Guid.NewGuid());
+
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public async Task GetMonitorForEditAsync_ShouldReturnCorrectMonitorData_WhenMonitorExists()
+    {
+        Guid monitorId = await SeedMonitorWithPorts();
+
+        MonitorEditDTO? result =
+            await monitorService.GetMonitorForEditAsync(monitorId);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result!.Id, Is.EqualTo(monitorId));
+        Assert.That(result.Brand, Is.EqualTo("Asus"));
+        Assert.That(result.Model, Is.EqualTo("ROG Swift OLED PG27AQDM"));
+        Assert.That(result.Resolution, Is.EqualTo("QHD"));
+        Assert.That(result.PanelType, Is.EqualTo("OLED"));
+        Assert.That(result.RefreshRateHz, Is.EqualTo(240));
+    }
+
+    [Test]
+    public async Task GetMonitorForEditAsync_ShouldReturnSelectedPortsWithCorrectCounts()
+    {
+        Guid monitorId = await SeedMonitorWithPorts();
+
+        MonitorEditDTO? result =
+            await monitorService.GetMonitorForEditAsync(monitorId);
+
+        result!.Ports = await monitorService.GetPortsForEditAsync(monitorId);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result!.Ports.Count, Is.EqualTo(2));
+
+        MonitorPortCreateDTO hdmi =
+            result.Ports.First(p => p.Name == "HDMI");
+
+        Assert.That(hdmi.IsSelected, Is.True);
+        Assert.That(hdmi.Count, Is.EqualTo(2));
+
+        MonitorPortCreateDTO displayPort =
+            result.Ports.First(p => p.Name == "DisplayPort");
+
+        Assert.That(displayPort.IsSelected, Is.True);
+        Assert.That(displayPort.Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public async Task GetPortsForEditAsync_ShouldReturnAllPorts()
+    {
+        Guid monitorId = await SeedMonitorWithPorts();
+
+        IList<MonitorPortCreateDTO> result =
+            await monitorService.GetPortsForEditAsync(monitorId);
+
+        Assert.That(result.Count, Is.EqualTo(2));
+        Assert.That(result.Any(p => p.Name == "HDMI"), Is.True);
+        Assert.That(result.Any(p => p.Name == "DisplayPort"), Is.True);
+    }
+
+    [Test]
+    public async Task GetPortsForEditAsync_ShouldMarkOnlySelectedPorts()
+    {
+        Guid monitorId = Guid.NewGuid();
+
+        Guid hdmiId = Guid.NewGuid();
+        Guid displayPortId = Guid.NewGuid();
+        Guid usbCId = Guid.NewGuid();
+
+        Monitor monitor = new()
+        {
+            Id = monitorId,
+            Brand = "LG",
+            Model = "UltraGear",
+            Resolution = ResolutionType.QHD,
+            PanelType = PanelType.IPS,
+            ScreenSizeInches = 27,
+            RefreshRateHz = 165,
+            ResponseTimeMs = 1,
+            BrightnessNits = 350,
+            ContrastRatio = "1000:1",
+            Description = "Test monitor",
+            ImageUrl = "/images/monitors/lg.jpg",
+            ReleaseYear = 2024
+        };
+
+        Port hdmi = new()
+        {
+            Id = hdmiId,
+            Name = "HDMI",
+            Version = 2.1
+        };
+
+        Port displayPort = new()
+        {
+            Id = displayPortId,
+            Name = "DisplayPort",
+            Version = 1.4
+        };
+
+        Port usbC = new()
+        {
+            Id = usbCId,
+            Name = "USB-C",
+            Version = 3.2
+        };
+
+        MonitorPort monitorHdmi = new()
+        {
+            MonitorId = monitorId,
+            Monitor = monitor,
+            PortId = hdmiId,
+            Port = hdmi,
+            Count = 2
+        };
+
+        await dbContext.Monitors.AddAsync(monitor);
+        await dbContext.Ports.AddRangeAsync(hdmi, displayPort, usbC);
+        await dbContext.MonitorPorts.AddAsync(monitorHdmi);
+        await dbContext.SaveChangesAsync();
+
+        IList<MonitorPortCreateDTO> result =
+            await monitorService.GetPortsForEditAsync(monitorId);
+
+        Assert.That(result.Count, Is.EqualTo(3));
+
+        Assert.That(result.First(p => p.PortId == hdmiId).IsSelected, Is.True);
+        Assert.That(result.First(p => p.PortId == hdmiId).Count, Is.EqualTo(2));
+
+        Assert.That(result.First(p => p.PortId == displayPortId).IsSelected, Is.False);
+        Assert.That(result.First(p => p.PortId == displayPortId).Count, Is.EqualTo(1));
+
+        Assert.That(result.First(p => p.PortId == usbCId).IsSelected, Is.False);
+        Assert.That(result.First(p => p.PortId == usbCId).Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public async Task EditMonitorAsync_ShouldReturnFalse_WhenMonitorDoesNotExist()
+    {
+        MonitorEditDTO dto = new()
+        {
+            Id = Guid.NewGuid(),
+            Brand = "Missing",
+            Model = "Missing",
+            Resolution = "QHD",
+            PanelType = "IPS",
+            ScreenSizeInches = 27,
+            RefreshRateHz = 165,
+            ResponseTimeMs = 1,
+            BrightnessNits = 350,
+            ContrastRatio = "1000:1",
+            Description = "Missing monitor",
+            ReleaseYear = 2024
+        };
+
+        bool result =
+            await monitorService.EditMonitorAsync(dto);
+
+        Assert.That(result, Is.False);
+    }
+
+    [Test]
+    public async Task EditMonitorAsync_ShouldUpdateMonitorProperties_WhenMonitorExists()
+    {
+        Guid monitorId = await SeedMonitorWithPorts();
+
+        MonitorEditDTO dto = new()
+        {
+            Id = monitorId,
+            Brand = "Updated LG",
+            Model = "Updated Model",
+            Resolution = "UHD",
+            PanelType = "VA",
+            ScreenSizeInches = 32,
+            RefreshRateHz = 144,
+            ResponseTimeMs = 4,
+            BrightnessNits = 500,
+            ContrastRatio = "3000:1",
+            Description = "Updated description",
+            ReleaseYear = 2025,
+            Ports = new List<MonitorPortCreateDTO>()
+        };
+
+        bool result =
+            await monitorService.EditMonitorAsync(dto);
+
+        Monitor? updated =
+            await dbContext.Monitors.FindAsync(monitorId);
+
+        Assert.That(result, Is.True);
+        Assert.That(updated, Is.Not.Null);
+        Assert.That(updated!.Brand, Is.EqualTo("Updated LG"));
+        Assert.That(updated.Model, Is.EqualTo("Updated Model"));
+        Assert.That(updated.Resolution.ToString(), Is.EqualTo("UHD"));
+        Assert.That(updated.PanelType.ToString(), Is.EqualTo("VA"));
+        Assert.That(updated.ScreenSizeInches, Is.EqualTo(32));
+        Assert.That(updated.RefreshRateHz, Is.EqualTo(144));
+        Assert.That(updated.ResponseTimeMs, Is.EqualTo(4));
+        Assert.That(updated.BrightnessNits, Is.EqualTo(500));
+        Assert.That(updated.ContrastRatio, Is.EqualTo("3000:1"));
+        Assert.That(updated.Description, Is.EqualTo("Updated description"));
+        Assert.That(updated.ReleaseYear, Is.EqualTo(2025));
+    }
+
+    [Test]
+    public async Task EditMonitorAsync_ShouldReplaceMonitorPorts()
+    {
+        Guid monitorId = await SeedMonitorWithPorts();
+
+        Guid usbCId = Guid.NewGuid();
+
+        Port usbC = new()
+        {
+            Id = usbCId,
+            Name = "USB-C",
+            Version = 3.2
+        };
+
+        await dbContext.Ports.AddAsync(usbC);
+        await dbContext.SaveChangesAsync();
+
+        MonitorEditDTO dto = new()
+        {
+            Id = monitorId,
+            Brand = "Asus",
+            Model = "ROG Swift OLED PG27AQDM",
+            Resolution = "QHD",
+            PanelType = "OLED",
+            ScreenSizeInches = 26.5,
+            RefreshRateHz = 240,
+            ResponseTimeMs = 0.03,
+            BrightnessNits = 240,
+            ContrastRatio = "1500000:1",
+            Description = "OLED gaming monitor",
+            ReleaseYear = 2023,
+            Ports = new List<MonitorPortCreateDTO>
+        {
+            new()
+            {
+                PortId = usbCId,
+                Count = 1,
+                IsSelected = true
+            }
+        }
+        };
+
+        bool result =
+            await monitorService.EditMonitorAsync(dto);
+
+        List<MonitorPort> monitorPorts =
+            await dbContext.MonitorPorts
+                .Where(mp => mp.MonitorId == monitorId)
+                .ToListAsync();
+
+        Assert.That(result, Is.True);
+        Assert.That(monitorPorts.Count, Is.EqualTo(1));
+        Assert.That(monitorPorts.First().PortId, Is.EqualTo(usbCId));
+        Assert.That(monitorPorts.First().Count, Is.EqualTo(1));
+    }
+
+    private async Task SeedMonitors()
+    {
+        await dbContext.Monitors.AddRangeAsync(
+            new Monitor
+            {
+                Id = Guid.NewGuid(),
+                Brand = "LG",
+                Model = "UltraGear",
+                Resolution = ResolutionType.QHD,
+                PanelType = PanelType.OLED,
+                ScreenSizeInches = 27,
+                RefreshRateHz = 240,
+                ResponseTimeMs = 0.03,
+                BrightnessNits = 250,
+                ContrastRatio = "1000000:1",
+                Description = "Test",
+                ImageUrl = "/images/lg.jpg",
+                ReleaseYear = 2024
+            },
+            new Monitor
+            {
+                Id = Guid.NewGuid(),
+                Brand = "Samsung",
+                Model = "Odyssey",
+                Resolution = ResolutionType.UHD,
+                PanelType = PanelType.VA,
+                ScreenSizeInches = 32,
+                RefreshRateHz = 144,
+                ResponseTimeMs = 1,
+                BrightnessNits = 350,
+                ContrastRatio = "2500:1",
+                Description = "Test",
+                ImageUrl = "/images/samsung.jpg",
+                ReleaseYear = 2023
+            });
+
+        await dbContext.SaveChangesAsync();
+    }
+
+    private async Task<Guid> SeedMonitorWithPorts()
+    {
+        Guid monitorId = Guid.NewGuid();
+        Guid hdmiId = Guid.NewGuid();
+        Guid displayPortId = Guid.NewGuid();
+
+        Monitor monitor = new Monitor
+        {
+            Id = monitorId,
+            Brand = "Asus",
+            Model = "ROG Swift OLED PG27AQDM",
+            Resolution = ResolutionType.QHD,
+            PanelType = PanelType.OLED,
+            ScreenSizeInches = 26.5,
+            RefreshRateHz = 240,
+            ResponseTimeMs = 0.03,
+            BrightnessNits = 240,
+            ContrastRatio = "1500000:1",
+            Description = "OLED gaming monitor",
+            ImageUrl = "/images/monitors/asus.jpg",
+            ReleaseYear = 2023
+        };
+
+        Port hdmi = new Port
+        {
+            Id = hdmiId,
+            Name = "HDMI",
+            Version = 2.0
+        };
+
+        Port displayPort = new Port
+        {
+            Id = displayPortId,
+            Name = "DisplayPort",
+            Version = 1.4
+        };
+
+        MonitorPort monitorHdmi = new MonitorPort
+        {
+            MonitorId = monitorId,
+            Monitor = monitor,
+            PortId = hdmiId,
+            Port = hdmi,
+            Count = 2
+        };
+
+        MonitorPort monitorDisplayPort = new MonitorPort
+        {
+            MonitorId = monitorId,
+            Monitor = monitor,
+            PortId = displayPortId,
+            Port = displayPort,
+            Count = 1
+        };
+
+        await dbContext.Monitors.AddAsync(monitor);
+        await dbContext.Ports.AddRangeAsync(hdmi, displayPort);
+        await dbContext.MonitorPorts.AddRangeAsync(monitorHdmi, monitorDisplayPort);
+        await dbContext.SaveChangesAsync();
+
+        return monitorId;
     }
 }
