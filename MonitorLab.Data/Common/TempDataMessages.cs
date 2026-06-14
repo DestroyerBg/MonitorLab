@@ -16,13 +16,16 @@
         public const string MonitorDeletedSuccessfully = "Мониторът беше изтрит успешно.";
 
         public static string MonitorAlreadyAdded(string brand, string model)
-            => $"{brand} {model} вече е добавен в списъка за сравнение.";
+            => $"Мониторът {brand} {model} вече е добавен в списъка за сравнение.";
 
         public static string MonitorAddedSuccessfully(string brand, string model)
-            => $"{brand} {model} е добавен успешно за сравнение.";
+            => $"Мониторът {brand} {model} е добавен успешно за сравнение.";
 
         public static string MonitorRemovedSuccessfully(string brand, string model)
-            => $"{brand} {model} беше премахнат от сравнението.";
+            => $"Мониторът {brand} {model} беше премахнат от сравнението.";
+
+        public static string MonitorEditedSuccessfully(string brand, string model)
+            => $"Мониторът {brand} {model} беше редактиран успешно.";
     }
 }
     

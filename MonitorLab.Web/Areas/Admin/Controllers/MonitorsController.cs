@@ -100,7 +100,7 @@ namespace MonitorLab.Web.Areas.Admin.Controllers
             if (dto == null)
             {
                 TempData["ToastType"] = Error;
-                TempData["ToastMessage"] = "Мониторът не беше намерен.";
+                TempData["ToastMessage"] = MonitorNotFound;
                 return RedirectToAction(nameof(Dashboard));
             }
 
@@ -141,8 +141,8 @@ namespace MonitorLab.Web.Areas.Admin.Controllers
 
             if (!isEdited)
             {
-                TempData["ToastType"] = "error";
-                TempData["ToastMessage"] = "Мониторът не беше намерен.";
+                TempData["ToastType"] = Error;
+                TempData["ToastMessage"] = MonitorNotFound;
                 return RedirectToAction(nameof(Dashboard));
             }
 
@@ -161,7 +161,7 @@ namespace MonitorLab.Web.Areas.Admin.Controllers
             }
 
             TempData["ToastType"] = Success;
-            TempData["ToastMessage"] = "Мониторът беше редактиран успешно.";
+            TempData["ToastMessage"] = MonitorEditedSuccessfully(inputModel.Brand, inputModel.Model);
 
             return RedirectToAction(nameof(Dashboard));
         }
