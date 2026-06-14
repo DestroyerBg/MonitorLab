@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using MonitorLab.Core.Contracts;
 using MonitorLab.Data;
 using MonitorLab.Data.EntityDTOs;
+using MonitorLab.Data.Enums;
 using MonitorLab.Data.Models;
 using Monitor = MonitorLab.Data.Models.Monitor;
 namespace MonitorLab.Core.Services
@@ -203,6 +204,88 @@ namespace MonitorLab.Core.Services
             await dbContext.SaveChangesAsync();
 
             return imageUrl;
+        }
+
+        public async Task<MonitorEditDTO?> GetMonitorForEditAsync(Guid id)
+        {
+            Monitor? monitor = await dbContext.Monitors
+                                .Include(m => m.MonitorPorts)
+                                .ThenInclude(m => m.Port)
+                                .FirstOrDefaultAsync(m => m.Id == id);
+            if (monitor == null)
+            {
+                return null;
+            }
+
+            MonitorEditDTO dto = mapper.Map<MonitorEditDTO>(monitor);
+            return dto;
+        }
+
+        public async Task<IList<MonitorPortCreateDTO>> GetPortsForEditAsync(Guid monitorId)
+        {
+            List<Guid> selectedPortIds = await dbContext.MonitorPorts
+                                        .Where(mp => mp.MonitorId == monitorId)
+                                        .Select(mp => mp.PortId)
+                                        .ToListAsync();
+
+            Dictionary<Guid, int> selectedPortCounts = await dbContext.MonitorPorts
+                .Where(mp => mp.MonitorId == monitorId)
+                .ToDictionaryAsync(mp => mp.PortId, mp => mp.Count);
+
+            return await dbContext.Ports
+                .OrderBy(p => p.Name)
+                .ThenBy(p => p.Version)
+                .Select(p => new MonitorPortCreateDTO
+                {
+                    PortId = p.Id,
+                    Name = p.Name,
+                    Version = p.Version,
+                    IsSelected = selectedPortIds.Contains(p.Id),
+                    Count = selectedPortCounts.ContainsKey(p.Id)
+                        ? selectedPortCounts[p.Id]
+                        : 1
+                })
+                .ToListAsync();
+        }
+
+        public async Task<bool> EditMonitorAsync(MonitorEditDTO dto)
+        {
+            Monitor? monitor = await dbContext.Monitors
+                .Include(m => m.MonitorPorts)
+                .FirstOrDefaultAsync(m => m.Id == dto.Id);
+
+            if (monitor == null)
+            {
+                return false;
+            }
+
+            monitor.Brand = dto.Brand;
+            monitor.Model = dto.Model;
+            monitor.Resolution = Enum.Parse<ResolutionType>(dto.Resolution);
+            monitor.PanelType = Enum.Parse<PanelType>(dto.PanelType);
+            monitor.ScreenSizeInches = dto.ScreenSizeInches;
+            monitor.RefreshRateHz = dto.RefreshRateHz;
+            monitor.ResponseTimeMs = dto.ResponseTimeMs;
+            monitor.BrightnessNits = dto.BrightnessNits;
+            monitor.ContrastRatio = dto.ContrastRatio;
+            monitor.Description = dto.Description;
+            monitor.ReleaseYear = dto.ReleaseYear;
+
+            dbContext.MonitorPorts.RemoveRange(monitor.MonitorPorts);
+
+            monitor.MonitorPorts = dto.Ports
+                .Where(p => p.IsSelected)
+                .Select(p => new MonitorPort
+                {
+                    MonitorId = monitor.Id,
+                    PortId = p.PortId,
+                    Count = p.Count
+                })
+                .ToList();
+
+            await dbContext.SaveChangesAsync();
+
+            return true;
         }
 
         private async Task<Monitor?> GetMonitorByIdWithPortsAsync(Guid id)

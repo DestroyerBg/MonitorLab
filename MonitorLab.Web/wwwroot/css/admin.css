@@ -346,19 +346,40 @@
     font-weight: 700;
 }
 
-    .admin-port-check input {
-        width: 18px;
-        height: 18px;
-    }
+.admin-port-check input {
+    width: 18px;
+    height: 18px;
+}
 
 .admin-port-count {
     width: 90px;
 }
 
-    .admin-port-count label {
-        color: #94a3b8;
-        font-size: 0.85rem;
-    }
+.admin-port-count label {
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
 
+.admin-current-image {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.admin-current-image span {
+    display: block;
+    color: #f8fafc;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.admin-current-image img {
+    max-width: 220px;
+    max-height: 140px;
+    object-fit: contain;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(148, 163, 184, 0.20);
+    padding: 0.5rem;
+}
 
 
