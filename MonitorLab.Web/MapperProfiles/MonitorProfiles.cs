@@ -40,7 +40,16 @@ namespace MonitorLab.Web.MapperProfiles
                 .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
             CreateMap<MonitorPortCreateViewModel, MonitorPortCreateDTO>();
             CreateMap<MonitorPortCreateDTO, MonitorPortCreateViewModel>();
-             
+            CreateMap<Monitor, MonitorEditDTO>()
+                .ForMember(dest => dest.CurrentImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
+                .ForMember(src => src.Ports, opt => opt.Ignore());
+            CreateMap<MonitorEditDTO, MonitorEditViewModel>()
+                .ForMember(src => src.Resolutions, opt => opt.Ignore())
+                .ForMember(src => src.PanelTypes, opt => opt.Ignore())
+                .ForMember(src => src.ImageFile, opt => opt.Ignore());
+            
+            CreateMap<MonitorEditViewModel, MonitorEditDTO>()
+                .ForMember(dest => dest.CurrentImageUrl, opt => opt.Ignore());  
         }
     }
 }
