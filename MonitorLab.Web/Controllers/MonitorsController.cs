@@ -38,9 +38,10 @@ namespace MonitorLab.Web.Controllers
          string? brand,
          string? resolution,
          string? panelType,
-         int? minRefreshRate)
+         int? minRefreshRate,
+         double? minSize)
         {
-            IEnumerable<MonitorCardDto> dtos = await monitorService.GetMonitorCatalogAsync(searchTerm, brand, resolution, panelType, minRefreshRate);
+            IEnumerable<MonitorCardDto> dtos = await monitorService.GetMonitorCatalogAsync(searchTerm, brand, resolution, panelType, minRefreshRate, minSize);
 
             IEnumerable<MonitorCardViewModel> model = mapper.Map<IEnumerable<MonitorCardViewModel>>(dtos);
 

@@ -31,7 +31,7 @@ namespace MonitorLab.Core.Services
             return catalog;
         }
 
-        public async Task<IEnumerable<MonitorCardDto>> GetMonitorCatalogAsync(string? searchTerm, string? brand, string? resolution, string? panelType, int? minRefreshRate)
+        public async Task<IEnumerable<MonitorCardDto>> GetMonitorCatalogAsync(string? searchTerm, string? brand, string? resolution, string? panelType, int? minRefreshRate, double? minSize)
         {
             IQueryable<Monitor>? query = dbContext.Monitors.AsQueryable();
 
@@ -44,7 +44,7 @@ namespace MonitorLab.Core.Services
 
             if (!string.IsNullOrWhiteSpace(brand))
             {
-                query = query.Where(m => m.Brand == brand);
+                query = query.Where(m => m.Brand.Contains(brand));
             }
 
             if (!string.IsNullOrWhiteSpace(resolution))
@@ -60,6 +60,11 @@ namespace MonitorLab.Core.Services
             if (minRefreshRate.HasValue)
             {
                 query = query.Where(m => m.RefreshRateHz >= minRefreshRate.Value);
+            }
+
+            if (minSize.HasValue)
+            {
+                query = query.Where(m => m.ScreenSizeInches >= minSize.Value);
             }
 
             IList<MonitorCardDto> monitors = await query
@@ -143,7 +148,8 @@ namespace MonitorLab.Core.Services
 
             monitor.Id = Guid.NewGuid();
 
-            monitor.MonitorPorts = monitorCreateDTO.Ports.Select(p => new MonitorPort
+            monitor.MonitorPorts = monitorCreateDTO.Ports
+                .Where(p => p.IsSelected).Select(p => new MonitorPort
             {
                 PortId = p.PortId,
                 MonitorId = monitor.Id,
@@ -185,7 +191,7 @@ namespace MonitorLab.Core.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<string?> DeleteMonitorAsync(Guid id)
+        public async Task<MonitorDeleteResultDTO> DeleteMonitorAsync(Guid id)
         {
             Monitor? monitor = await dbContext.Monitors
                 .Include(m => m.MonitorPorts)
@@ -193,7 +199,10 @@ namespace MonitorLab.Core.Services
 
             if (monitor == null)
             {
-                return null;
+                return new MonitorDeleteResultDTO()
+                {
+                    IsDeleted = false,
+                };
             }
 
             string? imageUrl = monitor.ImageUrl;
@@ -203,7 +212,11 @@ namespace MonitorLab.Core.Services
 
             await dbContext.SaveChangesAsync();
 
-            return imageUrl;
+            return new MonitorDeleteResultDTO()
+            {
+                IsDeleted = true,
+                ImageUrl = imageUrl
+            };
         }
 
         public async Task<MonitorEditDTO?> GetMonitorForEditAsync(Guid id)

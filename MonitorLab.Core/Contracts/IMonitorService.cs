@@ -11,7 +11,8 @@ namespace MonitorLab.Core.Contracts
             string? brand,
             string? resolution,
             string? panelType,
-            int? minRefreshRate);
+            int? minRefreshRate,
+            double? minSize);
         Task<MonitorDetailsDTO?> GetMonitorDetailsAsync(Guid id);
         Task<CompareDTO> GetMonitorComparisonAsync(IList<Guid> ids);
         Task<IEnumerable<SelectListItem>> GetDistinctPanelTypes();
@@ -20,7 +21,7 @@ namespace MonitorLab.Core.Contracts
         Task<Guid> CreateMonitorAsync(MonitorCreateDTO monitorCreateDTO);
         Task UpdateMonitorImageAsync(Guid monitorId, string imageUrl);
         Task<MonitorEditDTO?> GetMonitorForEditAsync(Guid id);
-        Task<string?> DeleteMonitorAsync(Guid id);
+        Task<MonitorDeleteResultDTO> DeleteMonitorAsync(Guid id);
 
         Task<bool> EditMonitorAsync(MonitorEditDTO dto);
     }

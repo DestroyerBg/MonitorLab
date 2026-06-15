@@ -59,6 +59,11 @@
             <input asp-for="MinRefreshRate" class="form-control" type="number" placeholder="примерно 144" />
         </div>
 
+        <div class="filter-group">
+            <label>Мин. Дължина в инчове</label>
+            <input asp-for="MinSize" class="form-control" type="number" step="0.1" placeholder="примерно 24 или 23.8" />
+        </div>
+
         <div class="filter-actions">
             <button type="submit" class="filter-btn primary">
                 <i class="bi bi-search"></i> Филтрирай

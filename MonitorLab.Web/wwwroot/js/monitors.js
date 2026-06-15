@@ -4,13 +4,14 @@
     const resolution = document.getElementById("Resolution")?.value ?? "";
     const panelType = document.getElementById("PanelType")?.value ?? "";
     const minRefreshRate = document.getElementById("MinRefreshRate")?.value ?? "";
-
+    const minSize = document.getElementById("MinSize").value;
     const params = new URLSearchParams({
         searchTerm,
         brand,
         resolution,
         panelType,
-        minRefreshRate
+        minRefreshRate,
+        minSize
     });
 
     const response = await fetch(`/Monitors/Filter?${params.toString()}`);

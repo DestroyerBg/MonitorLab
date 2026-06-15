@@ -63,5 +63,11 @@ namespace MonitorLab.Web.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
     }
 }
