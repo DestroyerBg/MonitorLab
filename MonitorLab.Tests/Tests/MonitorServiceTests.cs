@@ -727,9 +727,9 @@ public class MonitorServiceTests
     [Test]
     public async Task DeleteMonitorAsync_ShouldReturnNull_WhenMonitorDoesNotExist()
     {
-        string? result = await monitorService.DeleteMonitorAsync(Guid.NewGuid());
+        MonitorDeleteResultDTO result = await monitorService.DeleteMonitorAsync(Guid.NewGuid());
 
-        Assert.That(result, Is.Null);
+        Assert.That(result.IsDeleted, Is.False);
     }
 
     [Test]
@@ -755,11 +755,11 @@ public class MonitorServiceTests
         await dbContext.Monitors.AddAsync(monitor);
         await dbContext.SaveChangesAsync();
 
-        string? result = await monitorService.DeleteMonitorAsync(monitor.Id);
+        MonitorDeleteResultDTO result = await monitorService.DeleteMonitorAsync(monitor.Id);
 
         Monitor? deletedMonitor = await dbContext.Monitors.FindAsync(monitor.Id);
 
-        Assert.That(result, Is.EqualTo("/images/monitors/lg.jpg"));
+        Assert.That(result.ImageUrl, Is.EqualTo("/images/monitors/lg.jpg"));
         Assert.That(deletedMonitor, Is.Null);
     }
 
@@ -807,12 +807,12 @@ public class MonitorServiceTests
         await dbContext.MonitorPorts.AddAsync(monitorPort);
         await dbContext.SaveChangesAsync();
 
-        string? result = await monitorService.DeleteMonitorAsync(monitorId);
+        MonitorDeleteResultDTO result = await monitorService.DeleteMonitorAsync(monitorId);
 
         bool monitorExists = await dbContext.Monitors.AnyAsync(m => m.Id == monitorId);
         bool monitorPortExists = await dbContext.MonitorPorts.AnyAsync(mp => mp.MonitorId == monitorId);
 
-        Assert.That(result, Is.EqualTo("/images/monitors/samsung.jpg"));
+        Assert.That(result.ImageUrl, Is.EqualTo("/images/monitors/samsung.jpg"));
         Assert.That(monitorExists, Is.False);
         Assert.That(monitorPortExists, Is.False);
     }
@@ -840,11 +840,11 @@ public class MonitorServiceTests
         await dbContext.Monitors.AddAsync(monitor);
         await dbContext.SaveChangesAsync();
 
-        string? result = await monitorService.DeleteMonitorAsync(monitor.Id);
+        MonitorDeleteResultDTO result = await monitorService.DeleteMonitorAsync(monitor.Id);
 
         Monitor? deletedMonitor = await dbContext.Monitors.FindAsync(monitor.Id);
 
-        Assert.That(result, Is.Null);
+        Assert.That(result.ImageUrl, Is.Null);
         Assert.That(deletedMonitor, Is.Null);
     }
 

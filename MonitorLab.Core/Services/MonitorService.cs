@@ -185,7 +185,7 @@ namespace MonitorLab.Core.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<string?> DeleteMonitorAsync(Guid id)
+        public async Task<MonitorDeleteResultDTO> DeleteMonitorAsync(Guid id)
         {
             Monitor? monitor = await dbContext.Monitors
                 .Include(m => m.MonitorPorts)
@@ -193,7 +193,10 @@ namespace MonitorLab.Core.Services
 
             if (monitor == null)
             {
-                return null;
+                return new MonitorDeleteResultDTO()
+                {
+                    IsDeleted = false,
+                };
             }
 
             string? imageUrl = monitor.ImageUrl;
@@ -203,7 +206,11 @@ namespace MonitorLab.Core.Services
 
             await dbContext.SaveChangesAsync();
 
-            return imageUrl;
+            return new MonitorDeleteResultDTO()
+            {
+                IsDeleted = true,
+                ImageUrl = imageUrl
+            };
         }
 
         public async Task<MonitorEditDTO?> GetMonitorForEditAsync(Guid id)

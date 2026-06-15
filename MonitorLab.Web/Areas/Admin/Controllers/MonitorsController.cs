@@ -72,18 +72,18 @@ namespace MonitorLab.Web.Areas.Admin.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            string? imageUrl = await monitorService.DeleteMonitorAsync(id);
+            MonitorDeleteResultDTO result = await monitorService.DeleteMonitorAsync(id);
 
-            if (imageUrl == null)
+            if (!result.IsDeleted)
             {
                 TempData["ToastType"] = Error;
                 TempData["ToastMessage"] = MonitorNotFound;
                 return RedirectToAction(nameof(Dashboard));
             }
 
-            if (!string.IsNullOrWhiteSpace(imageUrl))
+            if (!string.IsNullOrWhiteSpace(result.ImageUrl))
             {
-                imageService.DeleteImage(imageUrl);
+                imageService.DeleteImage(result.ImageUrl);
             }
 
             TempData["ToastType"] = Success;
