@@ -656,12 +656,14 @@ public class MonitorServiceTests
             new()
             {
                 PortId = hdmiId,
-                Count = 2
+                Count = 2,
+                IsSelected = true,
             },
             new()
             {
                 PortId = displayPortId,
-                Count = 1
+                Count = 1,
+                IsSelected = true,
             }
         }
         };

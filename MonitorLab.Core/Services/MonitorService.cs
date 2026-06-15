@@ -143,7 +143,8 @@ namespace MonitorLab.Core.Services
 
             monitor.Id = Guid.NewGuid();
 
-            monitor.MonitorPorts = monitorCreateDTO.Ports.Select(p => new MonitorPort
+            monitor.MonitorPorts = monitorCreateDTO.Ports
+                .Where(p => p.IsSelected).Select(p => new MonitorPort
             {
                 PortId = p.PortId,
                 MonitorId = monitor.Id,
