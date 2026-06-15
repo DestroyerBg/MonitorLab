@@ -44,7 +44,7 @@ namespace MonitorLab.Core.Services
 
             if (!string.IsNullOrWhiteSpace(brand))
             {
-                query = query.Where(m => m.Brand == brand);
+                query = query.Where(m => m.Brand.Contains(brand));
             }
 
             if (!string.IsNullOrWhiteSpace(resolution))
