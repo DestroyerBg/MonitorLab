@@ -10,6 +10,8 @@
         public string? PanelType { get; set; }
         public int? MinRefreshRate { get; set; }
 
+        public double? MinSize { get; set; }
+
         public IEnumerable<string> Brands { get; set; } = new List<string>();
         public IEnumerable<string> Resolutions { get; set; } = new List<string>();
         public IEnumerable<string> PanelTypes { get; set; } = new List<string>();

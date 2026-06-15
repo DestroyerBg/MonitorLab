@@ -31,7 +31,7 @@ namespace MonitorLab.Core.Services
             return catalog;
         }
 
-        public async Task<IEnumerable<MonitorCardDto>> GetMonitorCatalogAsync(string? searchTerm, string? brand, string? resolution, string? panelType, int? minRefreshRate)
+        public async Task<IEnumerable<MonitorCardDto>> GetMonitorCatalogAsync(string? searchTerm, string? brand, string? resolution, string? panelType, int? minRefreshRate, double? minSize)
         {
             IQueryable<Monitor>? query = dbContext.Monitors.AsQueryable();
 
@@ -60,6 +60,11 @@ namespace MonitorLab.Core.Services
             if (minRefreshRate.HasValue)
             {
                 query = query.Where(m => m.RefreshRateHz >= minRefreshRate.Value);
+            }
+
+            if (minSize.HasValue)
+            {
+                query = query.Where(m => m.ScreenSizeInches >= minSize.Value);
             }
 
             IList<MonitorCardDto> monitors = await query

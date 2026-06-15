@@ -4,6 +4,7 @@
     document.getElementById("Resolution").value = "";
     document.getElementById("PanelType").value = "";
     document.getElementById("MinRefreshRate").value = "";
+    document.getElementById("MinSize").value = "";
 
     filterMonitors();
 }

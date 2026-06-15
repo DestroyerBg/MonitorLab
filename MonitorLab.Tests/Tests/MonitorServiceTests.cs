@@ -169,6 +169,7 @@ public class MonitorServiceTests
                 null,
                 null,
                 null,
+                null,
                 null);
 
         Assert.That(result.Count(), Is.EqualTo(1));
@@ -186,6 +187,7 @@ public class MonitorServiceTests
                 "LG",
                 null,
                 null,
+                null, 
                 null);
 
         Assert.That(result.All(m => m.Brand == "LG"), Is.True);
@@ -201,6 +203,7 @@ public class MonitorServiceTests
                 null,
                 null,
                 "QHD",
+                null,
                 null,
                 null);
 
@@ -218,6 +221,7 @@ public class MonitorServiceTests
                 null,
                 null,
                 "OLED",
+                null,
                 null);
 
         Assert.That(result.All(m => m.PanelType == "OLED"), Is.True);
@@ -234,7 +238,8 @@ public class MonitorServiceTests
                 null,
                 null,
                 null,
-                200);
+                200,
+                null);
 
         Assert.That(result.All(m => m.RefreshRateHz >= 200), Is.True);
     }
@@ -250,7 +255,8 @@ public class MonitorServiceTests
                 "LG",
                 "QHD",
                 "OLED",
-                240);
+                240,
+                null);
 
         Assert.That(result.Count(), Is.EqualTo(1));
 
@@ -260,6 +266,134 @@ public class MonitorServiceTests
         Assert.That(monitor.Resolution, Is.EqualTo("QHD"));
         Assert.That(monitor.PanelType, Is.EqualTo("OLED"));
         Assert.That(monitor.RefreshRateHz, Is.GreaterThanOrEqualTo(240));
+    }
+
+    [Test]
+    public async Task FilterMonitorsAsync_ShouldFilterByMinimumScreenSize()
+    {
+        await dbContext.Monitors.AddRangeAsync(
+            new Monitor
+            {
+                Id = Guid.NewGuid(),
+                Brand = "AOC",
+                Model = "24G4",
+                Resolution = ResolutionType.FullHD,
+                PanelType = PanelType.IPS,
+                ScreenSizeInches = 23.8,
+                RefreshRateHz = 180,
+                ResponseTimeMs = 1,
+                BrightnessNits = 300,
+                ContrastRatio = "1000:1",
+                Description = "Test monitor",
+                ImageUrl = "/images/monitors/aoc.jpg",
+                ReleaseYear = 2024
+            },
+            new Monitor
+            {
+                Id = Guid.NewGuid(),
+                Brand = "LG",
+                Model = "UltraGear 27",
+                Resolution = ResolutionType.QHD,
+                PanelType = PanelType.IPS,
+                ScreenSizeInches = 27,
+                RefreshRateHz = 165,
+                ResponseTimeMs = 1,
+                BrightnessNits = 350,
+                ContrastRatio = "1000:1",
+                Description = "Test monitor",
+                ImageUrl = "/images/monitors/lg.jpg",
+                ReleaseYear = 2024
+            });
+
+        await dbContext.SaveChangesAsync();
+
+        IEnumerable<MonitorCardDto> result =
+            await monitorService.GetMonitorCatalogAsync(
+                null,
+                null,
+                null,
+                null,
+                null,
+                27);
+
+        Assert.That(result.Count(), Is.EqualTo(1));
+
+        MonitorCardDto monitor = result.First();
+
+        Assert.That(monitor.Brand, Is.EqualTo("LG"));
+        Assert.That(monitor.ScreenSizeInches, Is.GreaterThanOrEqualTo(27));
+    }
+    [Test]
+    public async Task FilterMonitorsAsync_ShouldApplyMinimumRefreshRateAndMinimumScreenSize()
+    {
+        await dbContext.Monitors.AddRangeAsync(
+            new Monitor
+            {
+                Id = Guid.NewGuid(),
+                Brand = "AOC",
+                Model = "24G4",
+                Resolution = ResolutionType.FullHD,
+                PanelType = PanelType.IPS,
+                ScreenSizeInches = 23.8,
+                RefreshRateHz = 180,
+                ResponseTimeMs = 1,
+                BrightnessNits = 300,
+                ContrastRatio = "1000:1",
+                Description = "Test monitor",
+                ImageUrl = "/images/monitors/aoc.jpg",
+                ReleaseYear = 2024
+            },
+            new Monitor
+            {
+                Id = Guid.NewGuid(),
+                Brand = "Samsung",
+                Model = "Odyssey G5",
+                Resolution = ResolutionType.QHD,
+                PanelType = PanelType.VA,
+                ScreenSizeInches = 27,
+                RefreshRateHz = 144,
+                ResponseTimeMs = 1,
+                BrightnessNits = 350,
+                ContrastRatio = "2500:1",
+                Description = "Test monitor",
+                ImageUrl = "/images/monitors/samsung.jpg",
+                ReleaseYear = 2023
+            },
+            new Monitor
+            {
+                Id = Guid.NewGuid(),
+                Brand = "LG",
+                Model = "UltraGear OLED",
+                Resolution = ResolutionType.QHD,
+                PanelType = PanelType.OLED,
+                ScreenSizeInches = 27,
+                RefreshRateHz = 240,
+                ResponseTimeMs = 0.03,
+                BrightnessNits = 250,
+                ContrastRatio = "1500000:1",
+                Description = "Test monitor",
+                ImageUrl = "/images/monitors/lg-oled.jpg",
+                ReleaseYear = 2024
+            });
+
+        await dbContext.SaveChangesAsync();
+
+        IEnumerable<MonitorCardDto> result =
+            await monitorService.GetMonitorCatalogAsync(
+                null,
+                null,
+                null,
+                null,
+                200,
+                27);
+
+        Assert.That(result.Count(), Is.EqualTo(1));
+
+        MonitorCardDto monitor = result.First();
+
+        Assert.That(monitor.Brand, Is.EqualTo("LG"));
+        Assert.That(monitor.RefreshRateHz, Is.GreaterThanOrEqualTo(200));
+        Assert.That(monitor.ScreenSizeInches, Is.GreaterThanOrEqualTo(27));
     }
 
     [Test]

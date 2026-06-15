@@ -11,7 +11,8 @@ namespace MonitorLab.Core.Contracts
             string? brand,
             string? resolution,
             string? panelType,
-            int? minRefreshRate);
+            int? minRefreshRate,
+            double? minSize);
         Task<MonitorDetailsDTO?> GetMonitorDetailsAsync(Guid id);
         Task<CompareDTO> GetMonitorComparisonAsync(IList<Guid> ids);
         Task<IEnumerable<SelectListItem>> GetDistinctPanelTypes();
