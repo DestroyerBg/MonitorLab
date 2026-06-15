@@ -4,6 +4,32 @@
 @{
     ViewData["Title"] = "Админ панел - Монитори";
 }
+<form asp-area="Admin"
+      asp-controller="Monitors"
+      asp-action="Dashboard"
+      method="get"
+      class="admin-search-bar">
+
+    <div class="admin-form-group admin-search-group">
+        <label>Търсене на монитор</label>
+        <input name="searchTerm"
+               value="@ViewData["SearchTerm"]"
+               class="form-control"
+               placeholder="Марка или модел..." />
+    </div>
+
+    <button type="submit" class="admin-add-btn">
+        <i class="bi bi-search"></i>
+        Търси
+    </button>
+
+    <a asp-area="Admin"
+       asp-controller="Monitors"
+       asp-action="Dashboard"
+       class="admin-cancel-btn">
+        Изчисти
+    </a>
+</form>
 
 <section class="admin-panel-page">
     <div class="admin-panel-header">
